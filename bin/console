@@ -1,15 +1,13 @@
 #!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
-require "bundler/setup"
-require "github/to/canvas/quiz"
+lib_dir = File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
+$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
+require 'bundler/setup'
+require 'pry'
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+require 'github_to_canvas_quiz'
 
-require "irb"
-IRB.start(__FILE__)
+Pry.start
