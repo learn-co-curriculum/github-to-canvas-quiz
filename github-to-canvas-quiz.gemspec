@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.executables   = 'github-to-canvas-quiz'
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'rest-client', '~> 2.1'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.10'
