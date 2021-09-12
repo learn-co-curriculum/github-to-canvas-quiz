@@ -11,6 +11,10 @@ module GithubToCanvasQuiz
         def create_quiz(course_id, payload)
           post("/courses/#{course_id}/quizzes", payload)
         end
+
+        def update_quiz(course_id, id,  payload)
+          put("/courses/#{course_id}/quizzes/#{id}", payload)
+        end
       end
     end
   end

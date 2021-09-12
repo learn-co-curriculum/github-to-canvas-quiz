@@ -64,6 +64,16 @@ module GithubToCanvasQuiz
         abort
       end
 
+      def delete(endpoint)
+        RestClient.delete(host + endpoint, {
+          'Authorization' => "Bearer #{api_key}"
+        })
+      rescue RestClient::BadRequest => e
+        puts "Request failed. #{e.response.code} status code returned."
+        puts JSON.parse(e.response.body)
+        abort
+      end
+
       def next_url(link)
         link.split(/,/).detect { |rel| rel.match(/rel="next"/) }.split(/;/).first.strip[1..-2]
       rescue NoMethodError
