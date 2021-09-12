@@ -46,6 +46,24 @@ module GithubToCanvasQuiz
         blocks << blockquote(comments) unless comments.empty?
         join(blocks)
       end
+
+      def to_h
+        if left.empty?
+          {
+            'answer_text' => text,
+            'answer_weight' => title == 'Correct' ? 100 : 0,
+            'answer_comments' => comments
+          }
+        else
+          {
+            'answer_text' => left,
+            'answer_weight' => 100,
+            'answer_comments' => comments,
+            'answer_match_left' => left,
+            'answer_match_right' => right
+          }
+        end
+      end
     end
   end
 end

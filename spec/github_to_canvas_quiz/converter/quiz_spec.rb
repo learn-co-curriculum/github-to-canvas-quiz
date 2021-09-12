@@ -14,18 +14,41 @@ RSpec.describe GithubToCanvasQuiz::Converter::Quiz do
   end
 
   describe '#to_markdown' do
-    let(:quiz_hash) do
-      {
-        'id' => 18396,
-        'title' => 'Client-Side Routing Quiz',
-        'description' => "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>"
-      }
-    end
-
     it 'produces the correct markdown' do
-      output = described_class.from_canvas(4236, quiz_hash).to_markdown
+      output = described_class.new(
+        course_id: 4236,
+        id: 18396,
+        title: 'Client-Side Routing Quiz',
+        description: "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>"
+      ).to_markdown
       match = File.read('spec/fixtures/markdown/quiz.md')
       expect(output.chomp).to eq(match.chomp)
+    end
+  end
+
+  describe '#to_h' do
+    it 'produces the correct hash' do
+      output = described_class.new(
+        course_id: 4236,
+        id: 18396,
+        title: 'Client-Side Routing Quiz',
+        description: "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>"
+      ).to_h
+      expect(output).to eq({
+        'id' => 18396,
+        'course_id' => 4236,
+        'quiz' => {
+          'title' => 'Client-Side Routing Quiz',
+          'description' => "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>",
+          'quiz_type' => 'assignment',
+          'shuffle_answers' => true,
+          'hide_results' => 'until_after_last_attempt',
+          'show_correct_answers_last_attempt' => true,
+          'allowed_attempts' => 3,
+          'scoring_policy' => 'keep_highest',
+          'one_question_at_a_time' => true
+        }
+      })
     end
   end
 end
