@@ -4,12 +4,17 @@ module GithubToCanvasQuiz
   module Converter
     class Quiz
       class << self
+        def from_markdown(markdown)
+          options = MarkdownParser::Quiz.new(markdown).parse
+          new(options)
+        end
+
         def from_canvas(course_id, data)
           new(
             course_id: course_id,
-            id: data['id'],
-            title: data['title'],
-            description: data['description']
+            id: data.fetch('id'),
+            title: data.fetch('title'),
+            description: data.fetch('description', '')
           )
         end
       end

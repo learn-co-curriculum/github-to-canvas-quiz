@@ -34,5 +34,11 @@ Style/Documentation:
 Style/Lambda:
   EnforcedStyle: literal
 
+Style/NumericLiterals:
+  Enabled: false
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+
 Style/SymbolArray:
   EnforcedStyle: brackets

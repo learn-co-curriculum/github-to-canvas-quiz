@@ -6,6 +6,17 @@ require 'json'
 require_relative 'github_to_canvas_quiz/canvas_api/endpoints'
 require_relative 'github_to_canvas_quiz/canvas_api/client'
 
+# Markdown to HTML
+require 'redcarpet'
+require 'rouge'
+require 'rouge/plugins/redcarpet'
+require_relative 'github_to_canvas_quiz/markdown_converter'
+
+# Parsers
+require 'front_matter_parser'
+require_relative 'github_to_canvas_quiz/markdown_parser/question'
+require_relative 'github_to_canvas_quiz/markdown_parser/quiz'
+
 # Converters
 require 'yaml'
 require 'reverse_markdown'

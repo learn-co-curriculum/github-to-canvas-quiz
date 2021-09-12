@@ -8,26 +8,22 @@ module GithubToCanvasQuiz
       class << self
         def from_canvas(data)
           new(
-            text: choose_text(data['text'], data['html']),
-            comments: choose_text(data['comments'], data['comments_html']),
-            left: data['left'],
-            right: data['right'],
-            title: choose_title(data['left'], data['weight'])
+            text: choose_text(data.fetch('text', ''), data.fetch('html', '')),
+            comments: choose_text(data.fetch('comments', ''), data.fetch('comments_html', '')),
+            left: data.fetch('left', ''),
+            right: data.fetch('right', ''),
+            title: choose_title(data.fetch('left', ''), data.fetch('weight', 0))
           )
         end
 
         private
 
         def choose_title(left, weight)
-          if (!left.nil? && !left.empty?) || weight.positive?
-            'Correct'
-          else
-            'Incorrect'
-          end
+          !left.empty? || weight.positive? ? 'Correct' : 'Incorrect'
         end
 
         def choose_text(text, html)
-          html.nil? || html.empty? ? text : html
+          html.empty? ? text : html
         end
       end
 
@@ -42,19 +38,13 @@ module GithubToCanvasQuiz
       def to_markdown
         blocks = []
         blocks << h2(title)
-        blocks << if matching_answer?
-                    ul(left, right)
-                  else
+        blocks << if left.empty?
                     markdown_block(text)
+                  else
+                    ul(left, right)
                   end
-        blocks << blockquote(comments) unless comments.nil? || comments.empty?
+        blocks << blockquote(comments) unless comments.empty?
         join(blocks)
-      end
-
-      private
-
-      def matching_answer?
-        !left.nil? && !left.empty?
       end
     end
   end
