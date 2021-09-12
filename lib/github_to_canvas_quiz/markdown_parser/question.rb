@@ -18,7 +18,7 @@ module GithubToCanvasQuiz
         description = parse_description!(src)
         comment = parse_comment!(src)
         answers = parse_answers!(src)
-        distractors = ''
+        distractors = []
 
         distractors, answers = separate_matching_answers(answers) if frontmatter['type'] == 'matching_question'
 
@@ -86,8 +86,9 @@ module GithubToCanvasQuiz
 
       def separate_matching_answers(answers)
         # Pull out distractors
+        distractors = []
         incorrect = answers.find { |answer| answer['title'] == 'Incorrect' }
-        distractors = incorrect['html'].scan(/<li>(?<text>.*)<\/li>/).flatten
+        distractors = incorrect['html'].scan(/<li>(?<text>.*)<\/li>/).flatten if incorrect && incorrect['html']
 
         # Pull out other answers
         correct_answers = answers.filter { |answer| answer != incorrect }

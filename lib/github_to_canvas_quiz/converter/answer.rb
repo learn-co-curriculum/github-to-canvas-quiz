@@ -50,7 +50,7 @@ module GithubToCanvasQuiz
       def to_h
         if left.empty?
           {
-            'answer_text' => text,
+            'answer_html' => text,
             'answer_weight' => title == 'Correct' ? 100 : 0,
             'answer_comments' => comments
           }

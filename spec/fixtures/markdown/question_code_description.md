@@ -5,24 +5,18 @@ type: multiple_choice_question
 
 # Functions: Scope
 
-Which variables does the function `inner2` have access to?
+Which hook gives us the ability to programmatically navigate the user to a new page in our application?
 
-```
-const part1 = 'hello'
+Take a _look_ at this **code** :
 
-function demoChain(name) {
-    let part2 = 'hi'
-    return function inner1() {
-        let part3 = 'there'
-        return function inner2() {
-            console.log(`${part1.toUpperCase()} ${part2} ${name}`);
-        }
-    }
+```jsx
+function hello() {
+  return "world";
 }
-
-demoChain("Dr. Stephen Strange")()()
-
-//=> HELLO hi Dr. Stephen Strange
 ```
 
-> **Source/s: ** [Functions: Continued](https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565)
+> **Source/s:** [Functions: Continued](https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565)
+
+## Correct
+
+This one!

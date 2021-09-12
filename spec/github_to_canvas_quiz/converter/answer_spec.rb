@@ -43,7 +43,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Answer do
     context 'with a multiple choice question' do
       it 'produces the correct hash' do
         expect(multiple_choice.to_h).to eq({
-          'answer_text' => 'useParams',
+          'answer_html' => 'useParams',
           'answer_weight' => 0,
           'answer_comments' => '<p><span>We use the <a class="external" href="https://reactrouter.com/web/api/Hooks/useparams" target="_blank"><code>useParams</code><span class="screenreader-only">&nbsp;(Links to an external site.)</span></a> hook to get the dynamic </span><code>params</code><span> from the URL.</span></p>'
         })

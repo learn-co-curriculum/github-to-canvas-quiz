@@ -111,7 +111,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
               right: '',
               title: 'Incorrect'
             )
-          ]
+          ],
+          distractors: []
         )
       end
     end
@@ -147,6 +148,39 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
         )
       end
     end
+
+    context 'with a code block in the description' do
+      it 'creates a Question instance with the correct data' do
+        input = File.read('spec/fixtures/markdown/question_code_description.md')
+        description = <<~HTML
+          <p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>
+
+          <p>Take a <em>look</em> at this <strong>code</strong> :</p>
+          <div class="highlight"><pre class="highlight jsx"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="dl">"</span><span class="s2">world</span><span class="dl">"</span><span class="p">;</span>
+          <span class="p">}</span>
+          </code></pre></div>
+        HTML
+        expect(described_class.from_markdown(input)).to have_attributes(
+          id: 126509,
+          type: 'multiple_choice_question',
+          name: 'Functions: Scope',
+          description: description.strip,
+          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></p>',
+          answers: [
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer,
+              text: '<p>This one!</p>',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            )
+          ],
+          distractors: []
+        )
+      end
+    end
   end
 
   describe '#to_markdown' do
@@ -168,14 +202,31 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
 
     context 'with a code block in the description' do
       it 'produces the correct markdown' do
+        description = <<~HTML
+          <p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>
+
+          <p>Take a <em>look</em> at this <strong>code</strong> :</p>
+          <div class="highlight"><pre class="highlight jsx"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="dl">"</span><span class="s2">world</span><span class="dl">"</span><span class="p">;</span>
+          <span class="p">}</span>
+          </code></pre></div>
+        HTML
         output = described_class.new(
           id: 126509,
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
-          description: "<p class=\"code-line code-line\" data-line=\"59\">Which variables does the function&nbsp;<code>inner2</code> have access to?</p>\n<div>\n<div>\n<pre><code><span>const part1 = 'hello'</span></code><br><br><code><span>function demoChain(name) {</span></code><br><code><span>  &nbsp; let part2 = 'hi'</span></code><br><code><span>  &nbsp; return function inner1() {</span></code><br><code><span>  &nbsp; &nbsp; &nbsp; let part3 = 'there'</span></code><br><code><span>  &nbsp; &nbsp; &nbsp; return function inner2() {</span></code><br><code><span>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console.log(`${part1.toUpperCase()} ${part2} ${name}`);</span></code><br><code><span>  &nbsp; &nbsp; &nbsp; }</span></code><br><code><span>  &nbsp; }</span></code><br><code><span>}</span></code><br><br><code><span>demoChain(\"Dr. Stephen Strange\")()()</span></code><br><br><code><span>//=&gt; HELLO hi Dr. Stephen Strange<br></span></code></pre>\n</div>\n</div>",
-          comment: '<p><strong>Source/s:&nbsp;</strong><a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></p>',
-          answers: [],
-          distractors: ''
+          description: description,
+          comment: '<p><strong>Source/s:</strong> <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></p>',
+          answers: [
+            GithubToCanvasQuiz::Converter::Answer.new(
+              text: '<p>This one!</p>',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            )
+          ],
+          distractors: []
         ).to_markdown
         match = File.read('spec/fixtures/markdown/question_code_description.md')
         expect(output.chomp).to eq(match.chomp)
