@@ -9,26 +9,34 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       description: '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
       comment: '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
       answers: [
-        {
-          'text' => 'useHistory',
-          'comments_html' => '',
-          'weight' => 100.0
-        },
-        {
-          'text' => 'useParams',
-          'comments_html' => '<p><span>We use the <a class="external" href="https://reactrouter.com/web/api/Hooks/useparams" target="_blank"><code>useParams</code><span class="screenreader-only">&nbsp;(Links to an external site.)</span></a> hook to get the dynamic </span><code>params</code><span> from the URL.</span></p>',
-          'weight' => 0.0
-        },
-        {
-          'text' => 'useState',
-          'comments_html' => '<p><span>We use the&nbsp;<a class="inline_disabled" href="https://reactjs.org/docs/hooks-reference.html#usestate" target="_blank">useState</a> hook to return a stateful value, and a function to update it.</span></p>',
-          'weight' => 0.0
-        },
-        {
-          'text' => "I don't know.",
-          'comments_html' => '',
-          'weight' => 0.0
-        }
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: '<p>useHistory</p>',
+          comments: '',
+          left: '',
+          right: '',
+          title: 'Correct'
+        ),
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: '<p>useParams</p>',
+          comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>',
+          left: '',
+          right: '',
+          title: 'Incorrect'
+        ),
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: '<p>useState</p>',
+          comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>',
+          left: '',
+          right: '',
+          title: 'Incorrect'
+        ),
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: '<p>I don&#39;t know.</p>',
+          comments: '',
+          left: '',
+          right: '',
+          title: 'Incorrect'
+        )
       ],
       distractors: []
     )
@@ -41,16 +49,20 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
       comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
       answers: [
-        {
-          'text' => 'Answer 1',
-          'left' => 'Answer 1',
-          'right' => 'Value 1'
-        },
-        {
-          'text' => 'Answer 2',
-          'left' => 'Answer 2',
-          'right' => 'Value 2'
-        }
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: 'Answer 1',
+          comments: '',
+          left: 'Answer 1',
+          right: 'Value 1',
+          title: 'Correct'
+        ),
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: 'Answer 2',
+          comments: '',
+          left: 'Answer 2',
+          right: 'Value 2',
+          title: 'Correct'
+        )
       ],
       distractors: ['Incorrect 1', 'Incorrect 2']
     )

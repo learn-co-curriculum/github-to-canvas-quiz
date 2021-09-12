@@ -13,17 +13,17 @@ module GithubToCanvasQuiz
         end
 
         def from_canvas(data)
-          answers = data.fetch('answers', []).map do |answer|
+          answers = data['answers'].map do |answer|
             Answer.from_canvas(answer)
           end
           new(
-            id: data.fetch('id'),
-            type: data.fetch('question_type'),
-            name: data.fetch('question_name', ''),
-            description: data.fetch('question_text', ''),
-            comment: data.fetch('neutral_comments_html', ''),
+            id: data['id'],
+            type: data['question_type'],
+            name: data['question_name'] || '',
+            description: data['question_text'] || '',
+            comment: data['neutral_comments_html'] || '',
             answers: answers,
-            distractors: data.fetch('matching_answer_incorrect_matches', '').split("\n")
+            distractors: (data['matching_answer_incorrect_matches'] || '').split("\n")
           )
         end
       end
@@ -48,7 +48,7 @@ module GithubToCanvasQuiz
         blocks << markdown_block(description)
         blocks << blockquote(comment) unless comment.empty?
         answers.each do |answer|
-          blocks << Answer.from_canvas(answer).to_markdown
+          blocks << answer.to_markdown
         end
         unless distractors.empty?
           blocks << h2('Incorrect')
