@@ -42,19 +42,15 @@ module GithubToCanvasQuiz
 
       def to_h
         {
-          'id' => id,
-          'course_id' => course_id,
-          'quiz' => {
-            'title' => title,
-            'description' => description,
-            'quiz_type' => 'assignment',
-            'shuffle_answers' => true,
-            'hide_results' => 'until_after_last_attempt',
-            'show_correct_answers_last_attempt' => true,
-            'allowed_attempts' => 3,
-            'scoring_policy' => 'keep_highest',
-            'one_question_at_a_time' => true
-          }
+          'title' => title,
+          'description' => description,
+          'quiz_type' => 'assignment',
+          'shuffle_answers' => true,
+          'hide_results' => 'until_after_last_attempt',
+          'show_correct_answers_last_attempt' => true,
+          'allowed_attempts' => 3,
+          'scoring_policy' => 'keep_highest',
+          'one_question_at_a_time' => true
         }
       end
     end

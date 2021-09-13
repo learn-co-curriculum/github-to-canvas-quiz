@@ -59,16 +59,13 @@ module GithubToCanvasQuiz
 
       def to_h
         {
-          'id' => id,
-          'question' => {
-            'question_name' => name,
-            'question_text' => description,
-            'question_type' => type,
-            'points_possible' => 1,
-            'neutral_comments_html' => comment,
-            'answers' => answers.map(&:to_h),
-            'matching_answer_incorrect_matches' => distractors.join("\n")
-          }
+          'question_name' => name,
+          'question_text' => description,
+          'question_type' => type,
+          'points_possible' => 1,
+          'neutral_comments_html' => comment,
+          'answers' => answers.map(&:to_h),
+          'matching_answer_incorrect_matches' => distractors.join("\n")
         }
       end
     end

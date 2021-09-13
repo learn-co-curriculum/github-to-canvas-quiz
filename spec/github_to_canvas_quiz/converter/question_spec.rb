@@ -239,16 +239,13 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'produces the correct hash' do
         output = multiple_choice.to_h
         expect(output).to eq({
-          'id' => 123906,
-          'question' => {
-            'question_name' => 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
-            'question_text' => '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
-            'question_type' => 'multiple_choice_question',
-            'points_possible' => 1,
-            'neutral_comments_html' => '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
-            'answers' => multiple_choice.answers.map(&:to_h),
-            'matching_answer_incorrect_matches' => ''
-          }
+          'question_name' => 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
+          'question_text' => '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
+          'question_type' => 'multiple_choice_question',
+          'points_possible' => 1,
+          'neutral_comments_html' => '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
+          'answers' => multiple_choice.answers.map(&:to_h),
+          'matching_answer_incorrect_matches' => ''
         })
       end
     end
@@ -257,16 +254,13 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'produces the correct hash' do
         output = matching.to_h
         expect(output).to eq({
-          'id' => 144189,
-          'question' => {
-            'question_name' => 'Matching Question',
-            'question_text' => '<p>Match the value on the left to the correct value from the dropdown.</p>',
-            'question_type' => 'matching_question',
-            'points_possible' => 1,
-            'neutral_comments_html' => '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
-            'answers' => matching.answers.map(&:to_h),
-            'matching_answer_incorrect_matches' => "Incorrect 1\nIncorrect 2"
-          }
+          'question_name' => 'Matching Question',
+          'question_text' => '<p>Match the value on the left to the correct value from the dropdown.</p>',
+          'question_type' => 'matching_question',
+          'points_possible' => 1,
+          'neutral_comments_html' => '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+          'answers' => matching.answers.map(&:to_h),
+          'matching_answer_incorrect_matches' => "Incorrect 1\nIncorrect 2"
         })
       end
     end

@@ -28,10 +28,10 @@ end
 def create_or_update!(quiz)
   if quiz.id
     # update quiz
-    client.update_quiz(quiz.course_id, quiz.id, { 'quiz' => quiz.to_h['quiz'] })
+    client.update_quiz(quiz.course_id, quiz.id, { 'quiz' => quiz.to_h })
   else
     # create quiz
-    canvas_quiz = client.create_quiz(quiz.course_id, { 'quiz' => quiz.to_h['quiz'] })
+    canvas_quiz = client.create_quiz(quiz.course_id, { 'quiz' => quiz.to_h })
     quiz.id = canvas_quiz['id']
     # TODO: this will (likely???) not work for GitHub workflow!!!
     File.write('tmp/README.md', quiz.to_markdown)
@@ -52,10 +52,10 @@ def sync_quiz
     question = GithubToCanvasQuiz::Converter::Question.from_markdown(md)
     if question.id
       # if it has an ID it's an existing question -> update
-      client.update_question(quiz.course_id, quiz.id, question.id, { 'question' => question.to_h['question'] })
+      client.update_question(quiz.course_id, quiz.id, question.id, { 'question' => question.to_h })
     else
       # if it doesn't have an ID it's a new question -> create
-      canvas_question = client.create_question(quiz.course_id, quiz.id, { 'question' => question.to_h['question'] })
+      canvas_question = client.create_question(quiz.course_id, quiz.id, { 'question' => question.to_h })
       question.id = canvas_question['id']
       # save question data to markdown
       # TODO: only update frontmatter?

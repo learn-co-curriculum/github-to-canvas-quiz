@@ -35,19 +35,15 @@ RSpec.describe GithubToCanvasQuiz::Converter::Quiz do
         description: "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>"
       ).to_h
       expect(output).to eq({
-        'id' => 18396,
-        'course_id' => 4236,
-        'quiz' => {
-          'title' => 'Client-Side Routing Quiz',
-          'description' => "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>",
-          'quiz_type' => 'assignment',
-          'shuffle_answers' => true,
-          'hide_results' => 'until_after_last_attempt',
-          'show_correct_answers_last_attempt' => true,
-          'allowed_attempts' => 3,
-          'scoring_policy' => 'keep_highest',
-          'one_question_at_a_time' => true
-        }
+        'title' => 'Client-Side Routing Quiz',
+        'description' => "<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>",
+        'quiz_type' => 'assignment',
+        'shuffle_answers' => true,
+        'hide_results' => 'until_after_last_attempt',
+        'show_correct_answers_last_attempt' => true,
+        'allowed_attempts' => 3,
+        'scoring_policy' => 'keep_highest',
+        'one_question_at_a_time' => true
       })
     end
   end
