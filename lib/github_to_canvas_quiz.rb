@@ -14,6 +14,7 @@ require_relative 'github_to_canvas_quiz/markdown_converter'
 
 # Parsers
 require 'front_matter_parser'
+require_relative 'github_to_canvas_quiz/markdown_parser/base'
 require_relative 'github_to_canvas_quiz/markdown_parser/question'
 require_relative 'github_to_canvas_quiz/markdown_parser/quiz'
 

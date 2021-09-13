@@ -7,7 +7,7 @@ module GithubToCanvasQuiz
         def from_markdown(markdown)
           options = MarkdownParser::Question.new(markdown).parse
           options[:answers] = options[:answers].map do |answer|
-            Answer.from_canvas(answer)
+            Answer.new(answer)
           end
           new(options)
         end

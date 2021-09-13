@@ -2,24 +2,13 @@
 
 module GithubToCanvasQuiz
   module MarkdownParser
-    class Question
-      attr_reader :markdown
-
-      def initialize(markdown)
-        @markdown = markdown
-      end
-
+    class Question < Base
       def parse
-        frontmatter, html = separate_frontmatter_and_html
-        src = StringScanner.new(html)
-
         # Must call these in order, relies on moving the StringScanner position
-        name = parse_name!(src)
-        description = parse_description!(src)
-        comment = parse_comment!(src)
-        answers = parse_answers!(src)
-
-        distractors, answers = separate_matching_answers(answers) if frontmatter['type'] == 'matching_question'
+        name = parse_name!
+        description = parse_description!
+        comment = parse_comment!
+        answers, distractors = parse_answers!(frontmatter['type'])
 
         {
           id: frontmatter['id'],
@@ -28,79 +17,87 @@ module GithubToCanvasQuiz
           description: description,
           comment: comment,
           answers: answers,
-          distractors: distractors || []
+          distractors: distractors
         }
       end
 
       private
 
-      def separate_frontmatter_and_html
-        parsed = FrontMatterParser::Parser.new(:md).call(markdown)
-        html = MarkdownConverter.new(parsed.content).to_html
-        [parsed.front_matter, html]
-      end
-
-      def parse_name!(src)
+      def parse_name!
         src.scan(/<h1>(.*?)<\/h1>/)
-        src.captures[0]
+        src.captures.first
       end
 
-      def parse_description!(src)
-        # Check if there is a Blockquote before the next H2
-        if /<blockquote>/ =~ src.check_until(/(.*?)<h2>/m)
-          # Scan until the next blockquote
+      def parse_description!
+        if /<blockquote>/ =~ src.check_until(/(?=<h2>)/)
+          # If there is a <blockquote> before the next <h2>, scan until the next <blockquote>
           src.scan_until(/(?=<blockquote>)/).strip
-        elsif src.check_until(/(?=<h2>)/)
-          # Scan until the next H2
-          src.scan_until(/(?=<h2>)/).strip
+        elsif src.check_until(/(?=<(h2|blockquote)>)/)
+          # If there is a <h2> or  <blockquote> before the end, scan until the next <h2> or  <blockquote>
+          src.scan_until(/(?=<(h2|blockquote)>)/).strip
         else
-          # Read until end
+          # No more <h2>s or <blockquote>s, so the rest of the string is the description
           src.rest.strip
         end
       end
 
-      def parse_comment!(src)
-        return "" unless /<blockquote>/ =~ src.check_until(/(.*?)<h2>/m)
-
-        blockquote = (src.scan_until(/(?=<h2>)/) || '').strip
-        /<blockquote>(.*)<\/blockquote>/m.match(blockquote).captures[0].strip
+      def parse_comment!
+        if /<blockquote>/ =~ src.check_until(/(?=<h2>)/)
+          # If there is a <blockquote> before the next <h2>, scan until the next <h2>
+          html = src.scan_until(/(?=<h2>)/).strip
+          read_blockquote(html)
+        elsif src.match?(/<blockquote>/)
+          # If there is a <blockquote> before the next <h2>, and we landed on a <blockquote>
+          # (should only happen in the last section)
+          read_blockquote(src.rest)
+        else
+          ''
+        end
       end
 
-      def parse_answers!(src)
+      def parse_answers!(type)
         answers = []
+        distractors = []
         # Get answers from all H2s with "Correct" or "Incorrect"
-        while src.scan(/<h2>(Correct|Incorrect)<\/h2>/) || src.eos?
-          answer = {}
-          answer['title'] = src.captures[0]
-
-          answer['html'] = parse_description!(src)
-          answer['comments_html'] = parse_comment!(src) || ''
-
-          answer['weight'] = answer['title'] == 'Incorrect' ? 0 : 100
-
-          answers << answer
+        while src.scan(/<h2>(Correct|Incorrect)<\/h2>/)
+          if type == 'matching_question' && src.captures.first == 'Incorrect'
+            html = parse_description!
+            distractors = read_list_items(html)
+          else
+            answers << parse_answer!(type)
+          end
         end
-        answers
+        [answers, distractors]
       end
 
-      def separate_matching_answers(answers)
-        # Pull out distractors
-        incorrect = answers.find { |answer| answer['title'] == 'Incorrect' }
-        distractors = incorrect['html'].scan(/<li>(?<text>.*)<\/li>/).flatten if incorrect && incorrect['html']
-
-        # Pull out other answers
-        correct_answers = answers.filter { |answer| answer != incorrect }
-        matching_answers = correct_answers.map do |answer|
-          left, right = answer['html'].scan(/<li>(?<text>.*)<\/li>/).flatten
-          {
-            'text' => left,
-            'left' => left,
-            'right' => right,
-            'comments_html' => answer['comments_html'],
-            'title' => answer['title']
-          }
+      def parse_answer!(type)
+        # Must call these in order, relies on moving the StringScanner position
+        title = src.captures.first
+        description = parse_description!
+        if type == 'matching_question'
+          left, right = read_list_items(description)
+          text = left
+        else
+          text = description
+          left = ''
+          right = ''
         end
-        [distractors, matching_answers]
+        comments = parse_comment!
+        {
+          title: title,
+          left: left,
+          right: right,
+          text: text,
+          comments: comments
+        }
+      end
+
+      def read_list_items(html)
+        html.scan(/<li>(?<text>.*)<\/li>/).flatten.map(&:strip)
+      end
+
+      def read_blockquote(html)
+        /<blockquote>(.*)<\/blockquote>/m.match(html).captures.first.strip
       end
     end
   end

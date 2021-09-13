@@ -2,19 +2,10 @@
 
 module GithubToCanvasQuiz
   module MarkdownParser
-    class Quiz
-      attr_reader :markdown
-
-      def initialize(markdown)
-        @markdown = markdown
-      end
-
+    class Quiz < Base
       def parse
-        frontmatter, html = separate_frontmatter_and_html
-
-        src = StringScanner.new(html)
-        title = parse_title!(src)
-        description = parse_description!(src)
+        title = parse_title!
+        description = parse_description!
 
         {
           course_id: frontmatter['course_id'],
@@ -26,18 +17,12 @@ module GithubToCanvasQuiz
 
       private
 
-      def separate_frontmatter_and_html
-        parsed = FrontMatterParser::Parser.new(:md).call(markdown)
-        html = MarkdownConverter.new(parsed.content).to_html
-        [parsed.front_matter, html]
-      end
-
-      def parse_title!(src)
+      def parse_title!
         src.scan(/<h1>(.*?)<\/h1>/)
         src.captures[0]
       end
 
-      def parse_description!(src)
+      def parse_description!
         src.rest.strip
       end
     end

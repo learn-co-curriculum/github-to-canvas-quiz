@@ -32,7 +32,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
         ),
         GithubToCanvasQuiz::Converter::Answer.new(
           text: '<p>I don&#39;t know.</p>',
-          comments: '',
+          comments: '<p>Comment</p>',
           left: '',
           right: '',
           title: 'Incorrect'
@@ -106,7 +106,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer,
               text: '<p>I don&#39;t know.</p>',
-              comments: '',
+              comments: '<p>Comment</p>',
               left: '',
               right: '',
               title: 'Incorrect'
