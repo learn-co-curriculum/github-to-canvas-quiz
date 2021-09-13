@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 RSpec.describe GithubToCanvasQuiz::Converter::Quiz do
+  describe '.from_canvas' do
+    it 'creates a Quiz instance with the correct data' do
+      VCR.use_cassette 'quiz' do
+        client = GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])
+        quiz = client.get_single_quiz(4091, 21962)
+        expect(described_class.from_canvas(4091, quiz)).to have_attributes(
+          course_id: 4091,
+          id: quiz['id'],
+          title: quiz['title'],
+          description: quiz['description']
+        )
+      end
+    end
+  end
+
   describe '.from_markdown' do
     it 'creates a Quiz instance with the correct data' do
       input = File.read('spec/fixtures/markdown/quiz.md')

@@ -68,6 +68,88 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
     )
   end
 
+  describe '.from_canvas' do
+    let(:client) do
+      GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])
+    end
+
+    context 'with a multiple choice question' do
+      it 'creates a Question instance with the correct data' do
+        VCR.use_cassette 'question_multiple_choice' do
+          question = client.get_single_question(4091, 21962, 144210)
+          expect(described_class.from_canvas(question)).to have_attributes(
+            id: question['id'],
+            type: question['question_type'],
+            name: question['question_name'],
+            description: question['question_text'],
+            comment: question['neutral_comments_html'],
+            answers: [
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer,
+                text: question['answers'][0]['html'],
+                comments: question['answers'][0]['comments_html'],
+                left: '',
+                right: '',
+                title: 'Correct'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer,
+                text: question['answers'][1]['html'],
+                comments: question['answers'][1]['comments_html'],
+                left: '',
+                right: '',
+                title: 'Incorrect'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer,
+                text: question['answers'][2]['html'],
+                comments: question['answers'][2]['comments_html'],
+                left: '',
+                right: '',
+                title: 'Incorrect'
+              )
+            ],
+            distractors: []
+          )
+        end
+      end
+    end
+
+    context 'with a matching question' do
+      it 'creates a Question instance with the correct data' do
+        VCR.use_cassette 'question_matching' do
+          question = client.get_single_question(4091, 21962, 144243)
+          expect(described_class.from_canvas(question)).to have_attributes(
+            id: question['id'],
+            type: question['question_type'],
+            name: question['question_name'],
+            description: question['question_text'],
+            comment: question['neutral_comments_html'],
+            answers: [
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer,
+                text: question['answers'][0]['text'],
+                comments: question['answers'][0]['comments_html'],
+                left: question['answers'][0]['left'],
+                right: question['answers'][0]['right'],
+                title: 'Correct'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer,
+                text: question['answers'][1]['text'],
+                comments: question['answers'][1]['comments_html'],
+                left: question['answers'][1]['left'],
+                right: question['answers'][1]['right'],
+                title: 'Correct'
+              )
+            ],
+            distractors: ['Incorrect 1', 'Incorrect 2']
+          )
+        end
+      end
+    end
+  end
+
   describe '.from_markdown' do
     context 'with a multiple choice question' do
       it 'creates a Question instance with the correct data' do
