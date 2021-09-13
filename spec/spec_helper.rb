@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
+require 'vcr'
+require 'webmock/rspec'
+
 require 'github_to_canvas_quiz'
+
+WebMock.disable_net_connect!
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/cassettes'
+  c.hook_into :webmock
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
