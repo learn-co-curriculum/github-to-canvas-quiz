@@ -67,6 +67,32 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       distractors: ['Incorrect 1', 'Incorrect 2']
     )
   end
+  let(:true_false) do
+    described_class.new(
+      id: 144189,
+      type: 'true_false_question',
+      name: 'Question 1',
+      description: '<p>Answer true</p>',
+      comment: '',
+      answers: [
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: 'True',
+          comments: '',
+          left: '',
+          right: '',
+          title: 'Correct'
+        ),
+        GithubToCanvasQuiz::Converter::Answer.new(
+          text: 'False',
+          comments: '',
+          left: '',
+          right: '',
+          title: 'Incorrect'
+        )
+      ],
+      distractors: []
+    )
+  end
 
   describe '.from_canvas' do
     let(:client) do
@@ -189,6 +215,38 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
               class: GithubToCanvasQuiz::Converter::Answer,
               text: '<p>I don&#39;t know.</p>',
               comments: '<p>Comment</p>',
+              left: '',
+              right: '',
+              title: 'Incorrect'
+            )
+          ],
+          distractors: []
+        )
+      end
+    end
+
+    context 'with a true/false question' do
+      it 'creates a Question instance with the correct data' do
+        input = File.read('spec/fixtures/markdown/question_true_false.md')
+        expect(described_class.from_markdown(input)).to have_attributes(
+          id: 123906,
+          type: 'true_false_question',
+          name: 'Question 1',
+          description: '<p>Answer true</p>',
+          comment: '',
+          answers: [
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer,
+              text: 'True',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer,
+              text: 'False',
+              comments: '',
               left: '',
               right: '',
               title: 'Incorrect'
@@ -326,7 +384,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_type' => 'multiple_choice_question',
           'points_possible' => 1,
           'neutral_comments_html' => '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
-          'answers' => multiple_choice.answers.map(&:to_h),
+          'answers' => multiple_choice.answers.map { |answer| answer.to_h('multiple_choice_question') },
           'matching_answer_incorrect_matches' => ''
         })
       end
@@ -341,8 +399,23 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_type' => 'matching_question',
           'points_possible' => 1,
           'neutral_comments_html' => '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
-          'answers' => matching.answers.map(&:to_h),
+          'answers' => matching.answers.map { |answer| answer.to_h('matching_question') },
           'matching_answer_incorrect_matches' => "Incorrect 1\nIncorrect 2"
+        })
+      end
+    end
+
+    context 'with a true/false question' do
+      it 'produces the correct hash' do
+        output = true_false.to_h
+        expect(output).to eq({
+          'question_name' => 'Question 1',
+          'question_text' => '<p>Answer true</p>',
+          'question_type' => 'true_false_question',
+          'points_possible' => 1,
+          'neutral_comments_html' => '',
+          'answers' => true_false.answers.map { |answer| answer.to_h('true_false_question') },
+          'matching_answer_incorrect_matches' => ''
         })
       end
     end

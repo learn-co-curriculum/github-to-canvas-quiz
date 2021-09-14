@@ -74,9 +74,14 @@ module GithubToCanvasQuiz
         # Must call these in order, relies on moving the StringScanner position
         title = src.captures.first
         description = parse_description!
-        if type == 'matching_question'
+        case type
+        when 'matching_question'
           left, right = read_list_items(description)
           text = left
+        when 'true_false_question'
+          text = read_paragraph(description)
+          left = ''
+          right = ''
         else
           text = description
           left = ''
@@ -98,6 +103,10 @@ module GithubToCanvasQuiz
 
       def read_blockquote(html)
         /<blockquote>(.*)<\/blockquote>/m.match(html).captures.first.strip
+      end
+
+      def read_paragraph(html)
+        /<p>(.*)<\/p>/m.match(html).captures.first.strip
       end
     end
   end

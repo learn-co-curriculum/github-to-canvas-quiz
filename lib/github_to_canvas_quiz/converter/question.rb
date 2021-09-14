@@ -64,7 +64,7 @@ module GithubToCanvasQuiz
           'question_type' => type,
           'points_possible' => 1,
           'neutral_comments_html' => comment,
-          'answers' => answers.map(&:to_h),
+          'answers' => answers.map { |answer| answer.to_h(type) },
           'matching_answer_incorrect_matches' => distractors.join("\n")
         }
       end

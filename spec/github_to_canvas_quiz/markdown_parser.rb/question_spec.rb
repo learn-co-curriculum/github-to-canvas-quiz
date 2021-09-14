@@ -106,6 +106,36 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
       end
     end
 
+    context 'with a true/false question' do
+      it 'returns a hash of question data' do
+        input = File.read('spec/fixtures/markdown/question_true_false.md')
+        expect(described_class.new(input).parse).to eq({
+          id: 123906,
+          type: 'true_false_question',
+          name: 'Question 1',
+          description: '<p>Answer true</p>',
+          comment: '',
+          answers: [
+            {
+              text: 'True',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            },
+            {
+              text: 'False',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Incorrect'
+            }
+          ],
+          distractors: []
+        })
+      end
+    end
+
     context 'with a code block in the description' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question_code_description.md')

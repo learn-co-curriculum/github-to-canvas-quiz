@@ -21,6 +21,16 @@ RSpec.describe GithubToCanvasQuiz::Converter::Answer do
     )
   end
 
+  let(:true_false) do
+    described_class.new(
+      text: 'True',
+      comments: '',
+      left: '',
+      right: '',
+      title: 'Correct'
+    )
+  end
+
   describe '#to_markdown' do
     context 'with a multiple choice question' do
       it 'produces the correct markdown' do
@@ -52,12 +62,22 @@ RSpec.describe GithubToCanvasQuiz::Converter::Answer do
 
     context 'with a matching question' do
       it 'produces the correct hash' do
-        expect(matching.to_h).to eq({
+        expect(matching.to_h('matching_question')).to eq({
           'answer_text' => 'Hoisting',
           'answer_weight' => 100,
           'answer_comments' => '',
           'answer_match_left' => 'Hoisting',
           'answer_match_right' => "JavaScript's ability to call functions before they appear in the code is called ___."
+        })
+      end
+    end
+
+    context 'with a true/false question' do
+      it 'produces the correct hash' do
+        expect(true_false.to_h('true_false_question')).to eq({
+          'answer_text' => 'True',
+          'answer_weight' => 100,
+          'answer_comments' => ''
         })
       end
     end
