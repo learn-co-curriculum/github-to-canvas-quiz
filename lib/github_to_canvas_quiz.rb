@@ -27,6 +27,9 @@ require_relative 'github_to_canvas_quiz/converter/answer'
 require_relative 'github_to_canvas_quiz/converter/quiz'
 require_relative 'github_to_canvas_quiz/converter/question'
 
+# Builder
+require_relative 'github_to_canvas_quiz/repo_builder'
+
 require_relative 'github_to_canvas_quiz/version'
 
 module GithubToCanvasQuiz
