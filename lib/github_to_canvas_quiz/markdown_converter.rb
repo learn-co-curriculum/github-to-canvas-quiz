@@ -4,7 +4,7 @@ module GithubToCanvasQuiz
   class CustomRender < Redcarpet::Render::HTML
     include Rouge::Plugins::Redcarpet
   end
-  
+
   class MarkdownConverter
     attr_reader :markdown, :options
 

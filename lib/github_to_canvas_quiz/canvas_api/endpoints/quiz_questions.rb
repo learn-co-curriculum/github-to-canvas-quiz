@@ -7,7 +7,7 @@ module GithubToCanvasQuiz
         def list_questions(course_id, quiz_id)
           get("/courses/#{course_id}/quizzes/#{quiz_id}/questions")
         end
-        
+
         def get_single_question(course_id, quiz_id, id)
           get("/courses/#{course_id}/quizzes/#{quiz_id}/questions/#{id}")
         end
