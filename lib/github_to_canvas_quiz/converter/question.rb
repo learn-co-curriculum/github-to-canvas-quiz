@@ -12,11 +12,13 @@ module GithubToCanvasQuiz
           new(options)
         end
 
-        def from_canvas(data)
+        def from_canvas(course_id, quiz_id, data)
           answers = data['answers'].map do |answer|
             Answer.from_canvas(answer)
           end
           new(
+            course_id: course_id,
+            quiz_id: quiz_id,
             id: data['id'],
             type: data['question_type'],
             name: data['question_name'] || '',
@@ -30,7 +32,7 @@ module GithubToCanvasQuiz
 
       include Helpers::Markdown
 
-      attr_accessor :id, :type, :name, :description, :comment, :answers, :distractors
+      attr_accessor :course_id, :quiz_id, :id, :type, :name, :description, :comment, :answers, :distractors
 
       def initialize(options)
         options.each do |key, value|
@@ -41,6 +43,8 @@ module GithubToCanvasQuiz
       def to_markdown
         blocks = []
         blocks << frontmatter({
+          'course_id' => course_id,
+          'quiz_id' => quiz_id,
           'id' => id,
           'type' => type
         })

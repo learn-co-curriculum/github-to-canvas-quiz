@@ -11,6 +11,8 @@ module GithubToCanvasQuiz
         answers, distractors = parse_answers!(frontmatter['type'])
 
         {
+          course_id: frontmatter['course_id'],
+          quiz_id: frontmatter['quiz_id'],
           id: frontmatter['id'],
           type: frontmatter['type'],
           name: name,

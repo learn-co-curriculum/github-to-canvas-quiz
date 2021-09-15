@@ -3,6 +3,8 @@
 RSpec.describe GithubToCanvasQuiz::Converter::Question do
   let(:multiple_choice) do
     described_class.new(
+      course_id: 4091,
+      quiz_id: 21962,
       id: 123906,
       type: 'multiple_choice_question',
       name: 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
@@ -43,6 +45,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
   end
   let(:matching) do
     described_class.new(
+      course_id: 4091,
+      quiz_id: 21962,
       id: 144189,
       type: 'matching_question',
       name: 'Matching Question',
@@ -69,6 +73,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
   end
   let(:true_false) do
     described_class.new(
+      course_id: 4091,
+      quiz_id: 21962,
       id: 144189,
       type: 'true_false_question',
       name: 'Question 1',
@@ -103,7 +109,9 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'creates a Question instance with the correct data' do
         VCR.use_cassette 'question_multiple_choice' do
           question = client.get_single_question(4091, 21962, 144210)
-          expect(described_class.from_canvas(question)).to have_attributes(
+          expect(described_class.from_canvas(4091, 21962, question)).to have_attributes(
+            course_id: 4091,
+            quiz_id: 21962,
             id: question['id'],
             type: question['question_type'],
             name: question['question_name'],
@@ -145,7 +153,9 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'creates a Question instance with the correct data' do
         VCR.use_cassette 'question_matching' do
           question = client.get_single_question(4091, 21962, 144243)
-          expect(described_class.from_canvas(question)).to have_attributes(
+          expect(described_class.from_canvas(4091, 21962, question)).to have_attributes(
+            course_id: 4091,
+            quiz_id: 21962,
             id: question['id'],
             type: question['question_type'],
             name: question['question_name'],
@@ -181,6 +191,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'creates a Question instance with the correct data' do
         input = File.read('spec/fixtures/markdown/question_multiple_choice.md')
         expect(described_class.from_markdown(input)).to have_attributes(
+          course_id: 4091,
+          quiz_id: 21962,
           id: 123906,
           type: 'multiple_choice_question',
           name: 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
@@ -229,6 +241,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'creates a Question instance with the correct data' do
         input = File.read('spec/fixtures/markdown/question_true_false.md')
         expect(described_class.from_markdown(input)).to have_attributes(
+          course_id: 4091,
+          quiz_id: 21962,
           id: 123906,
           type: 'true_false_question',
           name: 'Question 1',
@@ -261,6 +275,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'creates a Question instance with the correct data' do
         input = File.read('spec/fixtures/markdown/question_matching.md')
         expect(described_class.from_markdown(input)).to have_attributes(
+          course_id: 4091,
+          quiz_id: 21962,
           id: 144189,
           type: 'matching_question',
           name: 'Matching Question',
@@ -302,6 +318,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           </code></pre></div>
         HTML
         expect(described_class.from_markdown(input)).to have_attributes(
+          course_id: 4091,
+          quiz_id: 21962,
           id: 126509,
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
@@ -352,6 +370,8 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           </code></pre></div>
         HTML
         output = described_class.new(
+          course_id: 4091,
+          quiz_id: 21962,
           id: 126509,
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
