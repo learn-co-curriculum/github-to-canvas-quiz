@@ -76,27 +76,16 @@ module GithubToCanvasQuiz
         # Must call these in order, relies on moving the StringScanner position
         title = src.captures.first
         description = parse_description!
+        comments = parse_comment!
         case type
         when 'matching_question'
           left, right = read_list_items(description)
-          text = left
+          answer_hash(title: title, left: left, right: right, text: left, comments: comments)
         when 'true_false_question'
-          text = read_paragraph(description)
-          left = ''
-          right = ''
+          answer_hash(title: title, text: read_paragraph(description), comments: comments)
         else
-          text = description
-          left = ''
-          right = ''
+          answer_hash(title: title, text: description, comments: comments)
         end
-        comments = parse_comment!
-        {
-          title: title,
-          left: left,
-          right: right,
-          text: text,
-          comments: comments
-        }
       end
 
       def read_list_items(html)
@@ -109,6 +98,16 @@ module GithubToCanvasQuiz
 
       def read_paragraph(html)
         /<p>(.*)<\/p>/m.match(html).captures.first.strip
+      end
+
+      def answer_hash(title:, text:, comments:, left: '', right: '')
+        {
+          title: title,
+          left: left,
+          right: right,
+          text: text,
+          comments: comments
+        }
       end
     end
   end

@@ -13,9 +13,6 @@ module GithubToCanvasQuiz
         end
 
         def from_canvas(course_id, quiz_id, data)
-          answers = data['answers'].map do |answer|
-            Answer.from_canvas(answer)
-          end
           new(
             course_id: course_id,
             quiz_id: quiz_id,
@@ -24,7 +21,7 @@ module GithubToCanvasQuiz
             name: data['question_name'] || '',
             description: data['question_text'] || '',
             comment: data['neutral_comments_html'] || '',
-            answers: answers,
+            answers: data['answers'].map { |answer| Answer.from_canvas(answer) },
             distractors: (data['matching_answer_incorrect_matches'] || '').split("\n")
           )
         end
@@ -42,12 +39,7 @@ module GithubToCanvasQuiz
 
       def to_markdown
         blocks = []
-        blocks << frontmatter({
-          'course_id' => course_id,
-          'quiz_id' => quiz_id,
-          'id' => id,
-          'type' => type
-        })
+        blocks << frontmatter(frontmatter_hash)
         blocks << h1(name)
         blocks << markdown_block(description)
         blocks << blockquote(comment) unless comment.empty?
@@ -70,6 +62,17 @@ module GithubToCanvasQuiz
           'neutral_comments_html' => comment,
           'answers' => answers.map { |answer| answer.to_h(type) },
           'matching_answer_incorrect_matches' => distractors.join("\n")
+        }
+      end
+
+      private
+
+      def frontmatter_hash
+        {
+          'course_id' => course_id,
+          'quiz_id' => quiz_id,
+          'id' => id,
+          'type' => type
         }
       end
     end

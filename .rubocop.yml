@@ -7,23 +7,26 @@ AllCops:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*.rb"
+
 Metrics/AbcSize:
   Enabled: false
 
 Metrics/BlockLength:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
+  Exclude:
+    - "*.gemspec"
+    - "spec/**/*.rb"
 
 Metrics/MethodLength:
-  Enabled: false
+  Max: 15
 
 RSpec/ExampleLength:
   Enabled: false
 
 RSpec/MultipleExpectations:
-  Max: 2
+  Enabled: false
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
@@ -38,7 +41,7 @@ Style/NumericLiterals:
   Enabled: false
 
 Style/RegexpLiteral:
-  EnforcedStyle: slashes
+  AllowInnerSlashes: true
 
 Style/SymbolArray:
   EnforcedStyle: brackets

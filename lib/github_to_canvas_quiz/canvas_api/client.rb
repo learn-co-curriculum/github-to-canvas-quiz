@@ -20,9 +20,7 @@ module GithubToCanvasQuiz
         })
         JSON.parse(response)
       rescue RestClient::BadRequest => e
-        puts "Request failed. #{e.response.code} status code returned."
-        puts JSON.parse(e.response.body)
-        abort
+        report_error(e)
       end
 
       def get_all(endpoint)
@@ -37,9 +35,7 @@ module GithubToCanvasQuiz
         end
         data
       rescue RestClient::BadRequest => e
-        puts "Request failed. #{e.response.code} status code returned."
-        puts JSON.parse(e.response.body)
-        abort
+        report_error(e)
       end
 
       def post(endpoint, payload)
@@ -48,9 +44,7 @@ module GithubToCanvasQuiz
         })
         JSON.parse(response)
       rescue RestClient::BadRequest => e
-        puts "Request failed. #{e.response.code} status code returned."
-        puts JSON.parse(e.response.body)
-        abort
+        report_error(e)
       end
 
       def put(endpoint, payload)
@@ -59,9 +53,7 @@ module GithubToCanvasQuiz
         })
         JSON.parse(response)
       rescue RestClient::BadRequest => e
-        puts "Request failed. #{e.response.code} status code returned."
-        puts JSON.parse(e.response.body)
-        abort
+        report_error(e)
       end
 
       def delete(endpoint)
@@ -69,15 +61,19 @@ module GithubToCanvasQuiz
           'Authorization' => "Bearer #{api_key}"
         })
       rescue RestClient::BadRequest => e
-        puts "Request failed. #{e.response.code} status code returned."
-        puts JSON.parse(e.response.body)
-        abort
+        report_error(e)
       end
 
       def next_url(link)
         link.split(/,/).detect { |rel| rel.match(/rel="next"/) }.split(/;/).first.strip[1..-2]
       rescue NoMethodError
         nil
+      end
+
+      def report_error(err)
+        puts "Request failed. #{err.response.code} status code returned."
+        puts JSON.parse(err.response.body)
+        abort
       end
     end
   end
