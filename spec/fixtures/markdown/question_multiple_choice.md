@@ -1,4 +1,6 @@
 ---
+course_id: 4091
+quiz_id: 21962
 id: 123906
 type: multiple_choice_question
 ---
