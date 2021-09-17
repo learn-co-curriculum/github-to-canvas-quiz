@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://learning.flatironschool.com/api/v1/courses/4091/quizzes/21962/questions/144210
+    uri: https://flatironlearn.beta.instructure.com/api/v1/courses/4091/quizzes/21982/questions/144188
     body:
       encoding: US-ASCII
       string: ''
@@ -10,20 +10,20 @@ http_interactions:
       Accept:
       - "*/*"
       User-Agent:
-      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.7.4p191
+      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.6.3p62
       Authorization:
       - Bearer 15802~gh6vdVMNKu1rSpOoYtF3m1jDjQy9M33oRs0pveRDPqu6IecKCL9KuxTcLVR8ykPj
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
-      - learning.flatironschool.com
+      - flatironlearn.beta.instructure.com
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Mon, 13 Sep 2021 12:41:02 GMT
+      - Fri, 17 Sep 2021 11:42:59 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,19 +33,19 @@ http_interactions:
       Server:
       - Apache
       X-Session-Id:
-      - 04cc7d6ace05dc29dfecde0b93b48461
+      - 233ac4a0e1c369fd8b3a4f728108ecc6
       X-Request-Context-Id:
-      - 646e1e9b-f712-4b76-bf13-e02aee287289
+      - 4d248dd0-69b8-4ed4-a15a-9b9b5f5804f6
       Vary:
       - Accept-Encoding
       X-Rate-Limit-Remaining:
       - '700.0'
       X-Canvas-Meta:
-      - q=956;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1e;o=quizzes/quiz_questions;n=show;t=Course;i=4091;x=5.0;p=f;f=2021-09-13T12:41:02.05Z;b=1402348;m=1402348;u=0.06;y=0.00;d=0.01;
+      - q=2002;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1c;o=quizzes/quiz_questions;n=show;t=Course;i=4091;x=5.0;p=f;f=2021-09-17T11:42:59.23Z;b=1398760;m=1398760;u=0.10;y=0.00;d=0.03;
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Cost:
-      - '0.06956857400081162'
+      - '0.1328955359790598'
       Cache-Control:
       - max-age=0, private, must-revalidate
       Strict-Transport-Security:
@@ -61,49 +61,38 @@ http_interactions:
       X-Download-Options:
       - noopen
       X-Runtime:
-      - '0.110524'
+      - '0.163617'
       X-Content-Type-Options:
       - nosniff
       Set-Cookie:
-      - _csrf_token=0KirMe22GESUdYu%2F3XkssKimIdVCrpil2dNNE0Kkeri2mfhfh%2BdgfaAd7Ii%2FKUP0mcJXjTD37uas5T54MJIKwg%3D%3D;
+      - _csrf_token=Otl7xqbpf7WWzAB7LGJLihk%2BCdhmGv1A341%2FBOGExyhL6i6%2Fz7k9xPqJTjN9Jw7PcEZDuw5NxQ%2Bs6zlpo%2ByfHA%3D%3D;
         path=/; secure
-      - _legacy_normandy_session=ZCPcxekYgCK3DZAB-gp3ug.TMNQ5xFRDaDgGV1XivX_XDg2j1PTLZOrUzQD8QZehmkqJMywuoVvvdjzVw8p22zWTyr7bx_-3HNlXASxSfvcV_vPsycyQ4t_OM8WkPnEpIy75aJKitsZLenr1iSiDovp.dHf9RZm_6IRfywIII3h6W4Nr5hY.YT9G3g;
+      - _legacy_normandy_session=oUyNoJEVPeLycmAiYMQpsQ.TZwT_dON1xRx-ehty83N88FF0Eb1Dj6tV3MGPVq4AzbsCgAvnj9mGYbHope2_VilkECZkFl0bdiSANC4jTsA2FkRcop67j5o8aj4AsOSjt_gXXfu1NCcqK9qq4q-WZ3V.T69DFZBbX0RXSP0__5_RThI0JaI.YUR_Qw;
         path=/; secure; HttpOnly
-      - canvas_session=ZCPcxekYgCK3DZAB-gp3ug.TMNQ5xFRDaDgGV1XivX_XDg2j1PTLZOrUzQD8QZehmkqJMywuoVvvdjzVw8p22zWTyr7bx_-3HNlXASxSfvcV_vPsycyQ4t_OM8WkPnEpIy75aJKitsZLenr1iSiDovp.dHf9RZm_6IRfywIII3h6W4Nr5hY.YT9G3g;
+      - canvas_session=oUyNoJEVPeLycmAiYMQpsQ.TZwT_dON1xRx-ehty83N88FF0Eb1Dj6tV3MGPVq4AzbsCgAvnj9mGYbHope2_VilkECZkFl0bdiSANC4jTsA2FkRcop67j5o8aj4AsOSjt_gXXfu1NCcqK9qq4q-WZ3V.T69DFZBbX0RXSP0__5_RThI0JaI.YUR_Qw;
         path=/; secure; HttpOnly; SameSite=None
-      - log_session_id=04cc7d6ace05dc29dfecde0b93b48461; path=/; secure; HttpOnly
+      - log_session_id=233ac4a0e1c369fd8b3a4f728108ecc6; path=/; secure; HttpOnly
       X-Request-Processor:
-      - 0f9f25e7a4604e9fa
+      - '09c83115d8ea4d853'
       X-A11y-Ally:
       - Dana Danger Grey
       Etag:
-      - W/"820eb54ad2e71cc42b95360060c6e3b5"
+      - W/"cf72f15d693007249fe729a9d17f26e3"
       Status:
       - 200 OK
+      X-Robots-Tag:
+      - none
       P3p:
       - CP="None, see http://www.instructure.com/privacy-policy"
     body:
       encoding: ASCII-8BIT
-      string: '{"quiz_id":21962,"id":144210,"quiz_group_id":null,"assessment_question_id":167070,"position":null,"question_name":"Active
-        Record: Deleting Nested Data","question_type":"multiple_choice_question","question_text":"\u003cp\u003eWe''re
-        working on a domain where a \u003cstrong\u003esong belongs to an album\u003c/strong\u003e.
-        Before we can\ndelete an album from the database, we must delete all the songs
-        associated with\nthat album; otherwise, the songs will still exist without
-        knowing which album\nthey''re associated with.\u003c/p\u003e\n\n\u003cp\u003eWhich
-        of the following code blocks will help to delete all the songs associated\nwith
-        an album when the album is deleted?\u003c/p\u003e","points_possible":1.0,"correct_comments":"","incorrect_comments":"","neutral_comments":"","correct_comments_html":"","incorrect_comments_html":"","neutral_comments_html":"","answers":[{"id":4609,"text":"","html":"\u003cdiv
-        class=\"highlight\"\u003e\u003cpre class=\"highlight ruby\"\u003e\u003ccode\u003e\u003cspan
-        class=\"k\"\u003eclass\u003c/span\u003e \u003cspan class=\"nc\"\u003eAlbum\u003c/span\u003e
-        \u003cspan class=\"o\"\u003e\u0026lt;\u003c/span\u003e \u003cspan class=\"no\"\u003eApplicationRecord\u003c/span\u003e\n  \u003cspan
-        class=\"n\"\u003ehas_many\u003c/span\u003e \u003cspan class=\"ss\"\u003e:songs\u003c/span\u003e\u003cspan
-        class=\"p\"\u003e,\u003c/span\u003e \u003cspan class=\"ss\"\u003edependent:
-        :destroy\u003c/span\u003e\n\u003cspan class=\"k\"\u003eend\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e","comments":"","comments_html":"","weight":100.0},{"id":6321,"text":"","html":"\u003cdiv
-        class=\"highlight\"\u003e\u003cpre class=\"highlight ruby\"\u003e\u003ccode\u003e\u003cspan
-        class=\"k\"\u003eclass\u003c/span\u003e \u003cspan class=\"nc\"\u003eSong\u003c/span\u003e
-        \u003cspan class=\"o\"\u003e\u0026lt;\u003c/span\u003e \u003cspan class=\"no\"\u003eApplicationRecord\u003c/span\u003e\n  \u003cspan
-        class=\"n\"\u003ebelongs_to\u003c/span\u003e \u003cspan class=\"ss\"\u003e:album\u003c/span\u003e\u003cspan
-        class=\"p\"\u003e,\u003c/span\u003e \u003cspan class=\"ss\"\u003edependent:
-        :destroy\u003c/span\u003e\n\u003cspan class=\"k\"\u003eend\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e","comments":"","comments_html":"","weight":0.0},{"id":4354,"text":"","html":"\u003cp\u003eI
-        don''t know.\u003c/p\u003e","comments":"","comments_html":"","weight":0.0}],"variables":null,"formulas":null,"answer_tolerance":null,"formula_decimal_places":null,"matches":null,"matching_answer_incorrect_matches":null}'
-  recorded_at: Mon, 13 Sep 2021 12:41:02 GMT
+      string: '{"quiz_id":21982,"id":144188,"quiz_group_id":null,"assessment_question_id":167082,"position":null,"question_name":"Question","question_type":"multiple_choice_question","question_text":"\u003cp\u003eQuestion\u003c/p\u003e","points_possible":1.0,"correct_comments":"","incorrect_comments":"","neutral_comments":"","correct_comments_html":"","incorrect_comments_html":"","neutral_comments_html":"\u003cp\u003eNeutral
+        comment\u003c/p\u003e","answers":[{"id":483,"text":"","html":"\u003cp\u003eAnswer
+        1\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003eok!\u003c/p\u003e","comments":"","comments_html":"\u003cp\u003eAnswer
+        1 comment\u003c/p\u003e","weight":100.0},{"id":14,"text":"","html":"\u003cp\u003eAnswer
+        2\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003eok!\u003c/p\u003e","comments":"","comments_html":"\u003cp\u003eAnswer
+        2 comment\u003c/p\u003e","weight":0.0},{"id":8035,"text":"","html":"\u003cp\u003eAnswer
+        3\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003eok!\u003c/p\u003e","comments":"","comments_html":"\u003cp\u003eAnswer
+        3 comment\u003c/p\u003e","weight":0.0}],"variables":null,"formulas":null,"answer_tolerance":null,"formula_decimal_places":null,"matches":null,"matching_answer_incorrect_matches":null}'
+  recorded_at: Fri, 17 Sep 2021 11:42:59 GMT
 recorded_with: VCR 6.0.0

@@ -63,9 +63,9 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Repo do
           'neutral_comments_html' => '',
           'answers' => [
             {
-              'answer_html' => '<p>Answer</p>',
+              'answer_text' => 'Answer',
               'answer_weight' => 100,
-              'answer_comments' => ''
+              'answer_comment_html' => ''
             }
           ],
           'matching_answer_incorrect_matches' => ''
@@ -80,9 +80,9 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Repo do
           'neutral_comments_html' => '',
           'answers' => [
             {
-              'answer_html' => '<p>Answer</p>',
+              'answer_text' => 'Answer',
               'answer_weight' => 100,
-              'answer_comments' => ''
+              'answer_comment_html' => ''
             }
           ],
           'matching_answer_incorrect_matches' => ''

@@ -81,7 +81,7 @@ module GithubToCanvasQuiz
         when 'matching_question'
           left, right = read_list_items(description)
           answer_hash(title: title, left: left, right: right, text: left, comments: comments)
-        when 'true_false_question'
+        when 'true_false_question', 'short_answer_question'
           answer_hash(title: title, text: read_paragraph(description), comments: comments)
         else
           answer_hash(title: title, text: description, comments: comments)
@@ -97,7 +97,9 @@ module GithubToCanvasQuiz
       end
 
       def read_paragraph(html)
-        /<p>(.*)<\/p>/m.match(html).captures.first.strip
+        text = /<p>(.*)<\/p>/m.match(html).captures.first.strip
+        # convert html entities like &quot; to "
+        CGI.unescapeHTML(text)
       end
 
       def answer_hash(title:, text:, comments:, left: '', right: '')

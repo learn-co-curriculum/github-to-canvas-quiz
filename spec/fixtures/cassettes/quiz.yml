@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://learning.flatironschool.com/api/v1/courses/4091/quizzes/21962
+    uri: https://flatironlearn.beta.instructure.com/api/v1/courses/4091/quizzes/21982
     body:
       encoding: US-ASCII
       string: ''
@@ -10,20 +10,20 @@ http_interactions:
       Accept:
       - "*/*"
       User-Agent:
-      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.7.4p191
+      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.6.3p62
       Authorization:
       - Bearer 15802~gh6vdVMNKu1rSpOoYtF3m1jDjQy9M33oRs0pveRDPqu6IecKCL9KuxTcLVR8ykPj
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
-      - learning.flatironschool.com
+      - flatironlearn.beta.instructure.com
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Mon, 13 Sep 2021 12:52:22 GMT
+      - Fri, 17 Sep 2021 11:44:19 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,19 +33,19 @@ http_interactions:
       Server:
       - Apache
       X-Session-Id:
-      - '009c73eba77d8a26449f0670a85794ea'
+      - ee081bfa5bc75ec9ef5165da9689da5b
       X-Request-Context-Id:
-      - 0cc0e729-680f-4667-ba38-83f406b3898b
+      - 9ccec95f-3033-4844-af26-5e08652d6289
       Vary:
       - Accept-Encoding
       X-Rate-Limit-Remaining:
       - '700.0'
       X-Canvas-Meta:
-      - q=1114;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1b;o=quizzes/quizzes_api;n=show;t=Course;i=4091;x=5.0;p=f;e=1754896;f=2021-09-13T12:52:22.44Z;b=1837636;m=1837636;u=0.12;y=0.02;d=0.03;
+      - q=2271;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1c;o=quizzes/quizzes_api;n=show;t=Course;i=4091;x=5.0;p=f;e=1752300;f=2021-09-17T11:44:19.54Z;b=1480548;m=1480548;u=0.15;y=0.01;d=0.09;
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Cost:
-      - '0.14937363000035475'
+      - '0.2399387639948145'
       Cache-Control:
       - max-age=0, private, must-revalidate
       Strict-Transport-Security:
@@ -61,37 +61,32 @@ http_interactions:
       X-Download-Options:
       - noopen
       X-Runtime:
-      - '0.188968'
+      - '0.285021'
       X-Content-Type-Options:
       - nosniff
       Set-Cookie:
-      - _csrf_token=JSxZiNUCr00R%2BlIVESdK6NeJn7k5%2BxybgMebTrFZCFxoZD3c5GziCSe9a1NydgjfmbH5zFKrJc7whtEHmituLQ%3D%3D;
+      - _csrf_token=60X%2F272i1RN3zSqk9qg1Aven8jga%2BNF1v%2FJ31lpAz2a9HYWBx9C5JhCheZCawnc3ncG4CCiN5Szps0OvF3C3JQ%3D%3D;
         path=/; secure
-      - _legacy_normandy_session=R26krWAZU7LJlkyc-DjJhw.VNZPdHA05s4lY1dlKUs9Zfs1MZFs8TockZ3Sm9fBxcVT6UTAUNyjOy5dhYKEpLsm2GTfemcVtvZQkcKqoiSjYbhHNXXh70CX-6QekiT9sMTCbxFiNOCLWTeOUfjsIpny.1lu_5C3vJOC3zQy2Gq3Ggb_RIdo.YT9Jhg;
+      - _legacy_normandy_session=57jM67tNfUf7VfFMXE79mg.xwNduQuWldTsFvH7I4mXdWAWig1Ku2-TW8L-Xd1NqdEdCXISDTZy1cYunwwtr-XB8Emz3PHcVraV8Igrhz1K22ZFxulq6Nx0M1hssnIYB-3nsIDG9_qe7rxQtWdWpfAa.wS0x0ml-G-c1fXZYmtzJFAZ7g2A.YUR_kw;
         path=/; secure; HttpOnly
-      - canvas_session=R26krWAZU7LJlkyc-DjJhw.VNZPdHA05s4lY1dlKUs9Zfs1MZFs8TockZ3Sm9fBxcVT6UTAUNyjOy5dhYKEpLsm2GTfemcVtvZQkcKqoiSjYbhHNXXh70CX-6QekiT9sMTCbxFiNOCLWTeOUfjsIpny.1lu_5C3vJOC3zQy2Gq3Ggb_RIdo.YT9Jhg;
+      - canvas_session=57jM67tNfUf7VfFMXE79mg.xwNduQuWldTsFvH7I4mXdWAWig1Ku2-TW8L-Xd1NqdEdCXISDTZy1cYunwwtr-XB8Emz3PHcVraV8Igrhz1K22ZFxulq6Nx0M1hssnIYB-3nsIDG9_qe7rxQtWdWpfAa.wS0x0ml-G-c1fXZYmtzJFAZ7g2A.YUR_kw;
         path=/; secure; HttpOnly; SameSite=None
-      - log_session_id=009c73eba77d8a26449f0670a85794ea; path=/; secure; HttpOnly
+      - log_session_id=ee081bfa5bc75ec9ef5165da9689da5b; path=/; secure; HttpOnly
       X-Request-Processor:
-      - 0fcfca47f6327831f
+      - '09c83115d8ea4d853'
       X-A11y-Ally:
       - Dana Danger Grey
       Etag:
-      - W/"eedd351c479d03736152f8e435d3ec96"
+      - W/"c405ef1c0ce6d160c1da21a511e9360a"
       Status:
       - 200 OK
+      X-Robots-Tag:
+      - none
       P3p:
       - CP="None, see http://www.instructure.com/privacy-policy"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":21962,"title":"Active Record Associations Quiz","html_url":"https://learning.flatironschool.com/courses/4091/quizzes/21962","mobile_url":"https://learning.flatironschool.com/courses/4091/quizzes/21962?force_user=1\u0026persist_headless=1","description":"\u003cp\u003eIf
-        you don''t know the answer to a question, please do not guess. Instead, select
-        \"I don''t know\". It''s OK not to know everything and to admit when we''re
-        unsure.\u003c/p\u003e\n\u003cp\u003eIf you get stuck, check out these pages
-        from the Rails guides:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca
-        href=\"https://guides.rubyonrails.org/association_basics.html\"\u003eAssociation
-        Basics\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://guides.rubyonrails.org/routing.html#nested-resources\"\u003eRails
-        Routing: Nested Resources\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e","quiz_type":"assignment","time_limit":null,"timer_autosubmit_disabled":false,"shuffle_answers":true,"show_correct_answers":true,"scoring_policy":"keep_highest","allowed_attempts":3,"one_question_at_a_time":true,"question_count":9,"points_possible":9.0,"cant_go_back":false,"access_code":null,"ip_filter":null,"due_at":null,"lock_at":null,"unlock_at":null,"published":false,"unpublishable":true,"locked_for_user":true,"lock_info":{"missing_permission":"participate_as_student","asset_string":"quizzes:quiz_21962"},"lock_explanation":"This
-        quiz is currently locked.","hide_results":"until_after_last_attempt","show_correct_answers_at":null,"hide_correct_answers_at":null,"all_dates":[{"due_at":null,"unlock_at":null,"lock_at":null,"base":true}],"can_unpublish":true,"can_update":true,"require_lockdown_browser":false,"require_lockdown_browser_for_results":false,"require_lockdown_browser_monitor":false,"lockdown_browser_monitor_data":null,"speed_grader_url":null,"permissions":{"manage":true,"read":true,"update":true,"submit":true,"preview":true,"create":true,"delete":true,"read_statistics":true,"grade":true,"review_grades":true,"view_answer_audits":true},"quiz_reports_url":"https://learning.flatironschool.com/api/v1/courses/4091/quizzes/21962/reports","quiz_statistics_url":"https://learning.flatironschool.com/api/v1/courses/4091/quizzes/21962/statistics","message_students_url":"https://learning.flatironschool.com/api/v1/courses/4091/quizzes/21962/submission_users/message","section_count":1,"important_dates":false,"quiz_submission_versions_html_url":"https://learning.flatironschool.com/courses/4091/quizzes/21962/submission_versions","assignment_id":142727,"one_time_results":false,"only_visible_to_overrides":false,"assignment_group_id":8026,"show_correct_answers_last_attempt":true,"version_number":4,"has_access_code":false,"post_to_sis":false,"migration_id":null,"question_types":[]}'
-  recorded_at: Mon, 13 Sep 2021 12:52:22 GMT
+      string: '{"id":21982,"title":"Test for Gem","html_url":"https://flatironlearn.beta.instructure.com/courses/4091/quizzes/21982","mobile_url":"https://flatironlearn.beta.instructure.com/courses/4091/quizzes/21982?force_user=1\u0026persist_headless=1","description":"\u003cp\u003eDescription!\u003c/p\u003e","quiz_type":"assignment","time_limit":null,"timer_autosubmit_disabled":false,"shuffle_answers":true,"show_correct_answers":true,"scoring_policy":"keep_highest","allowed_attempts":3,"one_question_at_a_time":false,"question_count":0,"points_possible":2.0,"cant_go_back":false,"access_code":null,"ip_filter":null,"due_at":null,"lock_at":null,"unlock_at":null,"published":false,"unpublishable":true,"locked_for_user":true,"lock_info":{"missing_permission":"participate_as_student","asset_string":"quizzes:quiz_21982"},"lock_explanation":"This
+        quiz is currently locked.","hide_results":null,"show_correct_answers_at":null,"hide_correct_answers_at":null,"all_dates":[{"due_at":null,"unlock_at":null,"lock_at":null,"base":true}],"can_unpublish":true,"can_update":true,"require_lockdown_browser":false,"require_lockdown_browser_for_results":false,"require_lockdown_browser_monitor":false,"lockdown_browser_monitor_data":null,"speed_grader_url":null,"permissions":{"manage":true,"read":true,"create":true,"update":true,"submit":true,"preview":true,"delete":true,"read_statistics":true,"grade":true,"review_grades":true,"view_answer_audits":true},"quiz_reports_url":"https://flatironlearn.beta.instructure.com/api/v1/courses/4091/quizzes/21982/reports","quiz_statistics_url":"https://flatironlearn.beta.instructure.com/api/v1/courses/4091/quizzes/21982/statistics","message_students_url":"https://flatironlearn.beta.instructure.com/api/v1/courses/4091/quizzes/21982/submission_users/message","section_count":1,"important_dates":false,"quiz_submission_versions_html_url":"https://flatironlearn.beta.instructure.com/courses/4091/quizzes/21982/submission_versions","assignment_id":142760,"one_time_results":false,"only_visible_to_overrides":false,"assignment_group_id":8026,"show_correct_answers_last_attempt":false,"version_number":1,"has_access_code":false,"post_to_sis":false,"migration_id":null,"question_types":[]}'
+  recorded_at: Fri, 17 Sep 2021 11:44:19 GMT
 recorded_with: VCR 6.0.0

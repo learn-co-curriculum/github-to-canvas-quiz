@@ -144,6 +144,52 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
       end
     end
 
+    context 'with a short answer question' do
+      it 'returns a hash of question data' do
+        input = File.read('spec/fixtures/markdown/question_short_answer.md')
+        expect(described_class.new(input).parse).to eq({
+          course_id: 3297,
+          quiz_id: 12282,
+          id: 144185,
+          type: 'short_answer_question',
+          name: 'Events: Forms',
+          description: '<p>The ______ event fires when a form is submitted.</p>',
+          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/video-forms?module_item_id=270739">Video: Forms</a></p>',
+          answers: [
+            {
+              text: 'submit',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            },
+            {
+              text: 'Submit',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            },
+            {
+              text: "'submit'",
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            },
+            {
+              text: '"submit"',
+              comments: '',
+              left: '',
+              right: '',
+              title: 'Correct'
+            }
+          ],
+          distractors: []
+        })
+      end
+    end
+
     context 'with a code block in the description' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question_code_description.md')

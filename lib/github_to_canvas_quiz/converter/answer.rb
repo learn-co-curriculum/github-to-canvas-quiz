@@ -49,9 +49,12 @@ module GithubToCanvasQuiz
 
       def to_h(type = nil)
         case type
-        when 'matching_question' then matching_question_hash
-        when 'true_false_question' then true_false_question_hash
-        else generic_question_hash
+        when 'matching_question'
+          matching_question_hash
+        when 'true_false_question', 'short_answer_question'
+          true_false_question_hash
+        else
+          generic_question_hash
         end
       end
 
@@ -61,7 +64,7 @@ module GithubToCanvasQuiz
         {
           'answer_text' => left,
           'answer_weight' => 100,
-          'answer_comments' => comments,
+          'answer_comment_html' => comments,
           'answer_match_left' => left,
           'answer_match_right' => right
         }
@@ -71,7 +74,7 @@ module GithubToCanvasQuiz
         {
           'answer_text' => text,
           'answer_weight' => title == 'Correct' ? 100 : 0,
-          'answer_comments' => comments
+          'answer_comment_html' => comments
         }
       end
 
@@ -79,7 +82,7 @@ module GithubToCanvasQuiz
         {
           'answer_html' => text,
           'answer_weight' => title == 'Correct' ? 100 : 0,
-          'answer_comments' => comments
+          'answer_comment_html' => comments
         }
       end
     end

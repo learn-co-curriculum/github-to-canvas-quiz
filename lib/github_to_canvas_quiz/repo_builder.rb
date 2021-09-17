@@ -10,7 +10,10 @@ module GithubToCanvasQuiz
     end
 
     def build(path = '.')
+      raise DirectoryNotFoundError unless File.directory? path
+      
       File.write("#{path}/README.md", quiz.to_markdown)
+
       Dir.mkdir("#{path}/questions") unless File.directory? "#{path}/questions"
       questions.each.with_index do |question, index|
         filename = index.to_s.rjust(2, '0')

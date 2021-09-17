@@ -31,10 +31,7 @@ module GithubToCanvasQuiz
 
       def to_markdown
         blocks = []
-        blocks << frontmatter({
-          'id' => id,
-          'course_id' => course_id
-        })
+        blocks << frontmatter(frontmatter_hash)
         blocks << h1(title)
         blocks << markdown_block(description)
         join(blocks)
@@ -51,6 +48,15 @@ module GithubToCanvasQuiz
           'allowed_attempts' => 3,
           'scoring_policy' => 'keep_highest',
           'one_question_at_a_time' => true
+        }
+      end
+
+      private
+
+      def frontmatter_hash
+        {
+          'id' => id,
+          'course_id' => course_id
         }
       end
     end

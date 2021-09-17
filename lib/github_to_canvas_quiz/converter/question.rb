@@ -43,9 +43,7 @@ module GithubToCanvasQuiz
         blocks << h1(name)
         blocks << markdown_block(description)
         blocks << blockquote(comment) unless comment.empty?
-        answers.each do |answer|
-          blocks << answer.to_markdown
-        end
+        blocks.concat(answers.map(&:to_markdown))
         unless distractors.empty?
           blocks << h2('Incorrect')
           blocks << ul(*distractors)

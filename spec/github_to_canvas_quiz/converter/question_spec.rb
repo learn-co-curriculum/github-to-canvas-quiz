@@ -108,10 +108,10 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
     context 'with a multiple choice question' do
       it 'creates a Question instance with the correct data' do
         VCR.use_cassette 'question_multiple_choice' do
-          question = client.get_single_question(4091, 21962, 144210)
-          expect(described_class.from_canvas(4091, 21962, question)).to have_attributes(
+          question = client.get_single_question(4091, 21982, 144188)
+          expect(described_class.from_canvas(4091, 21982, question)).to have_attributes(
             course_id: 4091,
-            quiz_id: 21962,
+            quiz_id: 21982,
             id: question['id'],
             type: question['question_type'],
             name: question['question_name'],
@@ -152,10 +152,10 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
     context 'with a matching question' do
       it 'creates a Question instance with the correct data' do
         VCR.use_cassette 'question_matching' do
-          question = client.get_single_question(4091, 21962, 144243)
-          expect(described_class.from_canvas(4091, 21962, question)).to have_attributes(
+          question = client.get_single_question(4091, 21982, 144189)
+          expect(described_class.from_canvas(4091, 21982, question)).to have_attributes(
             course_id: 4091,
-            quiz_id: 21962,
+            quiz_id: 21982,
             id: question['id'],
             type: question['question_type'],
             name: question['question_name'],
