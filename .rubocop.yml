@@ -11,13 +11,14 @@ Layout/LineLength:
   Exclude:
     - "spec/**/*.rb"
 
-Metrics/AbcSize:
-  Enabled: false
+# Metrics/AbcSize:
+#   Enabled: false
 
 Metrics/BlockLength:
-  Exclude:
-    - "*.gemspec"
-    - "spec/**/*.rb"
+  Enabled: false
+  # Exclude:
+  #   - "*.gemspec"
+  #   - "spec/**/*.rb"
 
 Metrics/MethodLength:
   Max: 15
