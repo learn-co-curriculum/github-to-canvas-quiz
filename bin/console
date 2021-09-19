@@ -10,84 +10,24 @@ require 'pry'
 
 require 'github_to_canvas_quiz'
 
-# Create Quiz
-# md = File.read("spec/fixtures/markdown/quiz.md")
-# quiz = GithubToCanvasQuiz::Converter::Quiz.from_markdown(md)
-# client = GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])
-# client.create_quiz(4091, { 'quiz' => quiz.to_h['quiz'] })
-
-# Create quiz question
-# md = File.read("spec/fixtures/markdown/question_matching.md")
-# question = GithubToCanvasQuiz::Converter::Question.from_markdown(md)
-# client.create_question(4091, 21960, { 'question' => question.to_h['question'] })
-
 def client
   @client ||= GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])
 end
 
-def create_or_update_quiz!(quiz)
-  if quiz.id
-    # update quiz
-    client.update_quiz(quiz.course_id, quiz.id, { 'quiz' => quiz.to_h })
-  else
-    # create quiz
-    canvas_quiz = client.create_quiz(quiz.course_id, { 'quiz' => quiz.to_h })
-    quiz.id = canvas_quiz['id']
-    # TODO: only update frontmatter?
-    # TODO: this will (likely???) not work for GitHub workflow!!!
-    File.write('tmp/README.md', quiz.to_markdown)
-  end
+def sync_quiz(path)
+  GithubToCanvasQuiz::Synchronizer::Repo.new(client).sync(path)
 end
 
-def create_or_update_question!(question)
-  if question.id
-    # if it has an ID it's an existing question -> update
-    client.update_question(quiz.course_id, quiz.id, question.id, { 'question' => question.to_h })
-  else
-    # if it doesn't have an ID it's a new question -> create
-    canvas_question = client.create_question(quiz.course_id, quiz.id, { 'question' => question.to_h })
-    question.id = canvas_question['id']
-    # save question data to markdown
-    # TODO: only update frontmatter?
-    # TODO: this will (likely???) not work for GitHub workflow!!!
-    File.write(path, question.to_markdown)
-  end
-end
-
-def sync_quiz
-  # get quiz data
-  md = File.read('tmp/README.md')
-  quiz = GithubToCanvasQuiz::Converter::Quiz.from_markdown(md)
-
-  create_or_update_quiz!(quiz)
-
-  # diff question data
-  canvas_questions = client.list_questions(quiz.course_id, quiz.id)
-  md_questions = Dir['tmp/questions/*.md'].map do |path|
-    md = File.read(path)
-    question = GithubToCanvasQuiz::Converter::Question.from_markdown(md)
-    create_or_update_question!(question)
-    question
-  end
-  # if a question is in canvas_questions but not in md_questions -> delete
-  canvas_questions.each do |canvas_question|
-    id = canvas_question['id']
-    client.delete_question(quiz.course_id, quiz.id, id) unless md_questions.map(&:id).include?(id)
-  end
-end
-
-def create_files_from_quiz(course_id, quiz_id)
+def create_files_from_quiz(course_id, quiz_id, dir = '.')
   # get the quiz data from Canvas (with question data)
   quiz_data = client.get_single_quiz(course_id, quiz_id)
-  questions = client.list_questions(course_id, quiz_id)
+  questions_data = client.list_questions(course_id, quiz_id)
   # convert the quiz data to markdown, including any metadata, and output
-  quiz_md = GithubToCanvasQuiz::Converter::Quiz.from_canvas(course_id, quiz_data).to_markdown
-  File.write('tmp/README.md', quiz_md)
-  questions.each_with_index do |question, index|
-    question_md = GithubToCanvasQuiz::Converter::Question.from_canvas(question).to_markdown
-    filename = index.to_s.rjust(2, '0')
-    File.write("tmp/questions/#{filename}.md", question_md)
+  quiz = GithubToCanvasQuiz::Converter::Quiz.from_canvas(course_id, quiz_data)
+  questions = questions_data.map do |question_data|
+    GithubToCanvasQuiz::Converter::Question.from_canvas(course_id, quiz_id, question_data)
   end
+  GithubToCanvasQuiz::RepoBuilder.new(quiz, questions).build(dir)
 end
 
 Pry.start
