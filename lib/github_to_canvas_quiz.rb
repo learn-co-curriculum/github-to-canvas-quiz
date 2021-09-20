@@ -23,7 +23,12 @@ require 'yaml'
 require 'reverse_markdown'
 require_relative 'github_to_canvas_quiz/reverse_markdown/converters/pre'
 require_relative 'github_to_canvas_quiz/converter/helpers/markdown'
-require_relative 'github_to_canvas_quiz/converter/answer'
+require_relative 'github_to_canvas_quiz/converter/answer/fill_in_multiple_blanks'
+require_relative 'github_to_canvas_quiz/converter/answer/matching'
+require_relative 'github_to_canvas_quiz/converter/answer/multiple_answers'
+require_relative 'github_to_canvas_quiz/converter/answer/multiple_choice'
+require_relative 'github_to_canvas_quiz/converter/answer/short_answer'
+require_relative 'github_to_canvas_quiz/converter/answer/true_false'
 require_relative 'github_to_canvas_quiz/converter/quiz'
 require_relative 'github_to_canvas_quiz/converter/question'
 
@@ -38,6 +43,8 @@ require_relative 'github_to_canvas_quiz/repo_builder'
 require_relative 'github_to_canvas_quiz/version'
 
 module GithubToCanvasQuiz
+  class UnknownQuestionType < StandardError; end
+
   class FileNotFoundError < StandardError; end
 
   class DirectoryNotFoundError < StandardError; end

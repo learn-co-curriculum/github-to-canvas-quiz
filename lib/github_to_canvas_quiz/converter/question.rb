@@ -7,7 +7,7 @@ module GithubToCanvasQuiz
         def from_markdown(markdown)
           options = MarkdownParser::Question.new(markdown).parse
           options[:answers] = options[:answers].map do |answer|
-            Answer.new(answer)
+            answer_from(options[:type], answer)
           end
           new(options)
         end
@@ -21,9 +21,39 @@ module GithubToCanvasQuiz
             name: data['question_name'] || '',
             description: data['question_text'] || '',
             comment: data['neutral_comments_html'] || '',
-            answers: data['answers'].map { |answer| Answer.from_canvas(answer) },
+            answers: data['answers'].map do |answer|
+              answer_from_canvas(data['question_type'], answer)
+            end,
             distractors: (data['matching_answer_incorrect_matches'] || '').split("\n")
           )
+        end
+
+        private
+
+        def answer_from(type, answer_data)
+          case type
+          when 'fill_in_multiple_blanks_question' then Answer::FillInMultipleBlanks.new(answer_data)
+          when 'matching_question' then Answer::Matching.new(answer_data)
+          when 'multiple_answers_question' then Answer::MultipleAnswers.new(answer_data)
+          when 'multiple_choice_question' then Answer::MultipleChoice.new(answer_data)
+          when 'short_answer_question' then Answer::ShortAnswer.new(answer_data)
+          when 'true_false_question' then Answer::TrueFalse.new(answer_data)
+          else
+            raise UnknownQuestionType(type)
+          end
+        end
+
+        def answer_from_canvas(type, answer_data)
+          case type
+          when 'fill_in_multiple_blanks_question' then Answer::FillInMultipleBlanks.from_canvas(answer_data)
+          when 'matching_question' then Answer::Matching.from_canvas(answer_data)
+          when 'multiple_answers_question' then Answer::MultipleAnswers.from_canvas(answer_data)
+          when 'multiple_choice_question' then Answer::MultipleChoice.from_canvas(answer_data)
+          when 'short_answer_question' then Answer::ShortAnswer.from_canvas(answer_data)
+          when 'true_false_question' then Answer::TrueFalse.from_canvas(answer_data)
+          else
+            raise UnknownQuestionType(type)
+          end
         end
       end
 
@@ -58,7 +88,7 @@ module GithubToCanvasQuiz
           'question_type' => type,
           'points_possible' => 1,
           'neutral_comments_html' => comment,
-          'answers' => answers.map { |answer| answer.to_h(type) },
+          'answers' => answers.map(&:to_h),
           'matching_answer_incorrect_matches' => distractors.join("\n")
         }
       end

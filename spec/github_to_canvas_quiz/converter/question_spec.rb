@@ -11,33 +11,25 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       description: '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
       comment: '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
       answers: [
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
+          title: 'Correct',
           text: '<p>useHistory</p>',
-          comments: '',
-          left: '',
-          right: '',
-          title: 'Correct'
+          comments: ''
         ),
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
+          title: 'Incorrect',
           text: '<p>useParams</p>',
-          comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>',
-          left: '',
-          right: '',
-          title: 'Incorrect'
+          comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>'
         ),
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
+          title: 'Incorrect',
           text: '<p>useState</p>',
-          comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>',
-          left: '',
-          right: '',
-          title: 'Incorrect'
+          comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>'
         ),
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
+          title: 'Incorrect',
           text: '<p>I don&#39;t know.</p>',
-          comments: '<p>Comment</p>',
-          left: '',
-          right: '',
-          title: 'Incorrect'
+          comments: '<p>Comment</p>'
         )
       ],
       distractors: []
@@ -53,19 +45,19 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
       comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
       answers: [
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::Matching.new(
+          title: 'Correct',
           text: 'Answer 1',
           comments: '',
           left: 'Answer 1',
-          right: 'Value 1',
-          title: 'Correct'
+          right: 'Value 1'
         ),
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::Matching.new(
+          title: 'Correct',
           text: 'Answer 2',
           comments: '',
           left: 'Answer 2',
-          right: 'Value 2',
-          title: 'Correct'
+          right: 'Value 2'
         )
       ],
       distractors: ['Incorrect 1', 'Incorrect 2']
@@ -81,19 +73,65 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       description: '<p>Answer true</p>',
       comment: '',
       answers: [
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::TrueFalse.new(
+          title: 'Correct',
           text: 'True',
-          comments: '',
-          left: '',
-          right: '',
-          title: 'Correct'
+          comments: ''
         ),
-        GithubToCanvasQuiz::Converter::Answer.new(
+        GithubToCanvasQuiz::Converter::Answer::Matching.new(
+          title: 'Incorrect',
           text: 'False',
-          comments: '',
-          left: '',
-          right: '',
-          title: 'Incorrect'
+          comments: ''
+        )
+      ],
+      distractors: []
+    )
+  end
+  let(:fill_in_multiple_blanks) do
+    described_class.new(
+      course_id: 3297,
+      quiz_id: 12020,
+      id: 130145,
+      type: 'fill_in_multiple_blanks_question',
+      name: 'Fundamentals: Logical Operators',
+      description: "<p>How do we declare JavaScript&#39;s 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
+      comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
+      answers: [
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '&&',
+          comments: '<p>Nice one!</p>',
+          blank_id: 'value1'
+        ),
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '"&&"',
+          comments: '<p>Nice one!</p>',
+          blank_id: 'value1'
+        ),
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '||',
+          comments: '<p>Correct!</p>',
+          blank_id: 'value2'
+        ),
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '"||"',
+          comments: '<p>Correct!</p>',
+          blank_id: 'value2'
+        ),
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '!',
+          comments: '<p>Nailed it!</p>',
+          blank_id: 'value3'
+        ),
+        GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
+          title: 'Correct',
+          text: '"!"',
+          comments: '<p>Nailed it!</p>',
+          blank_id: 'value3'
         )
       ],
       distractors: []
@@ -119,28 +157,22 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             comment: question['neutral_comments_html'],
             answers: [
               have_attributes(
-                class: GithubToCanvasQuiz::Converter::Answer,
+                class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+                title: 'Correct',
                 text: question['answers'][0]['html'],
-                comments: question['answers'][0]['comments_html'],
-                left: '',
-                right: '',
-                title: 'Correct'
+                comments: question['answers'][0]['comments_html']
               ),
               have_attributes(
-                class: GithubToCanvasQuiz::Converter::Answer,
+                class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+                title: 'Incorrect',
                 text: question['answers'][1]['html'],
-                comments: question['answers'][1]['comments_html'],
-                left: '',
-                right: '',
-                title: 'Incorrect'
+                comments: question['answers'][1]['comments_html']
               ),
               have_attributes(
-                class: GithubToCanvasQuiz::Converter::Answer,
+                class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+                title: 'Incorrect',
                 text: question['answers'][2]['html'],
-                comments: question['answers'][2]['comments_html'],
-                left: '',
-                right: '',
-                title: 'Incorrect'
+                comments: question['answers'][2]['comments_html']
               )
             ],
             distractors: []
@@ -163,23 +195,64 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             comment: question['neutral_comments_html'],
             answers: [
               have_attributes(
-                class: GithubToCanvasQuiz::Converter::Answer,
+                class: GithubToCanvasQuiz::Converter::Answer::Matching,
+                title: 'Correct',
                 text: question['answers'][0]['text'],
                 comments: question['answers'][0]['comments_html'],
                 left: question['answers'][0]['left'],
-                right: question['answers'][0]['right'],
-                title: 'Correct'
+                right: question['answers'][0]['right']
               ),
               have_attributes(
-                class: GithubToCanvasQuiz::Converter::Answer,
+                class: GithubToCanvasQuiz::Converter::Answer::Matching,
+                title: 'Correct',
                 text: question['answers'][1]['text'],
                 comments: question['answers'][1]['comments_html'],
                 left: question['answers'][1]['left'],
-                right: question['answers'][1]['right'],
-                title: 'Correct'
+                right: question['answers'][1]['right']
               )
             ],
             distractors: ['Incorrect 1', 'Incorrect 2']
+          )
+        end
+      end
+    end
+
+    context 'with a fill in multiple blanks question' do
+      it 'creates a Question instance with the correct data' do
+        VCR.use_cassette 'question_fill_in_multiple_blanks' do
+          question = client.get_single_question(3297, 12020, 130145)
+          expect(described_class.from_canvas(3297, 12020, question)).to have_attributes(
+            course_id: 3297,
+            quiz_id: 12020,
+            id: question['id'],
+            type: question['question_type'],
+            name: question['question_name'],
+            description: question['question_text'],
+            comment: question['neutral_comments_html'],
+            answers: [
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+                title: 'Correct',
+                text: question['answers'][0]['text'],
+                comments: question['answers'][0]['comments_html'],
+                blank_id: question['answers'][0]['blank_id']
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+                title: 'Correct',
+                text: question['answers'][1]['text'],
+                comments: question['answers'][1]['comments_html'],
+                blank_id: question['answers'][1]['blank_id']
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+                title: 'Correct',
+                text: question['answers'][2]['text'],
+                comments: question['answers'][2]['comments_html'],
+                blank_id: question['answers'][2]['blank_id']
+              )
+            ],
+            distractors: []
           )
         end
       end
@@ -189,7 +262,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
   describe '.from_markdown' do
     context 'with a multiple choice question' do
       it 'creates a Question instance with the correct data' do
-        input = File.read('spec/fixtures/markdown/question_multiple_choice.md')
+        input = File.read('spec/fixtures/markdown/question/multiple_choice.md')
         expect(described_class.from_markdown(input)).to have_attributes(
           course_id: 4091,
           quiz_id: 21962,
@@ -200,36 +273,28 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           comment: '<p><strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></strong></p>',
           answers: [
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+              title: 'Correct',
               text: '<p>useHistory</p>',
-              comments: '',
-              left: '',
-              right: '',
-              title: 'Correct'
+              comments: ''
             ),
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+              title: 'Incorrect',
               text: '<p>useParams</p>',
-              comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>',
-              left: '',
-              right: '',
-              title: 'Incorrect'
+              comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>'
             ),
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+              title: 'Incorrect',
               text: '<p>useState</p>',
-              comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>',
-              left: '',
-              right: '',
-              title: 'Incorrect'
+              comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>'
             ),
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+              title: 'Incorrect',
               text: '<p>I don&#39;t know.</p>',
-              comments: '<p>Comment</p>',
-              left: '',
-              right: '',
-              title: 'Incorrect'
+              comments: '<p>Comment</p>'
             )
           ],
           distractors: []
@@ -239,7 +304,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
 
     context 'with a true/false question' do
       it 'creates a Question instance with the correct data' do
-        input = File.read('spec/fixtures/markdown/question_true_false.md')
+        input = File.read('spec/fixtures/markdown/question/true_false.md')
         expect(described_class.from_markdown(input)).to have_attributes(
           course_id: 4091,
           quiz_id: 21962,
@@ -250,20 +315,16 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           comment: '',
           answers: [
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::TrueFalse,
+              title: 'Correct',
               text: 'True',
-              comments: '',
-              left: '',
-              right: '',
-              title: 'Correct'
+              comments: ''
             ),
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::TrueFalse,
+              title: 'Incorrect',
               text: 'False',
-              comments: '',
-              left: '',
-              right: '',
-              title: 'Incorrect'
+              comments: ''
             )
           ],
           distractors: []
@@ -273,7 +334,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
 
     context 'with a matching question' do
       it 'creates a Question instance with the correct data' do
-        input = File.read('spec/fixtures/markdown/question_matching.md')
+        input = File.read('spec/fixtures/markdown/question/matching.md')
         expect(described_class.from_markdown(input)).to have_attributes(
           course_id: 4091,
           quiz_id: 21962,
@@ -284,20 +345,20 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
           answers: [
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::Matching,
+              title: 'Correct',
               text: 'Answer 1',
               comments: '',
               left: 'Answer 1',
               right: 'Value 1',
-              title: 'Correct'
             ),
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::Matching,
+              title: 'Correct',
               text: 'Answer 2',
               comments: '',
               left: 'Answer 2',
               right: 'Value 2',
-              title: 'Correct'
             )
           ],
           distractors: ['Incorrect 1', 'Incorrect 2']
@@ -305,9 +366,72 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       end
     end
 
+    context 'with a fill in multiple blanks question' do
+      it 'creates a Question instance with the correct data' do
+        input = File.read('spec/fixtures/markdown/question/fill_in_multiple_blanks.md')
+        expect(described_class.from_markdown(input)).to have_attributes(
+          course_id: 3297,
+          quiz_id: 12020,
+          id: 130145,
+          type: 'fill_in_multiple_blanks_question',
+          name: 'Fundamentals: Logical Operators',
+          description: "<p>How do we declare JavaScript&#39;s 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
+          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
+          answers: [
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '&&',
+              comments: '<p>Nice one!</p>',
+              blank_id: 'value1'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '"&&"',
+              comments: '<p>Nice one!</p>',
+              blank_id: 'value1'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '||',
+              comments: '<p>Correct!</p>',
+              blank_id: 'value2'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '"||"',
+              comments: '<p>Correct!</p>',
+              blank_id: 'value2'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '!',
+              comments: '<p>Nailed it!</p>',
+              blank_id: 'value3'
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
+              title: 'Correct',
+              text: '"!"',
+              comments: '<p>Nailed it!</p>',
+              blank_id: 'value3'
+            )
+          ],
+          distractors: []
+        )
+      end
+    end
+
+    context 'with a multiple answers question' do
+    end
+
     context 'with a code block in the description' do
       it 'creates a Question instance with the correct data' do
-        input = File.read('spec/fixtures/markdown/question_code_description.md')
+        input = File.read('spec/fixtures/markdown/question/code_description.md')
         description = <<~HTML
           <p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>
 
@@ -327,12 +451,10 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></p>',
           answers: [
             have_attributes(
-              class: GithubToCanvasQuiz::Converter::Answer,
+              class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
+              title: 'Correct',
               text: '<p>This one!</p>',
               comments: '',
-              left: '',
-              right: '',
-              title: 'Correct'
             )
           ],
           distractors: []
@@ -345,7 +467,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
     context 'with a multiple choice question' do
       it 'produces the correct markdown' do
         output = multiple_choice.to_markdown
-        match = File.read('spec/fixtures/markdown/question_multiple_choice.md')
+        match = File.read('spec/fixtures/markdown/question/multiple_choice.md')
         expect(output.chomp).to eq(match.chomp)
       end
     end
@@ -353,7 +475,15 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
     context 'with a matching question' do
       it 'produces the correct markdown' do
         output = matching.to_markdown
-        match = File.read('spec/fixtures/markdown/question_matching.md')
+        match = File.read('spec/fixtures/markdown/question/matching.md')
+        expect(output.chomp).to eq(match.chomp)
+      end
+    end
+
+    context 'with a fill in multple blanks question' do
+      it 'produces the correct markdown' do
+        output = fill_in_multiple_blanks.to_markdown
+        match = File.read('spec/fixtures/markdown/question/fill_in_multiple_blanks.md')
         expect(output.chomp).to eq(match.chomp)
       end
     end
@@ -378,17 +508,15 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           description: description,
           comment: '<p><strong>Source/s:</strong> <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></p>',
           answers: [
-            GithubToCanvasQuiz::Converter::Answer.new(
+            GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
+              title: 'Correct',
               text: '<p>This one!</p>',
-              comments: '',
-              left: '',
-              right: '',
-              title: 'Correct'
+              comments: ''
             )
           ],
           distractors: []
         ).to_markdown
-        match = File.read('spec/fixtures/markdown/question_code_description.md')
+        match = File.read('spec/fixtures/markdown/question/code_description.md')
         expect(output.chomp).to eq(match.chomp)
       end
     end
@@ -404,7 +532,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_type' => 'multiple_choice_question',
           'points_possible' => 1,
           'neutral_comments_html' => '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
-          'answers' => multiple_choice.answers.map { |answer| answer.to_h('multiple_choice_question') },
+          'answers' => multiple_choice.answers.map(&:to_h),
           'matching_answer_incorrect_matches' => ''
         })
       end
@@ -419,7 +547,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_type' => 'matching_question',
           'points_possible' => 1,
           'neutral_comments_html' => '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
-          'answers' => matching.answers.map { |answer| answer.to_h('matching_question') },
+          'answers' => matching.answers.map(&:to_h),
           'matching_answer_incorrect_matches' => "Incorrect 1\nIncorrect 2"
         })
       end
@@ -434,7 +562,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_type' => 'true_false_question',
           'points_possible' => 1,
           'neutral_comments_html' => '',
-          'answers' => true_false.answers.map { |answer| answer.to_h('true_false_question') },
+          'answers' => true_false.answers.map(&:to_h),
           'matching_answer_incorrect_matches' => ''
         })
       end

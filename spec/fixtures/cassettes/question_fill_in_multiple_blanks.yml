@@ -1,0 +1,100 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://flatironlearn.beta.instructure.com/api/v1/courses/3297/quizzes/12020/questions/130145
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.7.4p191
+      Authorization:
+      - Bearer 15802~gh6vdVMNKu1rSpOoYtF3m1jDjQy9M33oRs0pveRDPqu6IecKCL9KuxTcLVR8ykPj
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - flatironlearn.beta.instructure.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 19 Sep 2021 11:18:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - Apache
+      X-Session-Id:
+      - 3b01ed0a227d885009ee975b09022db3
+      X-Request-Context-Id:
+      - f23f9372-67e6-4b3c-ab9f-414500c87971
+      Vary:
+      - Accept-Encoding
+      X-Rate-Limit-Remaining:
+      - '700.0'
+      X-Canvas-Meta:
+      - q=2124;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1c;o=quizzes/quiz_questions;n=show;t=Course;i=3297;x=5.0;p=f;f=2021-09-19T11:18:58.16Z;b=1333360;m=1333360;u=0.08;y=0.01;d=0.06;
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Cost:
+      - '0.1457037269879038'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Canvas-User-Id:
+      - '158020000000000641'
+      X-Download-Options:
+      - noopen
+      X-Runtime:
+      - '0.250268'
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _csrf_token=IqiNE6RaHau5z0iQm7vT8FD4q8GZSPfz6ibviU9RugVP%2FLhq6Bd1wM2eI6Tv2ZqHFr%2BYsNYrgIWiZaKwHSbyQg%3D%3D;
+        path=/; secure
+      - _legacy_normandy_session=XVqNq0XRUwNc-6FrDjfOMg.mDVFhEn2oN9aBj5mdaLqc7xxHLJofK28KeG9Ub1T-N3erI4RttX6k7im0yFN8GUSSHGsVTvdcye2CoYtJgBRkBlwyzHqghB-4Kf0Z3LhRRxm1hsF32Nii523KEdzr0oW.91lZxR1REkXapuwiK0Glwi7UTeY.YUccog;
+        path=/; secure; HttpOnly
+      - canvas_session=XVqNq0XRUwNc-6FrDjfOMg.mDVFhEn2oN9aBj5mdaLqc7xxHLJofK28KeG9Ub1T-N3erI4RttX6k7im0yFN8GUSSHGsVTvdcye2CoYtJgBRkBlwyzHqghB-4Kf0Z3LhRRxm1hsF32Nii523KEdzr0oW.91lZxR1REkXapuwiK0Glwi7UTeY.YUccog;
+        path=/; secure; HttpOnly; SameSite=None
+      - log_session_id=3b01ed0a227d885009ee975b09022db3; path=/; secure; HttpOnly
+      X-Request-Processor:
+      - 0e411a5e9663919b7
+      X-A11y-Ally:
+      - Dana Danger Grey
+      Etag:
+      - W/"301306e6a9a46cf24e5ba0aa7cf7dfae"
+      Status:
+      - 200 OK
+      X-Robots-Tag:
+      - none
+      P3p:
+      - CP="None, see http://www.instructure.com/privacy-policy"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"quiz_id":12020,"id":130145,"quiz_group_id":null,"assessment_question_id":138868,"position":null,"question_name":"Fundamentals:
+        Logical Operators","question_type":"fill_in_multiple_blanks_question","question_text":"\u003cp\u003eHow
+        do we declare JavaScript''s 3 logical operators?\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e[value1]
+        AND\u003c/p\u003e\n\u003cp\u003e[value2] OR\u003c/p\u003e\n\u003cp\u003e[value3]
+        NOT\u003c/p\u003e","points_possible":1.0,"correct_comments":"","incorrect_comments":"","neutral_comments":"","correct_comments_html":"","incorrect_comments_html":"\u003cp\u003e\u003cspan\u003eBe
+        sure to study the source/s for this question. You''ll get it next time.\u003c/span\u003e\u003c/p\u003e","neutral_comments_html":"\u003cp\u003e\u003cstrong\u003eSource/s:\u0026nbsp;\u003c/strong\u003e\u003ca
+        class=\"inline_disabled\" href=\"https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560\"
+        target=\"_blank\"\u003eLogical Operators\u003c/a\u003e\u003c/p\u003e","answers":[{"id":"6457","text":"\u0026\u0026","comments":"","comments_html":"\u003cp\u003eNice
+        one!\u003c/p\u003e","weight":100.0,"blank_id":"value1"},{"id":"4903","text":"||","comments":"","comments_html":"\u003cp\u003eCorrect!\u003c/p\u003e","weight":100.0,"blank_id":"value2"},{"id":"4743","text":"!","comments":"","comments_html":"\u003cp\u003eNailed
+        it!\u003c/p\u003e","weight":100.0,"blank_id":"value3"}],"variables":null,"formulas":null,"answer_tolerance":null,"formula_decimal_places":null,"matches":null,"matching_answer_incorrect_matches":null}'
+  recorded_at: Sun, 19 Sep 2021 11:18:58 GMT
+recorded_with: VCR 6.0.0

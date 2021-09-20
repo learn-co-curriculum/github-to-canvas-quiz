@@ -80,16 +80,21 @@ module GithubToCanvasQuiz
         case type
         when 'matching_question'
           left, right = read_list_items(description)
-          answer_hash(title: title, left: left, right: right, text: left, comments: comments)
+          { type: type, title: title, left: left, right: right, text: left, comments: comments }
+        when 'fill_in_multiple_blanks_question'
+          text, blank_id = read_list_items(description)
+          { type: type, title: title, text: text, comments: comments, blank_id: blank_id }
         when 'true_false_question', 'short_answer_question'
-          answer_hash(title: title, text: read_paragraph(description), comments: comments)
+          { type: type, title: title, text: read_paragraph(description), comments: comments }
         else
-          answer_hash(title: title, text: description, comments: comments)
+          { type: type, title: title, text: description, comments: comments }
         end
       end
 
       def read_list_items(html)
-        html.scan(/<li>(?<text>.*)<\/li>/).flatten.map(&:strip)
+        html.scan(/<li>(?<text>.*)<\/li>/).flatten.map do |text|
+          CGI.unescapeHTML(text).strip
+        end
       end
 
       def read_blockquote(html)
@@ -100,16 +105,6 @@ module GithubToCanvasQuiz
         text = /<p>(.*)<\/p>/m.match(html).captures.first.strip
         # convert html entities like &quot; to "
         CGI.unescapeHTML(text)
-      end
-
-      def answer_hash(title:, text:, comments:, left: '', right: '')
-        {
-          title: title,
-          left: left,
-          right: right,
-          text: text,
-          comments: comments
-        }
       end
     end
   end
