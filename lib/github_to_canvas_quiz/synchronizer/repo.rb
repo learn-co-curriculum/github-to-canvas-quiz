@@ -10,13 +10,13 @@ module GithubToCanvasQuiz
       end
 
       def sync(path)
-        raise GithubToCanvasQuiz::DirectoryNotFoundError unless File.directory? path
+        raise DirectoryNotFoundError unless File.directory? path
 
         # sync quiz
-        quiz = Quiz.new(client).sync("#{path}/README.md")
+        quiz = Synchronizer::Quiz.new(client).sync("#{path}/README.md")
         # sync questions
         questions = Dir["#{path}/questions/*.md"].map do |question_path|
-          Question.new(client).sync(question_path)
+          Synchronizer::Question.new(client).sync(question_path)
         end
         # delete questions that are no longer in the repo
         delete_questions(quiz, questions)

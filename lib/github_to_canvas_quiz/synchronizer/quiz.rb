@@ -12,18 +12,18 @@ module GithubToCanvasQuiz
       def sync(path)
         raise GithubToCanvasQuiz::FileNotFoundError unless File.exist? path
 
-        quiz = load_quiz(path)
+        quiz = load_quiz_from_markdown(path)
         canvas_quiz = save_to_canvas(quiz)
         unless quiz.id
           quiz.id = canvas_quiz['id']
-          update_readme(path, quiz)
+          update_quiz_markdown_contents(path, quiz)
         end
         quiz
       end
 
       private
 
-      def load_quiz(path)
+      def load_quiz_from_markdown(path)
         md = File.read(path)
         GithubToCanvasQuiz::Converter::Quiz.from_markdown(md)
       end
@@ -37,7 +37,7 @@ module GithubToCanvasQuiz
       end
 
       # TODO: only update frontmatter?
-      def update_readme(path, quiz)
+      def update_quiz_markdown_contents(path, quiz)
         File.write(path, quiz.to_markdown)
       end
     end

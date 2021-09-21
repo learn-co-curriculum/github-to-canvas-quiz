@@ -6,8 +6,7 @@ module GithubToCanvasQuiz
   class CLI < Thor
     option :course, type: :numeric, required: true, desc: 'Canvas Course ID'
     option :quiz, type: :numeric, required: true, desc: 'Canvas Quiz ID'
-    option :directory, default: '.',
-                       desc: '(optional) Directory to output markdown files. Defaults to current directory'
+    option :directory, default: '.', desc: '(optional) Directory to output markdown files. Defaults to current directory'
     desc 'build', 'Creates Markdown files for a Canvas quiz and its questions'
     def build
       # get the quiz data from Canvas (with question data)
@@ -25,10 +24,8 @@ module GithubToCanvasQuiz
       puts '✅ Done'
     end
 
-    option :directory, default: '.',
-                       desc: '(optional) Directory with markdown files to align. Defaults to current directory'
-    desc 'align',
-         'Updates a Canvas quiz using the markdown files in the current directory. Use the --directory flag to specify a different directory.'
+    option :directory, default: '.', desc: '(optional) Directory with markdown files to align. Defaults to current directory'
+    desc 'align', 'Updates a Canvas quiz from Markdown files.'
     def align
       puts '⬆️ Aligning quiz...'
       Synchronizer::Repo.new(client).sync(options[:directory])
