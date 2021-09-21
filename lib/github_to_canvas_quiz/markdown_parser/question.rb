@@ -3,11 +3,16 @@
 module GithubToCanvasQuiz
   module MarkdownParser
     class Question < Base
+
       def parse
-        # Must call these in order, relies on moving the StringScanner position
+        # Must call these in order, relies on moving the StringScanner position...
+        # name: contents of the first H1
         name = parse_name!
+        # description: contents before the first H2, or before blockquote before the first H2
         description = parse_description!
+        # comment: contents of the first blockquote before the first H2
         comment = parse_comment!
+        # answers/distractors: contents of H2 and before next H2
         answers, distractors = parse_answers!(frontmatter['type'])
 
         {
@@ -64,7 +69,7 @@ module GithubToCanvasQuiz
         while src.scan(/<h2>(Correct|Incorrect)<\/h2>/)
           if type == 'matching_question' && src.captures.first == 'Incorrect'
             html = parse_description!
-            distractors = read_list_items(html)
+            distractors = read_list_items_as_text(html)
           else
             answers << parse_answer!(type)
           end
@@ -79,32 +84,40 @@ module GithubToCanvasQuiz
         comments = parse_comment!
         case type
         when 'matching_question'
-          left, right = read_list_items(description)
+          left, right = read_list_items_as_text(description)
           { type: type, title: title, left: left, right: right, text: left, comments: comments }
         when 'fill_in_multiple_blanks_question'
-          text, blank_id = read_list_items(description)
+          text, blank_id = read_list_items_as_text(description)
           { type: type, title: title, text: text, comments: comments, blank_id: blank_id }
         when 'true_false_question', 'short_answer_question'
-          { type: type, title: title, text: read_paragraph(description), comments: comments }
+          { type: type, title: title, text: read_paragraph_as_text(description), comments: comments }
         else
           { type: type, title: title, text: description, comments: comments }
         end
       end
 
-      def read_list_items(html)
-        html.scan(/<li>(?<text>.*)<\/li>/).flatten.map do |text|
-          CGI.unescapeHTML(text).strip
+      def read_blockquote(html)
+        extract_html_from(html, 'blockquote').first
+      end
+
+      def read_list_items_as_text(html)
+        extract_text_from(html, 'li')
+      end
+
+      def read_paragraph_as_text(html)
+        extract_text_from(html, 'p').first
+      end
+
+      def extract_html_from(html, selector)
+        Nokogiri::HTML5.fragment(html).css(selector).map do |node|
+          node.inner_html.strip
         end
       end
 
-      def read_blockquote(html)
-        /<blockquote>(.*)<\/blockquote>/m.match(html).captures.first.strip
-      end
-
-      def read_paragraph(html)
-        text = /<p>(.*)<\/p>/m.match(html).captures.first.strip
-        # convert html entities like &quot; to "
-        CGI.unescapeHTML(text)
+      def extract_text_from(html, selector)
+        Nokogiri::HTML5.fragment(html).css(selector).map do |node|
+          CGI.unescapeHTML(node.content).strip
+        end
       end
     end
   end

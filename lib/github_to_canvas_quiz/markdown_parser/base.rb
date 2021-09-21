@@ -17,6 +17,7 @@ module GithubToCanvasQuiz
         html = MarkdownConverter.new(parsed.content).to_html
         [parsed.front_matter, html]
       end
+
     end
   end
 end

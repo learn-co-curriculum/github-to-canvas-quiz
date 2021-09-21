@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'nokogiri'
+require_relative 'github_to_canvas_quiz/html_node_scanner'
+
 # API
 require 'rest-client'
 require 'json'
