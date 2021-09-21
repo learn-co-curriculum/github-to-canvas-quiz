@@ -293,7 +293,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
               title: 'Incorrect',
-              text: '<p>I don&#39;t know.</p>',
+              text: "<p>I don't know.</p>",
               comments: '<p>Comment</p>'
             )
           ],
@@ -350,7 +350,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
               text: 'Answer 1',
               comments: '',
               left: 'Answer 1',
-              right: 'Value 1',
+              right: 'Value 1'
             ),
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::Matching,
@@ -358,7 +358,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
               text: 'Answer 2',
               comments: '',
               left: 'Answer 2',
-              right: 'Value 2',
+              right: 'Value 2'
             )
           ],
           distractors: ['Incorrect 1', 'Incorrect 2']
@@ -375,7 +375,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           id: 130145,
           type: 'fill_in_multiple_blanks_question',
           name: 'Fundamentals: Logical Operators',
-          description: "<p>How do we declare JavaScript&#39;s 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
+          description: "<p>How do we declare JavaScript's 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
           comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
           answers: [
             have_attributes(
@@ -454,7 +454,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
               class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
               title: 'Correct',
               text: '<p>This one!</p>',
-              comments: '',
+              comments: ''
             )
           ],
           distractors: []

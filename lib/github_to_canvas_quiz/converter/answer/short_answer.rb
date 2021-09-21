@@ -19,7 +19,7 @@ module GithubToCanvasQuiz
             html.empty? ? text : html
           end
         end
-        
+
         include Helpers::Markdown
 
         attr_accessor :title, :text, :comments

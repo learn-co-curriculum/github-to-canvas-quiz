@@ -3,21 +3,15 @@
 module GithubToCanvasQuiz
   module MarkdownParser
     class Base
-      attr_reader :frontmatter, :src
+      attr_reader :frontmatter, :scanner
 
       def initialize(markdown)
-        @frontmatter, html = parse_markdown(markdown)
-        @src = StringScanner.new(html)
-      end
-
-      private
-
-      def parse_markdown(markdown)
         parsed = FrontMatterParser::Parser.new(:md).call(markdown)
         html = MarkdownConverter.new(parsed.content).to_html
-        [parsed.front_matter, html]
-      end
 
+        @frontmatter = parsed.front_matter
+        @scanner = HTML::Scanner.from_html(html)
+      end
     end
   end
 end

@@ -3,23 +3,25 @@
 module GithubToCanvasQuiz
   module MarkdownParser
     class Question < Base
+      attr_accessor :course_id, :quiz_id, :id, :type, :name, :description, :comment, :answers, :distractors
 
       def parse
-        # Must call these in order, relies on moving the StringScanner position...
-        # name: contents of the first H1
-        name = parse_name!
-        # description: contents before the first H2, or before blockquote before the first H2
-        description = parse_description!
-        # comment: contents of the first blockquote before the first H2
-        comment = parse_comment!
-        # answers/distractors: contents of H2 and before next H2
-        answers, distractors = parse_answers!(frontmatter['type'])
+        read_frontmatter!
+        scan_heading!
 
+        self.answers ||= []
+        self.distractors ||= []
+        scan_answers!
+
+        to_h
+      end
+
+      def to_h
         {
-          course_id: frontmatter['course_id'],
-          quiz_id: frontmatter['quiz_id'],
-          id: frontmatter['id'],
-          type: frontmatter['type'],
+          course_id: course_id,
+          quiz_id: quiz_id,
+          id: id,
+          type: type,
           name: name,
           description: description,
           comment: comment,
@@ -30,92 +32,68 @@ module GithubToCanvasQuiz
 
       private
 
-      def parse_name!
-        src.scan(/<h1>(.*?)<\/h1>/)
-        src.captures.first
-      end
-
-      def parse_description!
-        if /<blockquote>/ =~ src.check_until(/(?=<h2>)/)
-          # If there is a <blockquote> before the next <h2>, scan until the next <blockquote>
-          src.scan_until(/(?=<blockquote>)/).strip
-        elsif src.check_until(/(?=<(h2|blockquote)>)/)
-          # If there is a <h2> or  <blockquote> before the end, scan until the next <h2> or  <blockquote>
-          src.scan_until(/(?=<(h2|blockquote)>)/).strip
-        else
-          # No more <h2>s or <blockquote>s, so the rest of the string is the description
-          src.rest.strip
+      def read_frontmatter!
+        frontmatter.each do |key, value|
+          send("#{key}=", value) if respond_to?("#{key}=")
         end
       end
 
-      def parse_comment!
-        if /<blockquote>/ =~ src.check_until(/(?=<h2>)/)
-          # If there is a <blockquote> before the next <h2>, scan until the next <h2>
-          html = src.scan_until(/(?=<h2>)/).strip
-          read_blockquote(html)
-        elsif src.match?(/<blockquote>/)
-          # If there is a <blockquote> before the next <h2>, and we landed on a <blockquote>
-          # (should only happen in the last section)
-          read_blockquote(src.rest)
-        else
-          ''
-        end
+      def scan_heading!
+        # Name - contents of first H1
+        question_heading = scanner.scan_until('h1').last
+        self.name = question_heading.content
+
+        # Description/Comments - contents between H1 and first H2
+        question_body_nodes = scanner.scan_before('h2')
+        description_nodes, comment_nodes = parse_block_body(question_body_nodes)
+        self.description = description_nodes.to_html.strip
+        self.comment = comment_nodes ? comment_nodes.first.inner_html.strip : ''
       end
 
-      def parse_answers!(type)
-        answers = []
-        distractors = []
-        # Get answers from all H2s with "Correct" or "Incorrect"
-        while src.scan(/<h2>(Correct|Incorrect)<\/h2>/)
-          if type == 'matching_question' && src.captures.first == 'Incorrect'
-            html = parse_description!
-            distractors = read_list_items_as_text(html)
+      def scan_answers!
+        while scanner.check('h2')
+          answer_heading = scanner.scan('h2')
+          answer_title = answer_heading.content
+          answer_body_nodes = scanner.scan_before('h2') || scanner.scan_rest
+          if type == 'matching_question' && answer_title == 'Incorrect'
+            self.distractors = parse_distractors(answer_body_nodes)
           else
-            answers << parse_answer!(type)
+            self.answers << parse_answer(answer_body_nodes, answer_title, type)
           end
         end
-        [answers, distractors]
       end
 
-      def parse_answer!(type)
-        # Must call these in order, relies on moving the StringScanner position
-        title = src.captures.first
-        description = parse_description!
-        comments = parse_comment!
+      def parse_distractors(nodes)
+        extract_text_from(nodes, 'li')
+      end
+
+      def parse_answer(nodes, title, type)
+        answer_nodes, comment_nodes = parse_block_body(nodes)
+        comment = comment_nodes ? comment_nodes.first.inner_html.strip : ''
         case type
         when 'matching_question'
-          left, right = read_list_items_as_text(description)
-          { type: type, title: title, left: left, right: right, text: left, comments: comments }
+          left, right = extract_text_from(answer_nodes, 'li')
+          { type: type, title: title, left: left, right: right, text: left, comments: comment }
         when 'fill_in_multiple_blanks_question'
-          text, blank_id = read_list_items_as_text(description)
-          { type: type, title: title, text: text, comments: comments, blank_id: blank_id }
+          text, blank_id = extract_text_from(answer_nodes, 'li')
+          { type: type, title: title, text: text, comments: comment, blank_id: blank_id }
         when 'true_false_question', 'short_answer_question'
-          { type: type, title: title, text: read_paragraph_as_text(description), comments: comments }
+          text = extract_text_from(answer_nodes, 'p').first
+          { type: type, title: title, text: text, comments: comment }
         else
-          { type: type, title: title, text: description, comments: comments }
+          { type: type, title: title, text: answer_nodes.to_html.strip, comments: comment }
         end
       end
 
-      def read_blockquote(html)
-        extract_html_from(html, 'blockquote').first
+      def parse_block_body(nodes)
+        scanner = HTML::Scanner.new(nodes)
+        content = scanner.scan_before('blockquote') || scanner.scan_rest
+        comment = scanner.scan_rest unless scanner.eof?
+        [content, comment]
       end
 
-      def read_list_items_as_text(html)
-        extract_text_from(html, 'li')
-      end
-
-      def read_paragraph_as_text(html)
-        extract_text_from(html, 'p').first
-      end
-
-      def extract_html_from(html, selector)
-        Nokogiri::HTML5.fragment(html).css(selector).map do |node|
-          node.inner_html.strip
-        end
-      end
-
-      def extract_text_from(html, selector)
-        Nokogiri::HTML5.fragment(html).css(selector).map do |node|
+      def extract_text_from(nodes, selector)
+        nodes.css(selector).map do |node|
           CGI.unescapeHTML(node.content).strip
         end
       end

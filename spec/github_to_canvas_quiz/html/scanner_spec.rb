@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GithubToCanvasQuiz::HTMLNodeScanner do
+RSpec.describe GithubToCanvasQuiz::HTML::Scanner do
   let(:html) do
     <<~HTML
       <h1>Question Name</h1>
@@ -69,13 +69,14 @@ RSpec.describe GithubToCanvasQuiz::HTMLNodeScanner do
               <strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565\">Functions: Continued</a></strong>
             </p>
           </blockquote>
+          <h2>Correct</h2>
         HTML
         expect(scanner.scan_until('h2').to_html.strip).to eq(expected_html.strip)
       end
 
       it 'updates the cursor position' do
         scanner.scan_until('h2')
-        expect(scanner.cursor).to eq(6)
+        expect(scanner.cursor).to eq(7)
       end
     end
 
@@ -87,6 +88,61 @@ RSpec.describe GithubToCanvasQuiz::HTMLNodeScanner do
       it 'does not update the cursor position' do
         scanner.scan_until('h6')
         expect(scanner.cursor).to eq(0)
+      end
+    end
+
+    context 'when scanning from the middle of the document' do
+      it 'returns the nodes between the current cursor and the selector' do
+        expected_html = <<~HTML
+          <p>useHistory</p>
+          <h2>Incorrect</h2>
+        HTML
+        scanner.scan_until('h2')
+        expect(scanner.scan_until('h2').to_html.strip).to eq(expected_html.strip)
+      end
+    end
+  end
+
+  describe '#scan_before' do
+    context 'when given a selector in the document' do
+      it 'returns the nodes between the current cursor and the selector' do
+        expected_html = <<~HTML
+          <h1>Question Name</h1>
+          <p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>
+          <blockquote>
+            <p>
+              <strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565\">Functions: Continued</a></strong>
+            </p>
+          </blockquote>
+        HTML
+        expect(scanner.scan_before('h2').to_html.strip).to eq(expected_html.strip)
+      end
+
+      it 'updates the cursor position' do
+        scanner.scan_before('h2')
+        expect(scanner.cursor).to eq(6)
+      end
+    end
+
+    context 'when given a selector not in the document' do
+      it 'returns nil' do
+        expect(scanner.scan_before('h6')).to eq(nil)
+      end
+
+      it 'does not update the cursor position' do
+        scanner.scan_before('h6')
+        expect(scanner.cursor).to eq(0)
+      end
+    end
+
+    context 'when scanning from the middle of the document' do
+      it 'returns the nodes between the current cursor and the selector' do
+        expected_html = <<~HTML
+          <h2>Correct</h2>
+          <p>useHistory</p>
+        HTML
+        scanner.scan_before('h2')
+        expect(scanner.scan_before('h2').to_html.strip).to eq(expected_html.strip)
       end
     end
   end
@@ -112,7 +168,7 @@ RSpec.describe GithubToCanvasQuiz::HTMLNodeScanner do
           <p>Comment</p>
         </blockquote>
       HTML
-      scanner.scan_until('h2')
+      scanner.scan_before('h2')
       expect(scanner.scan_rest.to_html.strip).to eq(expected_html.strip)
     end
 
@@ -134,6 +190,7 @@ RSpec.describe GithubToCanvasQuiz::HTMLNodeScanner do
               <strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565\">Functions: Continued</a></strong>
             </p>
           </blockquote>
+          <h2>Correct</h2>
         HTML
         expect(nodes.to_html.strip).to eq(html.strip)
       end

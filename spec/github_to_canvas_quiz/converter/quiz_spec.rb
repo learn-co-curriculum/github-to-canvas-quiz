@@ -23,7 +23,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Quiz do
         course_id: 4236,
         id: 18396,
         title: 'Client-Side Routing Quiz',
-        description: "<p>It&#39;s time to check your knowledge!</p>\n\n<p>If you don&#39;t know..</p>"
+        description: "<p>It's time to check your knowledge!</p>\n\n<p>If you don't know..</p>"
       )
     end
   end

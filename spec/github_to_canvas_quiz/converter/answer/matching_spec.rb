@@ -29,7 +29,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Answer::Matching do
         text: 'Hoisting',
         comments: '',
         left: 'Hoisting',
-        right: "JavaScript's ability to call functions before they appear in the code is called ___.",
+        right: "JavaScript's ability to call functions before they appear in the code is called ___."
       )
     end
 

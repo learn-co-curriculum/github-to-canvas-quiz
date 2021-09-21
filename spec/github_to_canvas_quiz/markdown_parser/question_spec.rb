@@ -34,7 +34,7 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
             },
             {
               type: 'multiple_choice_question',
-              text: '<p>I don&#39;t know.</p>',
+              text: "<p>I don't know.</p>",
               comments: '<p>Comment</p>',
               title: 'Incorrect'
             }
@@ -193,7 +193,7 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           id: 130145,
           type: 'fill_in_multiple_blanks_question',
           name: 'Fundamentals: Logical Operators',
-          description: "<p>How do we declare JavaScript&#39;s 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
+          description: "<p>How do we declare JavaScript's 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
           comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
           answers: [
             {
@@ -277,7 +277,7 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
             {
               type: 'multiple_answers_question',
               title: 'Incorrect',
-              text: '<p>I don&#39;t know.</p>',
+              text: "<p>I don't know.</p>",
               comments: ''
             }
           ],
