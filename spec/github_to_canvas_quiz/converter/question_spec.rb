@@ -9,7 +9,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       type: 'multiple_choice_question',
       name: 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
       description: '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
-      comment: '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
+      sources: [
+        {
+          'name' => 'Functions: Continued',
+          'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+        }
+      ],
       answers: [
         GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
           title: 'Correct',
@@ -43,7 +48,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       type: 'matching_question',
       name: 'Matching Question',
       description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
-      comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+      sources: [
+        {
+          'name' => 'A Quick Tour Of The Web',
+          'url' => 'https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web'
+        }
+      ],
       answers: [
         GithubToCanvasQuiz::Converter::Answer::Matching.new(
           title: 'Correct',
@@ -71,7 +81,6 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       type: 'true_false_question',
       name: 'Question 1',
       description: '<p>Answer true</p>',
-      comment: '',
       answers: [
         GithubToCanvasQuiz::Converter::Answer::TrueFalse.new(
           title: 'Correct',
@@ -95,7 +104,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       type: 'fill_in_multiple_blanks_question',
       name: 'Fundamentals: Logical Operators',
       description: "<p>How do we declare JavaScript&#39;s 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
-      comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
+      sources: [
+        {
+          'name' => 'Logical Operators',
+          'url' => 'https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560'
+        }
+      ],
       answers: [
         GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks.new(
           title: 'Correct',
@@ -154,7 +168,6 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             type: question['question_type'],
             name: question['question_name'],
             description: question['question_text'],
-            comment: question['neutral_comments_html'],
             answers: [
               have_attributes(
                 class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
@@ -192,7 +205,6 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             type: question['question_type'],
             name: question['question_name'],
             description: question['question_text'],
-            comment: question['neutral_comments_html'],
             answers: [
               have_attributes(
                 class: GithubToCanvasQuiz::Converter::Answer::Matching,
@@ -228,7 +240,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
             type: question['question_type'],
             name: question['question_name'],
             description: question['question_text'],
-            comment: question['neutral_comments_html'],
+            sources: [
+              {
+                'name' => 'Logical Operators',
+                'url' => 'https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560'
+              }
+            ],
             answers: [
               have_attributes(
                 class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
@@ -270,7 +287,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'multiple_choice_question',
           name: 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
           description: '<p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>',
-          comment: '<p><strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></strong></p>',
+          sources: [
+            {
+              'name' => 'Functions: Continued',
+              'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+            }
+          ],
           answers: [
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
@@ -312,7 +334,6 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'true_false_question',
           name: 'Question 1',
           description: '<p>Answer true</p>',
-          comment: '',
           answers: [
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::TrueFalse,
@@ -342,7 +363,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'matching_question',
           name: 'Matching Question',
           description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
-          comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+          sources: [
+            {
+              'name' => 'A Quick Tour Of The Web',
+              'url' => 'https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web'
+            }
+          ],
           answers: [
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::Matching,
@@ -376,7 +402,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'fill_in_multiple_blanks_question',
           name: 'Fundamentals: Logical Operators',
           description: "<p>How do we declare JavaScript's 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
-          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
+          sources: [
+            {
+              'name' => 'Logical Operators',
+              'url' => 'https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560'
+            }
+          ],
           answers: [
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks,
@@ -426,9 +457,6 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       end
     end
 
-    context 'with a multiple answers question' do
-    end
-
     context 'with a code block in the description' do
       it 'creates a Question instance with the correct data' do
         input = File.read('spec/fixtures/markdown/question/code_description.md')
@@ -448,7 +476,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
           description: description.strip,
-          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></p>',
+          sources: [
+            {
+              'name' => 'Functions: Continued',
+              'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+            }
+          ],
           answers: [
             have_attributes(
               class: GithubToCanvasQuiz::Converter::Answer::MultipleChoice,
@@ -506,7 +539,12 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
           description: description,
-          comment: '<p><strong>Source/s:</strong> <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></p>',
+          sources: [
+            {
+              'name' => 'Functions: Continued',
+              'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+            }
+          ],
           answers: [
             GithubToCanvasQuiz::Converter::Answer::MultipleChoice.new(
               title: 'Correct',
@@ -531,7 +569,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_text' => '<div><span>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</span></div>',
           'question_type' => 'multiple_choice_question',
           'points_possible' => 1,
-          'neutral_comments_html' => '<p><strong>Source/s: <a class="inline_disabled" href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565" target="_blank">Functions: Continued</a></strong></p>',
+          'neutral_comments_html' => '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></p>',
           'answers' => multiple_choice.answers.map(&:to_h),
           'matching_answer_incorrect_matches' => ''
         })
@@ -546,7 +584,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           'question_text' => '<p>Match the value on the left to the correct value from the dropdown.</p>',
           'question_type' => 'matching_question',
           'points_possible' => 1,
-          'neutral_comments_html' => '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+          'neutral_comments_html' => '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
           'answers' => matching.answers.map(&:to_h),
           'matching_answer_incorrect_matches' => "Incorrect 1\nIncorrect 2"
         })

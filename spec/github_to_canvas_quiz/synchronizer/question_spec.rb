@@ -84,7 +84,7 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Question do
 
       it 'saves the question id to the file' do
         synchronizer.sync("#{tmp_path}/questions/00.md")
-        output = "---\ncourse_id: 1234\nquiz_id: 123\nid: 1\ntype: short_answer_question\n---\n\n# Question 1\n\nDescription\n\n## Correct\n\nAnswer\n"
+        output = "---\ncourse_id: 1234\nquiz_id: 123\nid: 1\ntype: short_answer_question\nsources:\n---\n\n# Question 1\n\nDescription\n\n## Correct\n\nAnswer\n"
         expect(File.read("#{tmp_path}/questions/00.md")).to eq(output)
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Question do
 
       it 'saves the question id to the file' do
         synchronizer.sync("#{tmp_path}/questions/00.md")
-        output = "---\ncourse_id: 1234\nquiz_id: 123\nid: 1\ntype: short_answer_question\n---\n\n# Question 1\n\nDescription\n\n## Correct\n\nAnswer\n"
+        output = "---\ncourse_id: 1234\nquiz_id: 123\nid: 1\ntype: short_answer_question\nsources:\n---\n\n# Question 1\n\nDescription\n\n## Correct\n\nAnswer\n"
         expect(File.read("#{tmp_path}/questions/00.md")).to eq(output)
       end
     end

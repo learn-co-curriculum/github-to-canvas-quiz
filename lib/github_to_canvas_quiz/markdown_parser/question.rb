@@ -3,7 +3,7 @@
 module GithubToCanvasQuiz
   module MarkdownParser
     class Question < Base
-      attr_accessor :course_id, :quiz_id, :id, :type, :name, :description, :comment, :answers, :distractors
+      attr_accessor :course_id, :quiz_id, :id, :type, :sources, :name, :description, :answers, :distractors
 
       def parse
         read_frontmatter!
@@ -22,9 +22,9 @@ module GithubToCanvasQuiz
           quiz_id: quiz_id,
           id: id,
           type: type,
+          sources: sources,
           name: name,
           description: description,
-          comment: comment,
           answers: answers,
           distractors: distractors
         }
@@ -43,11 +43,9 @@ module GithubToCanvasQuiz
         question_heading = scanner.scan_until('h1').last
         self.name = question_heading.content
 
-        # Description/Comments - contents between H1 and first H2
-        question_body_nodes = scanner.scan_before('h2')
-        description_nodes, comment_nodes = parse_block_body(question_body_nodes)
+        # Description - contents between H1 and first H2
+        description_nodes = scanner.scan_before('h2')
         self.description = description_nodes.to_html.strip
-        self.comment = comment_nodes ? comment_nodes.first.inner_html.strip : ''
       end
 
       def scan_answers!

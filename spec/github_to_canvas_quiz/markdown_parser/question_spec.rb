@@ -12,7 +12,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'multiple_choice_question',
           name: 'By using which hook can we effectively navigate the user to a new page in response to any event in our application?',
           description: '<p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>',
-          comment: '<p><strong>Source/s: <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></strong></p>',
+          sources: [
+            {
+              'name' => 'Functions: Continued',
+              'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+            }
+          ],
           answers: [
             {
               type: 'multiple_choice_question',
@@ -54,7 +59,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'matching_question',
           name: 'Matching Question',
           description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
-          comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+          sources: [
+            {
+              'name' => 'A Quick Tour Of The Web',
+              'url' => 'https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web'
+            }
+          ],
           answers: [
             {
               type: 'matching_question',
@@ -88,7 +98,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'matching_question',
           name: 'Matching Question',
           description: '<p>Match the value on the left to the correct value from the dropdown.</p>',
-          comment: '<p><strong>Source:</strong> <a href="https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web">A Quick Tour Of The Web</a></p>',
+          sources: [
+            {
+              'name' => 'A Quick Tour Of The Web',
+              'url' => 'https://learning.flatironschool.com/courses/4091/pages/a-quick-tour-of-the-web'
+            }
+          ],
           answers: [
             {
               type: 'matching_question',
@@ -122,7 +137,7 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'true_false_question',
           name: 'Question 1',
           description: '<p>Answer true</p>',
-          comment: '',
+          sources: nil,
           answers: [
             {
               type: 'true_false_question',
@@ -152,7 +167,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'short_answer_question',
           name: 'Events: Forms',
           description: '<p>The ______ event fires when a form is submitted.</p>',
-          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/video-forms?module_item_id=270739">Video: Forms</a></p>',
+          sources: [
+            {
+              'name' => 'Video: Forms',
+              'url' => 'https://learning.flatironschool.com/courses/3297/pages/video-forms?module_item_id=270739'
+            }
+          ],
           answers: [
             {
               type: 'short_answer_question',
@@ -194,7 +214,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'fill_in_multiple_blanks_question',
           name: 'Fundamentals: Logical Operators',
           description: "<p>How do we declare JavaScript's 3 logical operators?</p>\n\n<p>[value1] AND</p>\n\n<p>[value2] OR</p>\n\n<p>[value3] NOT</p>",
-          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560">Logical Operators</a></p>',
+          sources: [
+            {
+              'name' => 'Logical Operators',
+              'url' => 'https://learning.flatironschool.com/courses/3297/pages/logical-operators?module_item_id=143560'
+            }
+          ],
           answers: [
             {
               type: 'fill_in_multiple_blanks_question',
@@ -254,7 +279,7 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'multiple_answers_question',
           name: 'Exporting',
           description: "<p>I want to render the Card component inside of my Container component. How would\nI properly export the Card component?</p>\n<div class=\"highlight\"><pre class=\"highlight jsx\"><code><span class=\"kd\">function</span> <span class=\"nx\">Card</span><span class=\"p\">({</span> <span class=\"nx\">title</span><span class=\"p\">,</span> <span class=\"nx\">subtitle</span> <span class=\"p\">})</span> <span class=\"p\">{</span>\n  <span class=\"k\">return</span> <span class=\"p\">(</span>\n    <span class=\"p\">&lt;</span><span class=\"nt\">div</span><span class=\"p\">&gt;</span>\n      <span class=\"p\">&lt;</span><span class=\"nt\">h1</span><span class=\"p\">&gt;</span><span class=\"si\">{</span><span class=\"nx\">title</span><span class=\"si\">}</span><span class=\"p\">&lt;/</span><span class=\"nt\">h1</span><span class=\"p\">&gt;</span>\n      <span class=\"p\">&lt;</span><span class=\"nt\">p</span><span class=\"p\">&gt;</span><span class=\"si\">{</span><span class=\"nx\">subtitle</span><span class=\"si\">}</span><span class=\"p\">&lt;/</span><span class=\"nt\">p</span><span class=\"p\">&gt;</span>\n    <span class=\"p\">&lt;/</span><span class=\"nt\">div</span><span class=\"p\">&gt;</span>\n  <span class=\"p\">);</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
-          comment: '',
+          sources: nil,
           answers: [
             {
               type: 'multiple_answers_question',
@@ -305,7 +330,12 @@ RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
           type: 'multiple_choice_question',
           name: 'Functions: Scope',
           description: description.strip,
-          comment: '<p><strong>Source/s:</strong> <a href="https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565">Functions: Continued</a></p>',
+          sources: [
+            {
+              'name' => 'Functions: Continued',
+              'url' => 'https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565'
+            }
+          ],
           answers: [
             {
               type: 'multiple_choice_question',

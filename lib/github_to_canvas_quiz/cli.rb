@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 module GithubToCanvasQuiz
   class CLI < Thor
     option :course, type: :numeric, required: true, desc: 'Canvas Course ID'

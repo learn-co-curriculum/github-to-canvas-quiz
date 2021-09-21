@@ -3,13 +3,14 @@ course_id: 4091
 quiz_id: 21962
 id: 123906
 type: multiple_choice_question
+sources:
+- name: 'Functions: Continued'
+  url: https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565
 ---
 
 # By using which hook can we effectively navigate the user to a new page in response to any event in our application?
 
 Which hook gives us the ability to programmatically navigate the user to a new page in our application?
-
-> **Source/s: [Functions: Continued](https://learning.flatironschool.com/courses/3297/assignments/73913?module_item_id=143565)**
 
 ## Correct
 

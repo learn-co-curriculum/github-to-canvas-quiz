@@ -20,7 +20,7 @@ module GithubToCanvasQuiz
             type: data['question_type'],
             name: data['question_name'] || '',
             description: data['question_text'] || '',
-            comment: data['neutral_comments_html'] || '',
+            sources: parse_sources(data['neutral_comments_html']),
             answers: data['answers'].map do |answer|
               answer_from_canvas(data['question_type'], answer)
             end,
@@ -29,6 +29,15 @@ module GithubToCanvasQuiz
         end
 
         private
+
+        def parse_sources(html)
+          return unless html
+
+          Nokogiri::HTML5.fragment(html).css('a').map do |node|
+            name = node.content.gsub('Links to an external site.', '')
+            { 'name' => name, 'url' => node['href'] }
+          end
+        end
 
         def answer_from(type, answer_data)
           case type
@@ -59,7 +68,7 @@ module GithubToCanvasQuiz
 
       include Helpers::Markdown
 
-      attr_accessor :course_id, :quiz_id, :id, :type, :name, :description, :comment, :answers, :distractors
+      attr_accessor :course_id, :quiz_id, :id, :type, :sources, :name, :description, :answers, :distractors
 
       def initialize(options)
         options.each do |key, value|
@@ -72,7 +81,6 @@ module GithubToCanvasQuiz
         blocks << frontmatter(frontmatter_hash)
         blocks << h1(name)
         blocks << markdown_block(description)
-        blocks << blockquote(comment) unless comment.empty?
         blocks.concat(answers.map(&:to_markdown))
         unless distractors.empty?
           blocks << h2('Incorrect')
@@ -87,7 +95,7 @@ module GithubToCanvasQuiz
           'question_text' => description,
           'question_type' => type,
           'points_possible' => 1,
-          'neutral_comments_html' => comment,
+          'neutral_comments_html' => sources ? sources_to_html : '',
           'answers' => answers.map(&:to_h),
           'matching_answer_incorrect_matches' => distractors.join("\n")
         }
@@ -100,8 +108,17 @@ module GithubToCanvasQuiz
           'course_id' => course_id,
           'quiz_id' => quiz_id,
           'id' => id,
-          'type' => type
+          'type' => type,
+          'sources' => sources
         }
+      end
+
+      def sources_to_html
+        comments = sources.map do |source|
+          "<a href=\"#{source['url']}\">#{source['name']}</a>"
+        end.join('')
+        
+        "<p><strong>Source/s:</strong> #{comments}</p>"
       end
     end
   end

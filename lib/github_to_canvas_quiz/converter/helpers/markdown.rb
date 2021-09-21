@@ -46,6 +46,7 @@ module GithubToCanvasQuiz
 
         def remove_canvas_cruft(markdown)
           markdown.gsub('&nbsp;(Links to an external site.)', '')
+                  .gsub('Links to an external site.', '')
                   .gsub('&nbsp;', ' ')
         end
       end
