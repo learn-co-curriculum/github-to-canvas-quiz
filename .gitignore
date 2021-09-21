@@ -12,3 +12,6 @@
 .rspec_status
 
 Gemfile.lock
+
+# dev environment variables
+.env*local

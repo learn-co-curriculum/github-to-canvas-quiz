@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require 'dotenv'
 require 'vcr'
 require 'webmock/rspec'
 
 require 'github_to_canvas_quiz'
+
+# Override environment variables with variables in .env.test.local
+Dotenv.overload(".env.test.local")
 
 WebMock.disable_net_connect!
 

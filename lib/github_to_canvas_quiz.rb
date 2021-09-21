@@ -6,6 +6,10 @@ require 'json'
 require_relative 'github_to_canvas_quiz/canvas_api/endpoints'
 require_relative 'github_to_canvas_quiz/canvas_api/client'
 
+# CLI
+require 'thor'
+require_relative 'github_to_canvas_quiz/cli'
+
 # Markdown to HTML
 require 'redcarpet'
 require 'rouge'

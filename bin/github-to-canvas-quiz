@@ -5,9 +5,11 @@
 lib_dir = File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
-require 'bundler/setup'
-require 'pry'
-
 require 'github_to_canvas_quiz'
 
-Pry.start
+if ENV['GEM_ENV'] == 'development'
+  require 'dotenv'
+  Dotenv.overload('.env.development.local')
+end
+
+GithubToCanvasQuiz::CLI.start

@@ -11,7 +11,7 @@ module GithubToCanvasQuiz
 
     def build(path = '.')
       raise DirectoryNotFoundError unless File.directory? path
-      
+
       File.write("#{path}/README.md", quiz.to_markdown)
 
       Dir.mkdir("#{path}/questions") unless File.directory? "#{path}/questions"
