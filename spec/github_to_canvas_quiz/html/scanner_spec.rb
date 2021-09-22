@@ -174,7 +174,7 @@ RSpec.describe GithubToCanvasQuiz::HTML::Scanner do
 
     it 'updates the cursor position' do
       scanner.scan_rest
-      expect(scanner.cursor).to eq(scanner.nodes.length)
+      expect(scanner.cursor).to eq(scanner.node_set.length)
     end
   end
 
