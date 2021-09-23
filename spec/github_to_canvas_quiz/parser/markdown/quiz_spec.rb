@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GithubToCanvasQuiz::MarkdownParser::Quiz do
+RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Quiz do
   describe '#parse' do
     it 'returns a hash of quiz data' do
       input = File.read('spec/fixtures/markdown/quiz.md')

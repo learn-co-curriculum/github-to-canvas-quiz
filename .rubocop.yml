@@ -11,8 +11,8 @@ Layout/LineLength:
   Exclude:
     - "spec/**/*.rb"
 
-# Metrics/AbcSize:
-#   Enabled: false
+Metrics/AbcSize:
+  Max: 20
 
 Metrics/BlockLength:
   Enabled: false

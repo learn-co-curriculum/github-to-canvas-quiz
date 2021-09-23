@@ -14,17 +14,15 @@ require_relative 'github_to_canvas_quiz/canvas_api/client'
 require 'thor'
 require_relative 'github_to_canvas_quiz/cli'
 
-# Markdown to HTML
+# Parsers
 require 'redcarpet'
 require 'rouge'
 require 'rouge/plugins/redcarpet'
-require_relative 'github_to_canvas_quiz/markdown_converter'
-
-# Parsers
 require 'front_matter_parser'
-require_relative 'github_to_canvas_quiz/markdown_parser/base'
-require_relative 'github_to_canvas_quiz/markdown_parser/question'
-require_relative 'github_to_canvas_quiz/markdown_parser/quiz'
+require_relative 'github_to_canvas_quiz/parser/markdown/helpers'
+require_relative 'github_to_canvas_quiz/parser/markdown/base'
+require_relative 'github_to_canvas_quiz/parser/markdown/question'
+require_relative 'github_to_canvas_quiz/parser/markdown/quiz'
 
 # Converters
 require 'yaml'

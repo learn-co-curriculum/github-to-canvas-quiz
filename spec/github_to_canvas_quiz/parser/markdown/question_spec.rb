@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GithubToCanvasQuiz::MarkdownParser::Question do
+RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
   describe '#parse' do
     context 'with a multiple choice question' do
       it 'returns a hash of question data' do

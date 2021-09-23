@@ -7,17 +7,16 @@ module GithubToCanvasQuiz
     option :directory, default: '.', desc: '(optional) Directory to output markdown files. Defaults to current directory'
     desc 'build', 'Creates Markdown files for a Canvas quiz and its questions'
     def build
+      puts "⬇️ Converting quiz..."
       # get the quiz data from Canvas (with question data)
       quiz_data = client.get_single_quiz(options[:course], options[:quiz])
       questions_data = client.list_questions(options[:course], options[:quiz])
-      puts "⬇️ Converting Quiz: #{quiz_data['title']}"
       # convert the quiz data to markdown, including any metadata, and output
       quiz = Converter::Quiz.from_canvas(options[:course], quiz_data)
       questions = questions_data.map do |question_data|
         Converter::Question.from_canvas(options[:course], options[:quiz], question_data)
       end
       # output files to directory
-      puts '📃 Creating Files...'
       RepoBuilder.new(quiz, questions).build(options[:directory])
       puts '✅ Done'
     end
