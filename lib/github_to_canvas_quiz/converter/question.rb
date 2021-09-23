@@ -5,7 +5,7 @@ module GithubToCanvasQuiz
     class Question
       class << self
         def from_markdown(markdown)
-          options = MarkdownParser::Question.new(markdown).parse
+          options = Parser::Markdown::Question.new(markdown).parse
           options[:answers] = options[:answers].map do |answer|
             answer_from(options[:type], answer)
           end

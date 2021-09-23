@@ -5,7 +5,7 @@ module GithubToCanvasQuiz
     class Quiz
       class << self
         def from_markdown(markdown)
-          options = MarkdownParser::Quiz.new(markdown).parse
+          options = Parser::Markdown::Quiz.new(markdown).parse
           new(options)
         end
 
