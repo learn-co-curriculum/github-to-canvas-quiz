@@ -33,7 +33,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Answer::FillInMultipleBlanks do
     describe '#to_markdown' do
       it 'produces the correct markdown' do
         match = File.read('spec/fixtures/markdown/answer/fill_in_multiple_blanks_question.md')
-        expect(answer.to_markdown.chomp).to eq(match.chomp)
+        expect(answer.to_markdown).to eq(match)
       end
     end
 

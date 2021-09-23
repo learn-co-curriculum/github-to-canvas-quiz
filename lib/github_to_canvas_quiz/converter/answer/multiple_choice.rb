@@ -20,8 +20,6 @@ module GithubToCanvasQuiz
           end
         end
 
-        include Helpers::Markdown
-
         attr_accessor :title, :text, :comments
 
         def initialize(options)
@@ -31,11 +29,11 @@ module GithubToCanvasQuiz
         end
 
         def to_markdown
-          blocks = []
-          blocks << h2(title)
-          blocks << markdown_block(text)
-          blocks << blockquote(comments) unless comments.empty?
-          join(blocks)
+          MarkdownBuilder.new.build do |md|
+            md.h2(title)
+            md.from_html(text)
+            md.blockquote(comments) unless comments.empty?
+          end
         end
 
         def to_h

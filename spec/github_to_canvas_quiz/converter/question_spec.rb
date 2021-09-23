@@ -501,7 +501,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'produces the correct markdown' do
         output = multiple_choice.to_markdown
         match = File.read('spec/fixtures/markdown/question/multiple_choice.md')
-        expect(output.chomp).to eq(match.chomp)
+        expect(output).to eq(match)
       end
     end
 
@@ -509,7 +509,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'produces the correct markdown' do
         output = matching.to_markdown
         match = File.read('spec/fixtures/markdown/question/matching.md')
-        expect(output.chomp).to eq(match.chomp)
+        expect(output).to eq(match)
       end
     end
 
@@ -517,7 +517,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
       it 'produces the correct markdown' do
         output = fill_in_multiple_blanks.to_markdown
         match = File.read('spec/fixtures/markdown/question/fill_in_multiple_blanks.md')
-        expect(output.chomp).to eq(match.chomp)
+        expect(output).to eq(match)
       end
     end
 
@@ -555,7 +555,7 @@ RSpec.describe GithubToCanvasQuiz::Converter::Question do
           distractors: []
         ).to_markdown
         match = File.read('spec/fixtures/markdown/question/code_description.md')
-        expect(output.chomp).to eq(match.chomp)
+        expect(output).to eq(match)
       end
     end
   end

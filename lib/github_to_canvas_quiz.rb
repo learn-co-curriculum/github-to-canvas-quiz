@@ -19,16 +19,11 @@ require 'redcarpet'
 require 'rouge'
 require 'rouge/plugins/redcarpet'
 require 'front_matter_parser'
-require_relative 'github_to_canvas_quiz/parser/markdown/helpers'
 require_relative 'github_to_canvas_quiz/parser/markdown/base'
 require_relative 'github_to_canvas_quiz/parser/markdown/question'
 require_relative 'github_to_canvas_quiz/parser/markdown/quiz'
 
 # Converters
-require 'yaml'
-require 'reverse_markdown'
-require_relative 'github_to_canvas_quiz/reverse_markdown/converters/pre'
-require_relative 'github_to_canvas_quiz/converter/helpers/markdown'
 require_relative 'github_to_canvas_quiz/converter/answer/fill_in_multiple_blanks'
 require_relative 'github_to_canvas_quiz/converter/answer/matching'
 require_relative 'github_to_canvas_quiz/converter/answer/multiple_answers'
@@ -47,6 +42,12 @@ require_relative 'github_to_canvas_quiz/synchronizer/quiz'
 require_relative 'github_to_canvas_quiz/repo_builder'
 
 require_relative 'github_to_canvas_quiz/version'
+
+# Renderers
+require 'yaml'
+require 'reverse_markdown'
+require_relative 'github_to_canvas_quiz/reverse_markdown/converters/pre'
+require_relative 'github_to_canvas_quiz/markdown_builder'
 
 module GithubToCanvasQuiz
   class UnknownQuestionType < StandardError; end

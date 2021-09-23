@@ -17,3 +17,17 @@
     class for initialization
 - Converter
   - convert data from the associated model to JSON or Markdown
+
+```rb
+quiz = Quiz.load(:api, course_id: 1, quiz_id: 2)
+quiz = Quiz.load(:file, path: '')
+
+class Quiz
+  def self.load(loader, options)
+    case loader
+    when :api then Loader::API::Quiz.new(self, options)
+    when :file then Loader::File::Quiz.new(self, options)
+    end
+  end
+end
+```

@@ -47,8 +47,7 @@ module GithubToCanvasQuiz
           when 'multiple_choice_question' then Answer::MultipleChoice.new(answer_data)
           when 'short_answer_question' then Answer::ShortAnswer.new(answer_data)
           when 'true_false_question' then Answer::TrueFalse.new(answer_data)
-          else
-            raise UnknownQuestionType(type)
+          else raise UnknownQuestionType(type)
           end
         end
 
@@ -60,13 +59,10 @@ module GithubToCanvasQuiz
           when 'multiple_choice_question' then Answer::MultipleChoice.from_canvas(answer_data)
           when 'short_answer_question' then Answer::ShortAnswer.from_canvas(answer_data)
           when 'true_false_question' then Answer::TrueFalse.from_canvas(answer_data)
-          else
-            raise UnknownQuestionType(type)
+          else raise UnknownQuestionType(type)
           end
         end
       end
-
-      include Helpers::Markdown
 
       attr_accessor :course_id, :quiz_id, :id, :type, :sources, :name, :description, :answers, :distractors
 
@@ -77,16 +73,18 @@ module GithubToCanvasQuiz
       end
 
       def to_markdown
-        blocks = []
-        blocks << frontmatter(frontmatter_hash)
-        blocks << h1(name)
-        blocks << markdown_block(description)
-        blocks.concat(answers.map(&:to_markdown))
-        unless distractors.empty?
-          blocks << h2('Incorrect')
-          blocks << ul(*distractors)
+        MarkdownBuilder.new.build do |md|
+          md.frontmatter(frontmatter_hash)
+          md.h1(name)
+          md.from_html(description)
+          answers.each do |answer|
+            md.add_markdown(answer.to_markdown)
+          end
+          unless distractors.empty?
+            md.h2('Incorrect')
+            md.ul(*distractors)
+          end
         end
-        join(blocks)
       end
 
       def to_h
@@ -95,13 +93,20 @@ module GithubToCanvasQuiz
           'question_text' => description,
           'question_type' => type,
           'points_possible' => 1,
-          'neutral_comments_html' => sources ? sources_to_html : '',
+          'neutral_comments_html' => sources.nil? || sources.empty? ? '' : sources_to_html,
           'answers' => answers.map(&:to_h),
           'matching_answer_incorrect_matches' => distractors.join("\n")
         }
       end
 
       private
+
+      def sources_to_html
+        comments = sources.map do |source|
+          "<a href=\"#{source['url']}\">#{source['name']}</a>"
+        end.join
+        "<p><strong>Source/s:</strong> #{comments}</p>"
+      end
 
       def frontmatter_hash
         {
@@ -111,14 +116,6 @@ module GithubToCanvasQuiz
           'type' => type,
           'sources' => sources
         }
-      end
-
-      def sources_to_html
-        comments = sources.map do |source|
-          "<a href=\"#{source['url']}\">#{source['name']}</a>"
-        end.join('')
-        
-        "<p><strong>Source/s:</strong> #{comments}</p>"
       end
     end
   end

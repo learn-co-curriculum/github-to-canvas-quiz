@@ -8,8 +8,6 @@ module GithubToCanvasQuiz
       end
 
       class Base
-        include Helpers
-
         attr_reader :frontmatter, :html
 
         OPTIONS = {
@@ -32,6 +30,18 @@ module GithubToCanvasQuiz
 
         def scanner
           @scanner ||= HTML::Scanner.from_html(html)
+        end
+
+        protected
+
+        def parse_text_from_nodes(nodes, selector)
+          nodes.css(selector).map do |node|
+            parse_text_from_node(node)
+          end
+        end
+
+        def parse_text_from_node(node)
+          CGI.unescapeHTML(node.content).strip
         end
       end
     end

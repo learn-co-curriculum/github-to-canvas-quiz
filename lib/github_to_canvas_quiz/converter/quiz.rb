@@ -19,8 +19,6 @@ module GithubToCanvasQuiz
         end
       end
 
-      include Helpers::Markdown
-
       attr_accessor :course_id, :id, :title, :description
 
       def initialize(options)
@@ -30,11 +28,11 @@ module GithubToCanvasQuiz
       end
 
       def to_markdown
-        blocks = []
-        blocks << frontmatter(frontmatter_hash)
-        blocks << h1(title)
-        blocks << markdown_block(description)
-        join(blocks)
+        MarkdownBuilder.new.build do |md|
+          md.frontmatter(frontmatter_hash)
+          md.h1(title)
+          md.from_html(description)
+        end
       end
 
       def to_h
