@@ -19,7 +19,7 @@ module ReverseMarkdown
       # Override #treat as proposed in https://github.com/xijo/reverse_markdown/pull/69
       def treat(node, state)
         case node.name
-        when 'code'
+        when 'text', 'span', 'code'
           node.text
         when 'br'
           "\n"
