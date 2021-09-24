@@ -3,32 +3,18 @@
 module GithubToCanvasQuiz
   module Parser
     module Markdown
-      class HTMLRenderer < Redcarpet::Render::HTML
-        include Rouge::Plugins::Redcarpet
-      end
-
       class Base
-        include Helpers::NodeParser
+        attr_reader :frontmatter, :markdown
 
-        attr_reader :frontmatter, :html
-
-        OPTIONS = {
-          tables: true,
-          autolink: true,
-          fenced_code_blocks: true,
-          disable_indented_code_blocks: true,
-          no_intra_emphasis: true
-        }.freeze
-
-        # TODO: allow markdown to be either string or file path
-        def initialize(markdown, options = {})
+        def initialize(markdown)
           # Separate the frontmatter and the rest of the markdown content
-          parsed = FrontMatterParser::Parser.new(:md).call(markdown)
+          parsed = if Pathname(markdown).exist?
+                     FrontMatterParser::Parser.parse_file(markdown)
+                   else
+                     FrontMatterParser::Parser.new(:md).call(markdown)
+                   end
           @frontmatter = parsed.front_matter
-
-          # Convert markdown to HTML
-          renderer = HTMLRenderer.new(escape_html: true)
-          @html = Redcarpet::Markdown.new(renderer, OPTIONS.merge(options)).render(parsed.content)
+          @markdown = parsed.content
         end
       end
     end

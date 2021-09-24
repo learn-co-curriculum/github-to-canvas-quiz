@@ -5,6 +5,8 @@ module GithubToCanvasQuiz
     module Markdown
       # Parses a markdown file and returns a Quiz
       class Quiz < Base
+        include Helpers::NodeParser
+
         def parse
           Model::Quiz.new(
             course_id: frontmatter['course_id'],
@@ -15,6 +17,11 @@ module GithubToCanvasQuiz
         end
 
         private
+
+        # Convert the markdown to HTML for scanning
+        def html
+          @html ||= MarkdownConverter.new(markdown).to_html
+        end
 
         # Title - contents of first H1
         def title

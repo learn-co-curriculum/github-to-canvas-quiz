@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 module GithubToCanvasQuiz
   module Parser
     module Markdown
@@ -14,9 +12,8 @@ module GithubToCanvasQuiz
           def initialize(title, nodes)
             @title = title
             scanner = Helpers::NodeScanner.new(nodes)
-            binding.pry
             @answer_nodes = scanner.scan_before('blockquote') || scanner.scan_rest
-            @comment = scanner.eof? ? '' : scanner.scan_rest.to_html.strip
+            @comment = scanner.eof? ? '' : scanner.scan_rest.first.inner_html.strip
           end
         end
 

@@ -4,15 +4,10 @@ module GithubToCanvasQuiz
   module Parser
     module Canvas
       class Question < Base
-        attr_reader :data
-
-        # Parse the frontmatter/HTML from the Markdown document and return a hash of parsed data
-        def load(course_id, quiz_id, id)
-          @data = client.get_single_question(course_id, quiz_id, id)
-
+        def parse
           Model::Question.new(
-            course_id: course_id,
-            quiz_id: quiz_id,
+            course_id: data['course_id'],
+            quiz_id: data['quiz_id'],
             id: data['id'],
             type: data['question_type'],
             name: data['question_name'],

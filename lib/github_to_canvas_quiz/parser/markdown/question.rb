@@ -4,6 +4,8 @@ module GithubToCanvasQuiz
   module Parser
     module Markdown
       class Question < Base
+        include Helpers::NodeParser
+
         # Parse the frontmatter/HTML from the Markdown document and return a Question and its associated Answers
         def parse
           Model::Question.new(
@@ -20,6 +22,11 @@ module GithubToCanvasQuiz
         end
 
         private
+
+        # Convert the markdown to HTML for scanning
+        def html
+          @html ||= MarkdownConverter.new(markdown).to_html
+        end
 
         # Name - contents of first H1
         def name
@@ -56,7 +63,9 @@ module GithubToCanvasQuiz
           scanner = Helpers::NodeScanner.from_html(html)
           scanner.scan_before('h2')
           while scanner.check('h2')
-            return parse_text_from_nodes(answer_body_nodes, 'li') if scanner.scan('h2').content == 'Incorrect'
+            title = scanner.scan('h2').content
+            nodes = scanner.scan_before('h2') || scanner.scan_rest
+            return parse_text_from_nodes(nodes, 'li') if title == 'Incorrect'
           end
 
           []

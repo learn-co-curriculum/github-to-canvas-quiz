@@ -53,7 +53,8 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
     context 'with a matching question' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/matching.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 4091,
           quiz_id: 21962,
           id: 144189,
@@ -67,32 +68,33 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'matching_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::Matching,
               text: 'Answer 1',
               comments: '',
               left: 'Answer 1',
               right: 'Value 1',
               title: 'Correct'
-            },
-            {
-              type: 'matching_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::Matching,
               text: 'Answer 2',
               comments: '',
               left: 'Answer 2',
               right: 'Value 2',
               title: 'Correct'
-            }
+            )
           ],
           distractors: ['Incorrect 1', 'Incorrect 2']
-        })
+        )
       end
     end
 
     context 'with a matching question and no distractors' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/matching_no_distractors.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 4091,
           quiz_id: 21962,
           id: 144189,
@@ -106,32 +108,33 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'matching_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::Matching,
               text: 'Answer 1',
               comments: '',
               left: 'Answer 1',
               right: 'Value 1',
               title: 'Correct'
-            },
-            {
-              type: 'matching_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::Matching,
               text: 'Answer 2',
               comments: '',
               left: 'Answer 2',
               right: 'Value 2',
               title: 'Correct'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 
     context 'with a true/false question' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/true_false.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 4091,
           quiz_id: 21962,
           id: 123906,
@@ -140,28 +143,29 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
           description: '<p>Answer true</p>',
           sources: nil,
           answers: [
-            {
-              type: 'true_false_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::TrueFalse,
               text: 'True',
               comments: '',
               title: 'Correct'
-            },
-            {
-              type: 'true_false_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::TrueFalse,
               text: 'False',
               comments: '',
               title: 'Incorrect'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 
     context 'with a short answer question' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/short_answer.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 3297,
           quiz_id: 12282,
           id: 144185,
@@ -175,40 +179,41 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'short_answer_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::ShortAnswer,
               text: 'submit',
               comments: '',
               title: 'Correct'
-            },
-            {
-              type: 'short_answer_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::ShortAnswer,
               text: 'Submit',
               comments: '',
               title: 'Correct'
-            },
-            {
-              type: 'short_answer_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::ShortAnswer,
               text: "'submit'",
               comments: '',
               title: 'Correct'
-            },
-            {
-              type: 'short_answer_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::ShortAnswer,
               text: '"submit"',
               comments: '',
               title: 'Correct'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 
     context 'with a fill in multiple blanks question' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/fill_in_multiple_blanks.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 3297,
           quiz_id: 12020,
           id: 130145,
@@ -222,58 +227,59 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'fill_in_multiple_blanks_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '&&',
               comments: '<p>Nice one!</p>',
               blank_id: 'value1'
-            },
-            {
-              type: 'fill_in_multiple_blanks_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '"&&"',
               comments: '<p>Nice one!</p>',
               blank_id: 'value1'
-            },
-            {
-              type: 'fill_in_multiple_blanks_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '||',
               comments: '<p>Correct!</p>',
               blank_id: 'value2'
-            },
-            {
-              type: 'fill_in_multiple_blanks_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '"||"',
               comments: '<p>Correct!</p>',
               blank_id: 'value2'
-            },
-            {
-              type: 'fill_in_multiple_blanks_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '!',
               comments: '<p>Nailed it!</p>',
               blank_id: 'value3'
-            },
-            {
-              type: 'fill_in_multiple_blanks_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::FillInMultipleBlanks,
               title: 'Correct',
               text: '"!"',
               comments: '<p>Nailed it!</p>',
               blank_id: 'value3'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 
     context 'with a multiple answers question' do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/multiple_answers.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 3264,
           quiz_id: 18302,
           id: 123916,
@@ -282,33 +288,33 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
           description: "<p>I want to render the Card component inside of my Container component. How would\nI properly export the Card component?</p>\n<div class=\"highlight\"><pre class=\"highlight jsx\"><code><span class=\"kd\">function</span> <span class=\"nx\">Card</span><span class=\"p\">({</span> <span class=\"nx\">title</span><span class=\"p\">,</span> <span class=\"nx\">subtitle</span> <span class=\"p\">})</span> <span class=\"p\">{</span>\n  <span class=\"k\">return</span> <span class=\"p\">(</span>\n    <span class=\"p\">&lt;</span><span class=\"nt\">div</span><span class=\"p\">&gt;</span>\n      <span class=\"p\">&lt;</span><span class=\"nt\">h1</span><span class=\"p\">&gt;</span><span class=\"si\">{</span><span class=\"nx\">title</span><span class=\"si\">}</span><span class=\"p\">&lt;/</span><span class=\"nt\">h1</span><span class=\"p\">&gt;</span>\n      <span class=\"p\">&lt;</span><span class=\"nt\">p</span><span class=\"p\">&gt;</span><span class=\"si\">{</span><span class=\"nx\">subtitle</span><span class=\"si\">}</span><span class=\"p\">&lt;/</span><span class=\"nt\">p</span><span class=\"p\">&gt;</span>\n    <span class=\"p\">&lt;/</span><span class=\"nt\">div</span><span class=\"p\">&gt;</span>\n  <span class=\"p\">);</span>\n<span class=\"p\">}</span>\n</code></pre></div>",
           sources: nil,
           answers: [
-            {
-              type: 'multiple_answers_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleAnswers,
               title: 'Correct',
               text: "<div class=\"highlight\"><pre class=\"highlight jsx\"><code><span class=\"kd\">function</span> <span class=\"nx\">Card</span><span class=\"p\">({</span> <span class=\"nx\">title</span><span class=\"p\">,</span> <span class=\"nx\">subtitle</span> <span class=\"p\">})</span> <span class=\"p\">{</span> <span class=\"p\">...</span> <span class=\"p\">}</span>\n\n<span class=\"k\">export</span> <span class=\"k\">default</span> <span class=\"nx\">Card</span><span class=\"p\">;</span>\n</code></pre></div>",
               comments: ''
-            },
-            {
-              type: 'multiple_answers_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleAnswers,
               title: 'Correct',
               text: "<div class=\"highlight\"><pre class=\"highlight jsx\"><code><span class=\"k\">export</span> <span class=\"k\">default</span> <span class=\"kd\">function</span> <span class=\"nx\">Card</span><span class=\"p\">({</span> <span class=\"nx\">title</span><span class=\"p\">,</span> <span class=\"nx\">subtitle</span> <span class=\"p\">})</span> <span class=\"p\">{</span> <span class=\"p\">...</span> <span class=\"p\">}</span>\n</code></pre></div>",
               comments: ''
-            },
-            {
-              type: 'multiple_answers_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleAnswers,
               title: 'Incorrect',
               text: "<div class=\"highlight\"><pre class=\"highlight jsx\"><code><span class=\"kd\">function</span> <span class=\"nx\">Card</span><span class=\"p\">({</span> <span class=\"nx\">title</span><span class=\"p\">,</span> <span class=\"nx\">subtitle</span> <span class=\"p\">})</span> <span class=\"p\">{</span> <span class=\"p\">...</span> <span class=\"p\">}</span>\n<span class=\"k\">export</span> <span class=\"nx\">cardComponent</span><span class=\"p\">;</span>\n</code></pre></div>",
               comments: '<p>Be sure you are exporting the correct function!</p>'
-            },
-            {
-              type: 'multiple_answers_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleAnswers,
               title: 'Incorrect',
               text: "<p>I don't know.</p>",
               comments: ''
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 
@@ -324,7 +330,8 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
           <span class="p">}</span>
           </code></pre></div>
         HTML
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 4091,
           quiz_id: 21962,
           id: 126509,
@@ -338,15 +345,15 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'multiple_choice_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>This one!</p>',
               comments: '',
               title: 'Correct'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
   end

@@ -10,6 +10,16 @@ require_relative 'github_to_canvas_quiz/canvas_api/client'
 require 'thor'
 require_relative 'github_to_canvas_quiz/cli'
 
+# Renderer Helpers
+require 'yaml'
+require 'reverse_markdown'
+require 'redcarpet'
+require 'rouge'
+require 'rouge/plugins/redcarpet'
+require_relative 'github_to_canvas_quiz/reverse_markdown/converters/pre'
+require_relative 'github_to_canvas_quiz/markdown_builder'
+require_relative 'github_to_canvas_quiz/markdown_converter'
+
 # Parsers/Canvas
 require_relative 'github_to_canvas_quiz/parser/canvas/answer'
 require_relative 'github_to_canvas_quiz/parser/canvas/base'
@@ -19,9 +29,6 @@ require_relative 'github_to_canvas_quiz/parser/canvas/quiz'
 # Parsers/Markdown
 require 'front_matter_parser'
 require 'nokogiri'
-require 'redcarpet'
-require 'rouge'
-require 'rouge/plugins/redcarpet'
 require_relative 'github_to_canvas_quiz/parser/markdown/helpers/node_parser'
 require_relative 'github_to_canvas_quiz/parser/markdown/helpers/node_scanner'
 require_relative 'github_to_canvas_quiz/parser/markdown/answer'
@@ -39,31 +46,13 @@ require_relative 'github_to_canvas_quiz/model/answer/true_false'
 require_relative 'github_to_canvas_quiz/model/quiz'
 require_relative 'github_to_canvas_quiz/model/question'
 
-# Converters
-# require_relative 'github_to_canvas_quiz/converter/answer/fill_in_multiple_blanks'
-# require_relative 'github_to_canvas_quiz/converter/answer/matching'
-# require_relative 'github_to_canvas_quiz/converter/answer/multiple_answers'
-# require_relative 'github_to_canvas_quiz/converter/answer/multiple_choice'
-# require_relative 'github_to_canvas_quiz/converter/answer/short_answer'
-# require_relative 'github_to_canvas_quiz/converter/answer/true_false'
-# require_relative 'github_to_canvas_quiz/converter/quiz'
-# require_relative 'github_to_canvas_quiz/converter/question'
-
 # Synchronizer
-require_relative 'github_to_canvas_quiz/synchronizer/repo'
-require_relative 'github_to_canvas_quiz/synchronizer/question'
 require_relative 'github_to_canvas_quiz/synchronizer/quiz'
 
-# Repository
-require_relative 'github_to_canvas_quiz/repo_builder'
+# Builder
+require_relative 'github_to_canvas_quiz/builder/quiz'
 
 require_relative 'github_to_canvas_quiz/version'
-
-# Renderers
-require 'yaml'
-require 'reverse_markdown'
-require_relative 'github_to_canvas_quiz/reverse_markdown/converters/pre'
-require_relative 'github_to_canvas_quiz/markdown_builder'
 
 module GithubToCanvasQuiz
   class UnknownQuestionType < StandardError; end

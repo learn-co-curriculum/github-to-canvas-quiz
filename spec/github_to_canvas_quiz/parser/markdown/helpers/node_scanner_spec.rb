@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GithubToCanvasQuiz::HTML::Scanner do
+RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Helpers::NodeScanner do
   let(:html) do
     <<~HTML
       <h1>Question Name</h1>

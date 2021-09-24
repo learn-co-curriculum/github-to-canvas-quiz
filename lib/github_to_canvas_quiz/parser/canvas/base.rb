@@ -4,10 +4,10 @@ module GithubToCanvasQuiz
   module Parser
     module Canvas
       class Base
-        attr_reader :client
+        attr_reader :data
 
-        def initialize(client)
-          @client = client
+        def initialize(data)
+          @data = data
         end
       end
     end

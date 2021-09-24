@@ -43,13 +43,7 @@ module GithubToCanvasQuiz
 
         class Matching < Base
           def call
-            Model::Answer::Matching.new(
-              title: title,
-              text: data['text'],
-              comments: comments,
-              left: data['left'],
-              right: data['right']
-            )
+            Model::Answer::Matching.new(title: title, text: data['text'], comments: comments, left: data['left'], right: data['right'])
           end
 
           private
@@ -105,7 +99,7 @@ module GithubToCanvasQuiz
 
         class ShortAnswer < Base
           def call
-            Model::Answer::ShortAnswer.new(title: title, text: answer['text'], comments: comments)
+            Model::Answer::ShortAnswer.new(title: title, text: data['text'], comments: comments)
           end
 
           private
@@ -121,7 +115,7 @@ module GithubToCanvasQuiz
 
         class TrueFalse < Base
           def call
-            Model::Answer::TrueFalse.new(title: title, text: answer['text'], comments: comments)
+            Model::Answer::TrueFalse.new(title: title, text: data['text'], comments: comments)
           end
 
           private
