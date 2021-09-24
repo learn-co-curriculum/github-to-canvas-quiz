@@ -3,9 +3,10 @@
 RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
   describe '#parse' do
     context 'with a multiple choice question' do
-      it 'returns a hash of question data' do
+      it 'returns a Model::Question instance with the correct data' do
         input = File.read('spec/fixtures/markdown/question/multiple_choice.md')
-        expect(described_class.new(input).parse).to eq({
+        expect(described_class.new(input).parse).to have_attributes(
+          class: GithubToCanvasQuiz::Model::Question,
           course_id: 4091,
           quiz_id: 21962,
           id: 123906,
@@ -19,33 +20,33 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             }
           ],
           answers: [
-            {
-              type: 'multiple_choice_question',
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>useHistory</p>',
               comments: '',
               title: 'Correct'
-            },
-            {
-              type: 'multiple_choice_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>useParams</p>',
               comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>',
               title: 'Incorrect'
-            },
-            {
-              type: 'multiple_choice_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>useState</p>',
               comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>',
               title: 'Incorrect'
-            },
-            {
-              type: 'multiple_choice_question',
+            ),
+            have_attributes(
+              class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: "<p>I don't know.</p>",
               comments: '<p>Comment</p>',
               title: 'Incorrect'
-            }
+            )
           ],
           distractors: []
-        })
+        )
       end
     end
 

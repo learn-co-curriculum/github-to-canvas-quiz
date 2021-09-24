@@ -8,6 +8,8 @@ module GithubToCanvasQuiz
       end
 
       class Base
+        include Helpers::NodeParser
+
         attr_reader :frontmatter, :html
 
         OPTIONS = {
@@ -18,6 +20,7 @@ module GithubToCanvasQuiz
           no_intra_emphasis: true
         }.freeze
 
+        # TODO: allow markdown to be either string or file path
         def initialize(markdown, options = {})
           # Separate the frontmatter and the rest of the markdown content
           parsed = FrontMatterParser::Parser.new(:md).call(markdown)
@@ -26,22 +29,6 @@ module GithubToCanvasQuiz
           # Convert markdown to HTML
           renderer = HTMLRenderer.new(escape_html: true)
           @html = Redcarpet::Markdown.new(renderer, OPTIONS.merge(options)).render(parsed.content)
-        end
-
-        def scanner
-          @scanner ||= HTML::Scanner.from_html(html)
-        end
-
-        protected
-
-        def parse_text_from_nodes(nodes, selector)
-          nodes.css(selector).map do |node|
-            parse_text_from_node(node)
-          end
-        end
-
-        def parse_text_from_node(node)
-          CGI.unescapeHTML(node.content).strip
         end
       end
     end
