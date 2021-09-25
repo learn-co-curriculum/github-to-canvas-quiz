@@ -13,10 +13,10 @@ module GithubToCanvasQuiz
         end
 
         def to_markdown
-          MarkdownBuilder.new.build do |md|
+          MarkdownBuilder.build do |md|
             md.h2(title)
             md.ul(text, blank_id)
-            md.blockquote(comments) unless comments.empty?
+            md.blockquote(md.html_to_markdown(comments)) unless comments.empty?
           end
         end
 

@@ -12,12 +12,12 @@ module GithubToCanvasQuiz
       end
 
       def to_markdown
-        MarkdownBuilder.new.build do |md|
+        MarkdownBuilder.build do |md|
           md.frontmatter(frontmatter_hash)
           md.h1(name)
-          md.from_html(description)
+          md.md(md.html_to_markdown(description))
           answers.each do |answer|
-            md.add_markdown(answer.to_markdown)
+            md.md(answer.to_markdown)
           end
           unless distractors.empty?
             md.h2('Incorrect')

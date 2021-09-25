@@ -12,10 +12,10 @@ module GithubToCanvasQuiz
       end
 
       def to_markdown
-        MarkdownBuilder.new.build do |md|
+        MarkdownBuilder.build do |md|
           md.frontmatter(frontmatter_hash)
           md.h1(title)
-          md.from_html(description)
+          md.md(md.html_to_markdown(description))
         end
       end
 
