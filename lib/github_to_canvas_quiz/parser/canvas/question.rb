@@ -3,7 +3,15 @@
 module GithubToCanvasQuiz
   module Parser
     module Canvas
-      class Question < Base
+      class Question
+        include Helpers
+
+        attr_reader :data
+
+        def initialize(data)
+          @data = data
+        end
+
         def parse
           Model::Question.new(
             course_id: data['course_id'],
@@ -11,7 +19,7 @@ module GithubToCanvasQuiz
             id: data['id'],
             type: data['question_type'],
             name: data['question_name'],
-            description: data['question_text'],
+            description: clean_html(data['question_text']),
             sources: sources,
             answers: answers,
             distractors: distractors
@@ -25,8 +33,10 @@ module GithubToCanvasQuiz
           return unless html
 
           Nokogiri::HTML5.fragment(html).css('a').map do |node|
-            name = node.content.gsub('Links to an external site.', '')
-            { 'name' => name, 'url' => node['href'] }
+            {
+              'name' => clean_html(node.content),
+              'url' => node['href']
+            }
           end
         end
 

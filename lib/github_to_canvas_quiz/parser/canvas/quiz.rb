@@ -4,7 +4,15 @@ module GithubToCanvasQuiz
   module Parser
     module Canvas
       # Parses a quiz from the Canvas API and returns a Quiz
-      class Quiz < Base
+      class Quiz
+        include Helpers
+
+        attr_reader :data
+
+        def initialize(data)
+          @data = data
+        end
+
         def parse
           Model::Quiz.new(
             course_id: data['course_id'],

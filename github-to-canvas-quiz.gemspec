@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'front_matter_parser', '~> 1.0'
+  spec.add_dependency 'htmlentities', '~> 4.3'
   spec.add_dependency 'nokogiri', '~> 1.12'
   spec.add_dependency 'redcarpet', '~> 3.5'
   spec.add_dependency 'rest-client', '~> 2.1'

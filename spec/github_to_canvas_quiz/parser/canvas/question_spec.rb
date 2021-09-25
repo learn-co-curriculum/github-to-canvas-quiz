@@ -22,19 +22,19 @@ RSpec.describe GithubToCanvasQuiz::Parser::Canvas::Question do
               have_attributes(
                 class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
                 title: 'Correct',
-                text: "<p>Answer 1</p>\n<p>&nbsp;</p>\n<p>ok!</p>",
+                text: "<p>Answer 1</p>\n<p>\u00a0</p>\n<p>ok!</p>",
                 comments: '<p>Answer 1 comment</p>'
               ),
               have_attributes(
                 class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
                 title: 'Incorrect',
-                text: "<p>Answer 2</p>\n<p>&nbsp;</p>\n<p>ok!</p>",
+                text: "<p>Answer 2</p>\n<p>\u00a0</p>\n<p>ok!</p>",
                 comments: '<p>Answer 2 comment</p>'
               ),
               have_attributes(
                 class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
                 title: 'Incorrect',
-                text: "<p>Answer 3</p>\n<p>&nbsp;</p>\n<p>ok!</p>",
+                text: "<p>Answer 3</p>\n<p>\u00a0</p>\n<p>ok!</p>",
                 comments: '<p>Answer 3 comment</p>'
               )
             ],
@@ -91,7 +91,7 @@ RSpec.describe GithubToCanvasQuiz::Parser::Canvas::Question do
             id: 130145,
             type: 'fill_in_multiple_blanks_question',
             name: 'Fundamentals: Logical Operators',
-            description: "<p>How do we declare JavaScript's 3 logical operators?&nbsp;</p>\n<p>[value1] AND</p>\n<p>[value2] OR</p>\n<p>[value3] NOT</p>",
+            description: "<p>How do we declare JavaScript's 3 logical operators?\u00a0</p>\n<p>[value1] AND</p>\n<p>[value2] OR</p>\n<p>[value3] NOT</p>",
             sources: [
               {
                 'name' => 'Logical Operators',

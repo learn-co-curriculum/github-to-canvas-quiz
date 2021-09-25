@@ -1,134 +1,17 @@
 # frozen_string_literal: true
 
+require_relative 'answer/base'
+require_relative 'answer/fill_in_multiple_blanks'
+require_relative 'answer/matching'
+require_relative 'answer/multiple_answers'
+require_relative 'answer/multiple_choice'
+require_relative 'answer/short_answer'
+require_relative 'answer/true_false'
+
 module GithubToCanvasQuiz
   module Parser
     module Canvas
       module Answer
-        class Base
-          def initialize(data)
-            @data = data
-          end
-
-          protected
-
-          def choose_text(text, html)
-            html.empty? ? text : html
-          end
-
-          private
-
-          attr_reader :data
-        end
-
-        class FillInMultipleBlanks < Base
-          def call
-            Model::Answer::FillInMultipleBlanks.new(
-              title: title,
-              text: data['text'],
-              comments: comments,
-              blank_id: data['blank_id']
-            )
-          end
-
-          private
-
-          def title
-            data.fetch('weight', 0).positive? ? 'Correct' : 'Incorrect'
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
-        class Matching < Base
-          def call
-            Model::Answer::Matching.new(title: title, text: data['text'], comments: comments, left: data['left'], right: data['right'])
-          end
-
-          private
-
-          def title
-            data['left'].empty? ? 'Incorrect' : 'Correct'
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
-        class MultipleAnswers < Base
-          def call
-            Model::Answer::MultipleAnswers.new(title: title, text: text, comments: comments)
-          end
-
-          private
-
-          def title
-            data.fetch('weight', 0).positive? ? 'Correct' : 'Incorrect'
-          end
-
-          def text
-            choose_text(data.fetch('text', ''), data.fetch('html', ''))
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
-        class MultipleChoice < Base
-          def call
-            Model::Answer::MultipleChoice.new(title: title, text: text, comments: comments)
-          end
-
-          private
-
-          def title
-            data.fetch('weight', 0).positive? ? 'Correct' : 'Incorrect'
-          end
-
-          def text
-            choose_text(data.fetch('text', ''), data.fetch('html', ''))
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
-        class ShortAnswer < Base
-          def call
-            Model::Answer::ShortAnswer.new(title: title, text: data['text'], comments: comments)
-          end
-
-          private
-
-          def title
-            data.fetch('weight', 0).positive? ? 'Correct' : 'Incorrect'
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
-        class TrueFalse < Base
-          def call
-            Model::Answer::TrueFalse.new(title: title, text: data['text'], comments: comments)
-          end
-
-          private
-
-          def title
-            data.fetch('weight', 0).positive? ? 'Correct' : 'Incorrect'
-          end
-
-          def comments
-            choose_text(data.fetch('comments', ''), data.fetch('comments_html', ''))
-          end
-        end
-
         CLASSES = {
           'fill_in_multiple_blanks_question' => FillInMultipleBlanks,
           'matching_question' => Matching,
@@ -139,7 +22,9 @@ module GithubToCanvasQuiz
         }.freeze
 
         def self.for(type, data)
-          CLASSES[type].new(data).call
+          raise UnknownQuestionType, type unless CLASSES.key?(type)
+
+          CLASSES[type].new(data).parse
         end
       end
     end

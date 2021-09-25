@@ -49,14 +49,7 @@ module GithubToCanvasQuiz
     end
 
     def html_to_markdown(html)
-      ReverseMarkdown.convert(remove_canvas_cruft(html), github_flavored: true).strip
-    end
-
-    # This should happen when receiving data from the API
-    def remove_canvas_cruft(html)
-      html.gsub('&nbsp;(Links to an external site.)', '')
-          .gsub('Links to an external site.', '')
-          .gsub('&nbsp;', ' ')
+      ReverseMarkdown.convert(html, github_flavored: true).strip
     end
   end
 end

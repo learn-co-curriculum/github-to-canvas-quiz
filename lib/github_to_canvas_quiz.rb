@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'front_matter_parser'
+require 'htmlentities'
 require 'json'
 require 'nokogiri'
 require 'redcarpet'
@@ -27,8 +28,8 @@ require 'github_to_canvas_quiz/model/answer/true_false'
 require 'github_to_canvas_quiz/model/quiz'
 require 'github_to_canvas_quiz/model/question'
 
+require 'github_to_canvas_quiz/parser/canvas/helpers'
 require 'github_to_canvas_quiz/parser/canvas/answer'
-require 'github_to_canvas_quiz/parser/canvas/base'
 require 'github_to_canvas_quiz/parser/canvas/question'
 require 'github_to_canvas_quiz/parser/canvas/quiz'
 require 'github_to_canvas_quiz/parser/markdown/helpers/node_parser'
