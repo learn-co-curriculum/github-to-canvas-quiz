@@ -10,7 +10,8 @@ sources:
 
 # Functions: Scope
 
-Which hook gives us the ability to programmatically navigate the user to a new page in our application?
+Which hook gives us the ability to programmatically navigate the user to a new
+page in our application?
 
 Take a _look_ at this **code** :
 

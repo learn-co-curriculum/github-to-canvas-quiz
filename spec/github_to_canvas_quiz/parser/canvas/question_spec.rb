@@ -126,5 +126,73 @@ RSpec.describe GithubToCanvasQuiz::Parser::Canvas::Question do
         end
       end
     end
+
+    context 'with a multiple dropdowns question' do
+      it 'creates a Question instance with the correct data' do
+        VCR.use_cassette 'question_multiple_dropdowns' do
+          data = client.get_single_question(3299, 19086, 120510)
+          data.merge!({ 'course_id' => 3299, 'quiz_id' => 19086 })
+          expect(described_class.new(data).parse).to have_attributes(
+            course_id: 3299,
+            quiz_id: 19086,
+            id: 120510,
+            type: 'multiple_dropdowns_question',
+            name: 'Question 5',
+            description: "<pre><code>\nmodule Talk\n  module Phrases\n    def hello\n      \"Hello!\"\n    end\n\n    def goodbye\n      \"Good bye!\"\n    end\n  end\n\n  module Teachers\n    def teach\n      \"Repeat after me.\"\n    end\n  end\nend<br>\n</code></pre>\n<div>\n<div><span>The code sample above is an example of [a1]</span><span> modules. To access the Teachers module to include it in a class, we would type include [a2]</span><span>.</span></div>\n</div>",
+            sources: [
+              {
+                'name' => 'Modules',
+                'url' => 'https://github.com/learn-co-curriculum/phase-3-ruby-oo-inheritance-modules'
+              }
+            ],
+            answers: [
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Correct',
+                text: 'nested',
+                comments: 'Correct! Both <code>Teachers</code> and <code>Phrases</code> are nested inside of <code>Talk</code>. They can be accessed using <code>::</code>.',
+                blank_id: 'a1'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Incorrect',
+                text: 'subclass inherited',
+                comments: "There aren't any classes, nor any subclass inheritance, in the syntax above. You might want to review the resource/s for this question.",
+                blank_id: 'a1'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Incorrect',
+                text: "I don't know",
+                comments: "Be sure to study the source/s for this question. You'll get it next time.",
+                blank_id: 'a1'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Correct',
+                text: 'Talk::Teachers',
+                comments: 'Correct! To <code>include</code> the <code>Teachers</code> module, we need to access it using <code>::</code> on the module that contains it.',
+                blank_id: 'a2'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Incorrect',
+                text: 'Teachers::Talk',
+                comments: 'When using <code>::</code> to access a nested module, we put the module that contains the other module on the left side of the double colon.',
+                blank_id: 'a2'
+              ),
+              have_attributes(
+                class: GithubToCanvasQuiz::Model::Answer::MultipleDropdowns,
+                title: 'Incorrect',
+                text: 'Talk.Teachers',
+                comments: "Not quite. This looks more like we're trying to call a method on <code>Talk</code>.",
+                blank_id: 'a2'
+              )
+            ],
+            distractors: []
+          )
+        end
+      end
+    end
   end
 end

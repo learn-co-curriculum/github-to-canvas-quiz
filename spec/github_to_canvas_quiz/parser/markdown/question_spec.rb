@@ -29,13 +29,13 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
             have_attributes(
               class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>useParams</p>',
-              comments: '<p>We use the <a href="https://reactrouter.com/web/api/Hooks/useparams"><code>useParams</code></a> hook to get the dynamic <code>params</code> from the URL.</p>',
+              comments: "<p>We use the <a href=\"https://reactrouter.com/web/api/Hooks/useparams\"><code>useParams</code></a> hook\nto get the dynamic <code>params</code> from the URL.</p>",
               title: 'Incorrect'
             ),
             have_attributes(
               class: GithubToCanvasQuiz::Model::Answer::MultipleChoice,
               text: '<p>useState</p>',
-              comments: '<p>We use the <a href="https://reactjs.org/docs/hooks-reference.html#usestate">useState</a> hook to return a stateful value, and a function to update it.</p>',
+              comments: "<p>We use the <a href=\"https://reactjs.org/docs/hooks-reference.html#usestate\">useState</a>\nhook to return a stateful value, and a function to update it.</p>",
               title: 'Incorrect'
             ),
             have_attributes(
@@ -322,7 +322,8 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
       it 'returns a hash of question data' do
         input = File.read('spec/fixtures/markdown/question/code_description.md')
         description = <<~HTML
-          <p>Which hook gives us the ability to programmatically navigate the user to a new page in our application?</p>
+          <p>Which hook gives us the ability to programmatically navigate the user to a new
+          page in our application?</p>
 
           <p>Take a <em>look</em> at this <strong>code</strong> :</p>
           <div class="highlight"><pre class="highlight jsx"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>

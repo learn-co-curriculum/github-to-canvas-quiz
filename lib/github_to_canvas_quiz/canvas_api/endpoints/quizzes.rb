@@ -4,6 +4,10 @@ module GithubToCanvasQuiz
   module CanvasAPI
     module Endpoints
       module Quizzes
+        def list_quizzes(course_id)
+          get_all("/courses/#{course_id}/quizzes")
+        end
+
         def get_single_quiz(course_id, id)
           get("/courses/#{course_id}/quizzes/#{id}")
         end

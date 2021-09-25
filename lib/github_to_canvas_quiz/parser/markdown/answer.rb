@@ -5,6 +5,7 @@ require_relative 'answer/fill_in_multiple_blanks'
 require_relative 'answer/matching'
 require_relative 'answer/multiple_answers'
 require_relative 'answer/multiple_choice'
+require_relative 'answer/multiple_dropdowns'
 require_relative 'answer/short_answer'
 require_relative 'answer/true_false'
 
@@ -17,6 +18,7 @@ module GithubToCanvasQuiz
           'matching_question' => Matching,
           'multiple_answers_question' => MultipleAnswers,
           'multiple_choice_question' => MultipleChoice,
+          'multiple_dropdowns_question' => MultipleDropdowns,
           'short_answer_question' => ShortAnswer,
           'true_false_question' => TrueFalse
         }.freeze

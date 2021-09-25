@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://flatironlearn.beta.instructure.com/api/v1/courses/3299/quizzes/19086/questions/120510
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - rest-client/2.1.0 (darwin20 x86_64) ruby/2.7.4p191
+      Authorization:
+      - Bearer 15802~gh6vdVMNKu1rSpOoYtF3m1jDjQy9M33oRs0pveRDPqu6IecKCL9KuxTcLVR8ykPj
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - flatironlearn.beta.instructure.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 25 Sep 2021 14:46:06 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - Apache
+      X-Request-Cost:
+      - '0.05685505899486998'
+      X-Session-Id:
+      - ff4d5511dfe92b7c98eeb6dc681081d2
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Context-Id:
+      - 7f6747b1-b322-4d98-be73-a60a23b11159
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Rate-Limit-Remaining:
+      - '700.0'
+      X-Canvas-Meta:
+      - q=2164;at=158020000000003798;dk=170000000000016;a=1;g=cX7SWGutCzDOFQFyPyMy2HZcIvWIoL67bpNEz9lv;s=15802;c=cluster238;z=us-east-1b;o=quizzes/quiz_questions;n=show;t=Course;i=3299;x=5.0;p=f;f=2021-09-25T14:46:06.81Z;b=1593156;m=1593156;u=0.05;y=0.00;d=0.01;
+      X-Canvas-User-Id:
+      - '158020000000000641'
+      X-Download-Options:
+      - noopen
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.072481'
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _csrf_token=82KdCnAkZZ704k40fuOffg6Yib%2BybYAwdbOlQjTNJxyiE%2BV7PxEs1bLWK2Ufk9UwQerQ65kbx2IP2dZ3Ap1dWA%3D%3D;
+        path=/; secure
+      - _legacy_normandy_session=KEQjU5Jh9-yZDLAGi9nLgw.rnParzI-VtjYDLbIQxdUHPRF13fM_PCJv3bGh3dgVwRRrNyOeRwTwGyVCGQ_VLLr0Zdt3HO9dKAkIP5fX5dgdA2OXftHHYeHZNU08-C16sTwO8-KHf60wemaKuf1xqqP.sobidnkODQ00kOroL6GVzihrePQ.YU82Lg;
+        path=/; secure; HttpOnly
+      - canvas_session=KEQjU5Jh9-yZDLAGi9nLgw.rnParzI-VtjYDLbIQxdUHPRF13fM_PCJv3bGh3dgVwRRrNyOeRwTwGyVCGQ_VLLr0Zdt3HO9dKAkIP5fX5dgdA2OXftHHYeHZNU08-C16sTwO8-KHf60wemaKuf1xqqP.sobidnkODQ00kOroL6GVzihrePQ.YU82Lg;
+        path=/; secure; HttpOnly; SameSite=None
+      - log_session_id=ff4d5511dfe92b7c98eeb6dc681081d2; path=/; secure; HttpOnly
+      X-Request-Processor:
+      - 0bc5dc2b781581295
+      X-A11y-Ally:
+      - Dana Danger Grey
+      Etag:
+      - W/"1e8899accb4eb5fc6b73c619cca6dd69"
+      Status:
+      - 200 OK
+      X-Robots-Tag:
+      - none
+      P3p:
+      - CP="None, see http://www.instructure.com/privacy-policy"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"quiz_id":19086,"id":120510,"quiz_group_id":null,"assessment_question_id":135363,"position":null,"question_name":"Question
+        5","question_type":"multiple_dropdowns_question","question_text":"\u003cpre\u003e\u003ccode\u003e\nmodule
+        Talk\n  module Phrases\n    def hello\n      \"Hello!\"\n    end\n\n    def
+        goodbye\n      \"Good bye!\"\n    end\n  end\n\n  module Teachers\n    def
+        teach\n      \"Repeat after me.\"\n    end\n  end\nend\u003cbr\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cdiv\u003e\n\u003cdiv\u003e\u003cspan\u003eThe
+        code sample above is an example of [a1]\u003c/span\u003e\u003cspan\u003e modules.
+        To access the Teachers module to include it in a class, we would type include
+        [a2]\u003c/span\u003e\u003cspan\u003e.\u003c/span\u003e\u003c/div\u003e\n\u003c/div\u003e","points_possible":1.0,"correct_comments":"","incorrect_comments":"","neutral_comments":"","correct_comments_html":"","incorrect_comments_html":"","neutral_comments_html":"\u003cp\u003e\u003cstrong\u003eSource/s\u003c/strong\u003e\u003cspan\u003e:\u0026nbsp;\u003c/span\u003e\u003ca
+        class=\"inline_disabled\" href=\"https://github.com/learn-co-curriculum/phase-3-ruby-oo-inheritance-modules\"
+        target=\"_blank\"\u003eModules\u003c/a\u003e\u003c/p\u003e","answers":[{"id":1150,"text":"nested","comments":"","comments_html":"Correct!
+        Both \u003ccode\u003eTeachers\u003c/code\u003e and \u003ccode\u003ePhrases\u003c/code\u003e
+        are nested inside of \u003ccode\u003eTalk\u003c/code\u003e. They can be accessed
+        using \u003ccode\u003e::\u003c/code\u003e.","weight":100.0,"blank_id":"a1"},{"id":6020,"text":"subclass
+        inherited","comments":"","comments_html":"There aren''t any classes, nor any
+        subclass inheritance, in the syntax above. You might want to review the resource/s
+        for this question.","weight":0.0,"blank_id":"a1"},{"id":9846,"text":"I don''t
+        know","comments":"","comments_html":"Be sure to study the source/s for this
+        question. You''ll get it next time.","weight":0.0,"blank_id":"a1"},{"id":4381,"text":"Talk::Teachers","comments":"","comments_html":"Correct!
+        To \u003ccode\u003einclude\u003c/code\u003e the \u003ccode\u003eTeachers\u003c/code\u003e
+        module, we need to access it using \u003ccode\u003e::\u003c/code\u003e on
+        the module that contains it.","weight":100.0,"blank_id":"a2"},{"id":3358,"text":"Teachers::Talk","comments":"","comments_html":"When
+        using \u003ccode\u003e::\u003c/code\u003e to access a nested module, we put
+        the module that contains the other module on the left side of the double colon.","weight":0.0,"blank_id":"a2"},{"id":6769,"text":"Talk.Teachers","comments":"","comments_html":"Not
+        quite. This looks more like we''re trying to call a method on \u003ccode\u003eTalk\u003c/code\u003e.","weight":0.0,"blank_id":"a2"}],"variables":null,"formulas":null,"answer_tolerance":null,"formula_decimal_places":null,"matches":null,"matching_answer_incorrect_matches":null}'
+  recorded_at: Sat, 25 Sep 2021 14:46:06 GMT
+recorded_with: VCR 6.0.0
