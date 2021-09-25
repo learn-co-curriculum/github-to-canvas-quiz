@@ -31,7 +31,7 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Helpers::NodeScanner do
   end
 
   let(:scanner) do
-    described_class.from_html(html)
+    described_class.new(html)
   end
 
   describe '#scan' do

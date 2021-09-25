@@ -30,20 +30,20 @@ module GithubToCanvasQuiz
 
         # Name - contents of first H1
         def name
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_until('h1').last.content
         end
 
         # Description - contents between H1 and first H2
         def description
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_until('h1')
           scanner.scan_before('h2').to_html.strip
         end
 
         # Each H2 and the content before the next H2 represent an answer
         def answers
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_before('h2')
           answers = []
           while scanner.check('h2')
@@ -60,7 +60,7 @@ module GithubToCanvasQuiz
         def distractors
           return [] unless frontmatter['type'] == 'matching_question'
 
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_before('h2')
           while scanner.check('h2')
             title = scanner.scan('h2').content

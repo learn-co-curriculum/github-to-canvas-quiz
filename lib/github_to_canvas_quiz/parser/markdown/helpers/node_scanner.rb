@@ -4,11 +4,11 @@ module GithubToCanvasQuiz
   module Parser
     module Markdown
       module Helpers
-        # Loosely based on the Ruby `StringScanner` class. allows position-based
+        # Loosely based on the Ruby `StringScanner` class. Allows position-based
         # traversal of a `Nokogiri::XML::NodeSet`:
         #
         #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-        #   scanner = HTML::Scanner.from_html(html)
+        #   scanner = HTML::Scanner.new(html)
         #
         #   # scan and return nodes before the first H3
         #   nodes = scanner.scan_before('h3')
@@ -21,32 +21,25 @@ module GithubToCanvasQuiz
         #   h3.content          # => 'end.'
         #   scanner.eof?        # => true
         class NodeScanner
-          class << self
-            #
-            # Create a new Scanner from a HTML string. Generally, you'll use this instead of initializing the class directly.
-            #
-            # @param [String] html The string of HTML you wish to scan
-            #
-            # @return [GithubToCanvasQuiz::HTML::Scanner] The new Scanner instance
-            def from_html(html)
-              new(Nokogiri::HTML5.fragment(html).children)
-            end
-          end
-
           attr_reader :node_set
           attr_accessor :cursor
 
           #
-          # Create a new instance from a Nokogiri::XML::NodeSet
+          # Create a new instance from a Nokogiri::XML::NodeSet or HTML string
           #
-          # @param [Nokogiri::XML::NodeSet] node_set NodeSet to be scanned
+          # @param [Nokogiri::XML::NodeSet, String] node_set HTML nodes to be scanned
           #
-          def initialize(node_set)
-            unless node_set.is_a? Nokogiri::XML::NodeSet
-              raise TypeError, "expected a Nokogiri::XML::NodeSet, got #{node_set.class.name}"
+          def initialize(nodes)
+
+            case nodes
+            when Nokogiri::XML::NodeSet
+              @node_set = nodes
+            when String
+              @node_set = Nokogiri::HTML5.fragment(nodes).children
+            else
+              raise TypeError, "expected a Nokogiri::XML::NodeSet or String, got #{nodes.class.name}"
             end
 
-            @node_set = node_set
             @cursor = 0
           end
 
@@ -65,7 +58,7 @@ module GithubToCanvasQuiz
           # returns the found node. Otherwise, return `nil`.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   h1 = scanner.scan('h1')
           #   h1.content     # => 'Hello'
@@ -85,7 +78,7 @@ module GithubToCanvasQuiz
           # and the found node.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   nodes = scanner.scan_until('h2')
           #   nodes.last.content  # => 'World'
@@ -110,7 +103,7 @@ module GithubToCanvasQuiz
           # and **before** the found node.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   nodes = scanner.scan_before('h2')
           #   nodes.last.content  # => 'Hello'
@@ -132,7 +125,7 @@ module GithubToCanvasQuiz
           # Returns a `NodeSet` of all the nodes between the cursor position and the end.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   nodes = scanner.scan_before('h2')
           #   nodes.last.content  # => 'Hello'
@@ -150,7 +143,7 @@ module GithubToCanvasQuiz
           # If it does, returns the found node. Otherwise, returns `nil`.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   h1 = scanner.check('h1')
           #   h1.content     # => 'Hello'
@@ -168,7 +161,7 @@ module GithubToCanvasQuiz
           # and the found node.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   nodes = scanner.check_until('h2')
           #   nodes.last.content  # => 'World'
@@ -192,7 +185,7 @@ module GithubToCanvasQuiz
           # and **before** the found node.
           #
           #   html = '<h1>Hello</h1><h2>World</h2><h3>end.</h3>'
-          #   scanner = HTML::Scanner.from_html(html)
+          #   scanner = HTML::Scanner.new(html)
           #
           #   nodes = scanner.check_before('h2')
           #   nodes.last.content  # => 'Hello'

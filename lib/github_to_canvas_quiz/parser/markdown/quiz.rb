@@ -25,13 +25,13 @@ module GithubToCanvasQuiz
 
         # Title - contents of first H1
         def title
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_until('h1').last.content
         end
 
         # Description - rest of document after the first H1
         def description
-          scanner = Helpers::NodeScanner.from_html(html)
+          scanner = Helpers::NodeScanner.new(html)
           scanner.scan_until('h1')
           scanner.scan_rest.to_html.strip
         end
