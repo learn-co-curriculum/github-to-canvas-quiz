@@ -3,7 +3,19 @@
 module GithubToCanvasQuiz
   # Markdown => CanvasAPI
   module Synchronizer
-    # Synchronize a quiz on Canvas based on the contents of a given directory
+    # Synchronize a quiz to Canvas based on the contents of a given directory
+    # Given a directory with valid markdown files:
+    #
+    # phase-1-quiz-arrays
+    # |   questions
+    # |   |-- 00.md
+    # |   |-- 01.md
+    # |-- README.md
+    #
+    # Useage:
+    #
+    #   client = CanvasAPI::Client.new(host: host, api_key: api_key)
+    #   Synchronizer::Quiz.new(client, 'phase-1-quiz-arrays')
     class Quiz
       attr_reader :client, :path
 
