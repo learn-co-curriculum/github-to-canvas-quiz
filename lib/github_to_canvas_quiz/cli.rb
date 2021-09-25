@@ -8,7 +8,7 @@ module GithubToCanvasQuiz
     desc 'build', 'Creates Markdown files for a Canvas quiz and its questions'
     def build
       puts '⬇️ Converting quiz...'
-      RepoBuilder.new(client, options[:course], options[:quiz]).build(options[:directory])
+      Builder::Quiz.new(client, options[:course], options[:quiz], options[:directory]).build
       puts '✅ Done'
     end
 
@@ -16,7 +16,7 @@ module GithubToCanvasQuiz
     desc 'align', 'Updates a Canvas quiz from Markdown files.'
     def align
       puts '⬆️ Aligning quiz...'
-      Synchronizer::Repo.new(client).sync(options[:directory])
+      Synchronizer::Quiz.new(client, options[:directory]).sync
       puts '✅ Done'
     end
 

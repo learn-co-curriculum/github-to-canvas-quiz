@@ -7,17 +7,16 @@ module GithubToCanvasQuiz
     class Quiz
       attr_reader :client, :course_id, :quiz_id, :path
 
-      def initialize(client, course_id, quiz_id)
+      def initialize(client, course_id, quiz_id, path = '.')
+        raise DirectoryNotFoundError unless File.directory? path
+
+        @path = path
         @client = client
         @course_id = course_id
         @quiz_id = quiz_id
       end
 
-      def build(path = '.')
-        raise DirectoryNotFoundError unless File.directory? path
-
-        @path = path
-
+      def build
         save_quiz!
         save_questions!
       end

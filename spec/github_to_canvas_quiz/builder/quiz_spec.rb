@@ -71,7 +71,7 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
     let(:tmp_path) { 'spec/tmp' }
 
     let(:builder) do
-      described_class.new(client, 4091, 21982)
+      described_class.new(client, 4091, 21982, tmp_path)
     end
 
     before do
@@ -94,7 +94,7 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
 
         Description
       MARKDOWN
-      builder.build(tmp_path)
+      builder.build
       expect(File.read("#{tmp_path}/README.md")).to eq(md)
     end
 
@@ -154,7 +154,7 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
 
         > Wrong!
       MARKDOWN
-      builder.build(tmp_path)
+      builder.build
       expect(File.read("#{tmp_path}/questions/00.md")).to eq(question1_md)
       expect(File.read("#{tmp_path}/questions/01.md")).to eq(question2_md)
     end
