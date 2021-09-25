@@ -3,10 +3,17 @@
 RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
   describe '#build' do
     let(:quiz_data) do
+      description = <<~HTML
+        <div id='git-data-element' data-org='learn-co-curriculum' data-repo='example-repo'></div>
+        <header class='fis-header'>
+          <a class='fis-git-link' href='https://github.com/learn-co-curriculum/example-repo/issues/new' target='_blank' rel='noopener'><img id='issue-img' title='Create New Issue' alt='Create New Issue' /></a>
+        </header>
+        <p>Description</p>
+      HTML
       {
         'id' => 21982,
         'title' => 'Quiz',
-        'description' => '<p>Description</p>'
+        'description' => description
       }
     end
 
@@ -80,6 +87,7 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
         ---
         id: 21982
         course_id: 4091
+        repo: example-repo
         ---
 
         # Quiz

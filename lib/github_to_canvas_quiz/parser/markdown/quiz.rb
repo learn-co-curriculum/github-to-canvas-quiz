@@ -11,6 +11,7 @@ module GithubToCanvasQuiz
           Model::Quiz.new(
             course_id: frontmatter['course_id'],
             id: frontmatter['id'],
+            repo: frontmatter['repo'],
             title: title,
             description: description
           )

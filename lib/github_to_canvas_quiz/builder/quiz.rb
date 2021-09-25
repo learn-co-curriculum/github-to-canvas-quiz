@@ -5,7 +5,7 @@ module GithubToCanvasQuiz
   module Builder
     # Create markdown files from a Canvas Quiz
     class Quiz
-      attr_reader :client, :course_id, :quiz_id
+      attr_reader :client, :course_id, :quiz_id, :path
 
       def initialize(client, course_id, quiz_id)
         @client = client
@@ -16,13 +16,10 @@ module GithubToCanvasQuiz
       def build(path = '.')
         raise DirectoryNotFoundError unless File.directory? path
 
-        File.write("#{path}/README.md", quiz.to_markdown)
+        @path = path
 
-        Dir.mkdir("#{path}/questions") unless File.directory? "#{path}/questions"
-        questions.each.with_index do |question, index|
-          filename = index.to_s.rjust(2, '0')
-          File.write("#{path}/questions/#{filename}.md", question.to_markdown)
-        end
+        save_quiz!
+        save_questions!
       end
 
       private
@@ -35,8 +32,15 @@ module GithubToCanvasQuiz
         @quiz = begin
           quiz_data = client.get_single_quiz(course_id, quiz_id)
           quiz_data.merge!({ 'course_id' => course_id })
-          Parser::Canvas::Quiz.new(quiz_data).parse
+          quiz = Parser::Canvas::Quiz.new(quiz_data).parse
+          # use file path as repo if not present
+          quiz.repo = path.split('/').last unless quiz.repo
+          quiz
         end
+      end
+
+      def save_quiz!
+        File.write("#{path}/README.md", quiz.to_markdown)
       end
 
       # Get question data from the Canvas API and return an array of Model::Question
@@ -50,6 +54,14 @@ module GithubToCanvasQuiz
             question_data.merge!({ 'course_id' => course_id, 'quiz_id' => quiz_id })
             Parser::Canvas::Question.new(question_data).parse
           end
+        end
+      end
+
+      def save_questions!
+        Dir.mkdir("#{path}/questions") unless File.directory? "#{path}/questions"
+        questions.each.with_index do |question, index|
+          filename = index.to_s.rjust(2, '0')
+          File.write("#{path}/questions/#{filename}.md", question.to_markdown)
         end
       end
     end

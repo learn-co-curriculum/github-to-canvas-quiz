@@ -17,9 +17,26 @@ module GithubToCanvasQuiz
           Model::Quiz.new(
             course_id: data['course_id'],
             id: data['id'],
+            repo: repo,
             title: data['title'],
-            description: data['description']
+            description: description
           )
+        end
+
+        private
+
+        # Remove header elements
+        def description
+          nodes = Nokogiri::HTML5.fragment(data['description'])
+          nodes.css('#git-data-element').remove
+          nodes.css('.fis-header').remove
+          nodes.to_html.strip
+        end
+
+        # Parse the repo from the #git-data-element
+        def repo
+          data_element = Nokogiri::HTML5.fragment(data['description']).css('#git-data-element').first
+          data_element ? data_element['data-repo'] : nil
         end
       end
     end

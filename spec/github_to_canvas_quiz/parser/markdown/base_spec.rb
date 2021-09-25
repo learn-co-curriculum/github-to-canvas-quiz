@@ -8,7 +8,8 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
         expect(described_class.new(markdown)).to have_attributes(
           frontmatter: {
             'id' => 18396,
-            'course_id' => 4236
+            'course_id' => 4236,
+            'repo' => 'phase-2-quiz-client-side-routing'
           },
           markdown: "# Client-Side Routing Quiz\n\nIt's time to check your knowledge!\n\nIf you don't know..\n"
         )
@@ -20,7 +21,8 @@ RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
         expect(described_class.new('spec/fixtures/markdown/quiz.md')).to have_attributes(
           frontmatter: {
             'id' => 18396,
-            'course_id' => 4236
+            'course_id' => 4236,
+            'repo' => 'phase-2-quiz-client-side-routing'
           },
           markdown: "# Client-Side Routing Quiz\n\nIt's time to check your knowledge!\n\nIf you don't know..\n"
         )
