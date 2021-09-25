@@ -39,7 +39,7 @@ require 'github_to_canvas_quiz/parser/markdown/base'
 require 'github_to_canvas_quiz/parser/markdown/question'
 require 'github_to_canvas_quiz/parser/markdown/quiz'
 
-require 'github_to_canvas_quiz/reverse_markdown/converters/pre'
+require 'github_to_canvas_quiz/reverse_markdown/register'
 
 require 'github_to_canvas_quiz/synchronizer/quiz'
 

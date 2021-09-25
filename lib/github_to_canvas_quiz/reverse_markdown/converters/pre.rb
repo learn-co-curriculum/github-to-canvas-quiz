@@ -47,7 +47,5 @@ module ReverseMarkdown
         node['class'].to_s[/highlight\s(.*)/, 1]
       end
     end
-
-    register :pre, Pre.new
   end
 end
