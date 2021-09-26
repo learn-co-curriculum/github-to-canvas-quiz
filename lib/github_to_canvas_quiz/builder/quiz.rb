@@ -18,7 +18,7 @@ module GithubToCanvasQuiz
         prepare_directory!
         save_quiz!
         save_questions!
-        backup_json!
+        backup_canvas_to_json!
         commit!
       end
 
@@ -39,7 +39,7 @@ module GithubToCanvasQuiz
         end
       end
 
-      def backup_json!
+      def backup_canvas_to_json!
         quiz = client.get_single_quiz(course_id, quiz_id)
         questions = client.list_questions(course_id, quiz_id)
 

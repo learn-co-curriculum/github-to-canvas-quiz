@@ -38,15 +38,6 @@ module GithubToCanvasQuiz
         }
       end
 
-      private
-
-      def sources_to_html
-        comments = sources.map do |source|
-          "<a href=\"#{source['url']}\">#{source['name']}</a>"
-        end.join
-        "<p><strong>Source/s:</strong> #{comments}</p>"
-      end
-
       def frontmatter_hash
         {
           'course_id' => course_id,
@@ -55,6 +46,15 @@ module GithubToCanvasQuiz
           'type' => type,
           'sources' => sources
         }
+      end
+
+      private
+
+      def sources_to_html
+        comments = sources.map do |source|
+          "<a href=\"#{source['url']}\">#{source['name']}</a>"
+        end.join
+        "<p><strong>Source/s:</strong> #{comments}</p>"
       end
     end
   end

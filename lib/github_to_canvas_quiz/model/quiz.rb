@@ -33,6 +33,14 @@ module GithubToCanvasQuiz
         }
       end
 
+      def frontmatter_hash
+        {
+          'id' => id,
+          'course_id' => course_id,
+          'repo' => repo
+        }
+      end
+
       private
 
       def description_with_header
@@ -48,14 +56,6 @@ module GithubToCanvasQuiz
             <a class='fis-git-link' href='https://github.com/learn-co-curriculum/#{repo}/issues/new' target='_blank' rel='noopener'><img id='issue-img' title='Create New Issue' alt='Create New Issue' /></a>
           </header>
         HTML
-      end
-
-      def frontmatter_hash
-        {
-          'id' => id,
-          'course_id' => course_id,
-          'repo' => repo
-        }
       end
     end
   end
