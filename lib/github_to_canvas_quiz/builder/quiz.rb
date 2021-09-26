@@ -18,6 +18,7 @@ module GithubToCanvasQuiz
         prepare_directory!
         save_quiz!
         save_questions!
+        backup_json!
         commit!
       end
 
@@ -38,10 +39,22 @@ module GithubToCanvasQuiz
         end
       end
 
+      def backup_json!
+        quiz = client.get_single_quiz(course_id, quiz_id)
+        questions = client.list_questions(course_id, quiz_id)
+
+        json_data = JSON.pretty_generate({ quiz: quiz, questions: questions })
+        File.write(json_path, json_data)
+      end
+
       def commit!
         git = Git.init(path) # inits a new repo, or loads the current one
-        git.add(['README.md', 'questions'])
-        git.commit('Created quiz and questions')
+        git.add(['README.md', 'questions', '.canvas-snapshot.json'])
+        git.commit('Created Canvas backup')
+      end
+
+      def json_path
+        File.join(path, '.canvas-snapshot.json')
       end
 
       def quiz_readme_path

@@ -99,7 +99,8 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
       in_temp_dir do |path|
         builder = described_class.new(client, 4091, 21982, path)
         builder.build
-        expect(File.read("#{path}/README.md")).to eq(md)
+        readme_file = File.join(path, 'README.md')
+        expect(File.read(readme_file)).to eq(md)
       end
     end
 
@@ -171,6 +172,23 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
       end
     end
 
+    # testing side effects of backup_json!
+    it 'outputs a JSON backup of the raw Canvas API data' do
+      in_temp_dir do |path|
+        builder = described_class.new(client, 4091, 21982, path)
+        builder.build
+
+        json_backup_file = File.join(path, '.canvas-snapshot.json')
+        expect(Pathname(json_backup_file)).to exist
+
+        json_data = JSON.parse(File.read(json_backup_file))
+        expect(json_data).to eq({
+          'quiz' => quiz_data,
+          'questions' => questions_data
+        })
+      end
+    end
+
     # testing side effects of commit!
     it 'initializes git in the project directory' do
       in_temp_dir do |path|
@@ -196,7 +214,8 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
           [
             have_attributes(path: 'README.md'),
             have_attributes(path: 'questions/00.md'),
-            have_attributes(path: 'questions/01.md')
+            have_attributes(path: 'questions/01.md'),
+            have_attributes(path: '.canvas-snapshot.json')
           ]
         )
       end
