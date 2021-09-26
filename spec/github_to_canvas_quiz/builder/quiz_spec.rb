@@ -68,20 +68,21 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
       )
     end
 
-    let(:tmp_path) { 'spec/tmp' }
+    # testing side effects of prepare_directory!
+    it 'creates a directory if one does not exist at the given path' do
+      in_temp_dir do |path|
+        new_directory = File.join(path, '/new-directory')
 
-    let(:builder) do
-      described_class.new(client, 4091, 21982, tmp_path)
+        expect(Pathname(new_directory)).not_to exist
+
+        builder = described_class.new(client, 4091, 21982, new_directory)
+        builder.build
+
+        expect(Pathname(new_directory)).to exist
+      end
     end
 
-    before do
-      Dir.mkdir(tmp_path) unless File.directory? tmp_path
-    end
-
-    after do
-      FileUtils.rm_rf("#{tmp_path}/.", secure: true)
-    end
-
+    # testing side effects of sync_quiz!
     it 'outputs a README.md file for the quiz in the given directory' do
       md = <<~MARKDOWN
         ---
@@ -94,10 +95,15 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
 
         Description
       MARKDOWN
-      builder.build
-      expect(File.read("#{tmp_path}/README.md")).to eq(md)
+
+      in_temp_dir do |path|
+        builder = described_class.new(client, 4091, 21982, path)
+        builder.build
+        expect(File.read("#{path}/README.md")).to eq(md)
+      end
     end
 
+    # testing side effects of sync_questions!
     it 'outputs a .md file for each question to a /questions subfolder in the given directory' do
       question1_md = <<~MARKDOWN
         ---
@@ -154,9 +160,46 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
 
         > Wrong!
       MARKDOWN
-      builder.build
-      expect(File.read("#{tmp_path}/questions/00.md")).to eq(question1_md)
-      expect(File.read("#{tmp_path}/questions/01.md")).to eq(question2_md)
+
+      in_temp_dir do |path|
+        builder = described_class.new(client, 4091, 21982, path)
+        builder.build
+        files = Dir["#{path}/questions/*.md"].map do |question_path|
+          File.read(question_path)
+        end
+        expect(files).to eq([question1_md, question2_md])
+      end
+    end
+
+    # testing side effects of commit!
+    it 'initializes git in the project directory' do
+      in_temp_dir do |path|
+        builder = described_class.new(client, 4091, 21982, path)
+        builder.build
+        expect(Pathname(File.join(path, '.git'))).to exist
+      end
+    end
+
+    it 'commits the README and question files' do
+      in_temp_dir do |path|
+        builder = described_class.new(client, 4091, 21982, path)
+        builder.build
+
+        git = Git.open(path)
+
+        # git.status will raise if no commits have been made yet
+        expect { git.status }.not_to raise_error
+
+        tracked_files = git.status.reject(&:untracked)
+
+        expect(tracked_files).to match_array(
+          [
+            have_attributes(path: 'README.md'),
+            have_attributes(path: 'questions/00.md'),
+            have_attributes(path: 'questions/01.md')
+          ]
+        )
+      end
     end
   end
 end

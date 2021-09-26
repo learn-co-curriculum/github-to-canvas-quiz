@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'front_matter_parser'
+require 'git'
 require 'htmlentities'
 require 'json'
 require 'nokogiri'

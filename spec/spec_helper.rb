@@ -6,6 +6,8 @@ require 'webmock/rspec'
 
 require 'github_to_canvas_quiz'
 
+require_relative './helpers/file_helpers'
+
 # Override environment variables with variables in .env.test.local
 Dotenv.overload('.env.test.local')
 
@@ -17,6 +19,9 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
+  # Helpers
+  config.include FileHelpers
+
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 
