@@ -2,31 +2,34 @@
 
 ## Refactor
 
-- Model
-  - underlying data needed for Canvas/Markdown
-  - methods: `.from_canvas`, `.from_markdown`, `#to_h`, `#to_markdown`
-  - `.from_markdown` calls the associated Markdown Parser, which returns a hash
-    used for initialization?
-  - `.from_canvas` calls the associated Canvas Parser, which returns a hash
-    used for initialization?
-  - `#to_markdown` calls the associated Markdown Converter, which returns a
-    markdown string
-  - `#to_h` returns a hash that can be used with the CanvasAPI
-- Parser
-  - parse Markdown or JSON to a hash that can be used by the associated
-    class for initialization
-- Converter
-  - convert data from the associated model to JSON or Markdown
+Features:
+
+- In Builder, initialize new repo (optional?)
+  - probably not necessary to save repo name to YAML, and may cause more issues
+    if repo URL changes...
+  - can read the repo data from the directory (local) or url (GitHub API)
+- In Align, take snapshots of Canvas API response JSON before and after
+- rename `build` to `backup` in CLI
+
+Question:
+
+- what is public API for this library, besides the CLI?
+- What class is responsible for loading a quiz from the API?
+- What class is responsible for saving a quiz to the file system?
+- use Capybara/HTML matchers for testing HTML strings?
 
 ```rb
-quiz = Quiz.load(:api, course_id: 1, quiz_id: 2)
-quiz = Quiz.load(:file, path: '')
+quiz = Quiz.from(:canvas, course_id: 1, quiz_id: 2)
+quiz = Quiz.from(:markdown, path: '')
 
 class Quiz
-  def self.load(loader, options)
+  def self.from(loader, options)
     case loader
-    when :api then Loader::API::Quiz.new(self, options)
-    when :file then Loader::File::Quiz.new(self, options)
+    when :api
+      # where does the API call happen?
+      Parser::Canvas::Quiz.new()
+    when :file
+      Parser::Markdown::Quiz.new(options[:path])
     end
   end
 end

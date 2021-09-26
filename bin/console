@@ -10,4 +10,20 @@ require 'pry'
 
 require 'github_to_canvas_quiz'
 
+def client
+  @client ||= GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])
+end
+
+def slugify(string)
+  string.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+end
+
+def build_all(course_id, repo_prefix)
+  quizzes = client.list_quizzes(course_id)
+  quizzes.each do |quiz|
+    quiz_path = "./tmp/#{repo_prefix}-quiz-#{slugify(quiz['title'])}"
+    GithubToCanvasQuiz::Builder::Quiz.new(client, course_id, quiz['id'], quiz_path).build
+  end
+end
+
 Pry.start
