@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Question do
+RSpec.describe GithubToCanvasQuiz::Parser::Markdown::Base do
   describe '#initialize' do
     context 'when given a string of markdown content' do
       it 'parses the markdown' do

@@ -30,7 +30,6 @@ module GithubToCanvasQuiz
           # @param [Nokogiri::XML::NodeSet, String] node_set HTML nodes to be scanned
           #
           def initialize(nodes)
-
             case nodes
             when Nokogiri::XML::NodeSet
               @node_set = nodes

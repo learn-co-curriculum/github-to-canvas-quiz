@@ -16,6 +16,7 @@ RSpec.describe GithubToCanvasQuiz::Parser::Canvas::Quiz do
         )
       end
     end
+
     it 'parses a repo from the quiz description' do
       VCR.use_cassette 'quiz_with_repo_header' do
         client = GithubToCanvasQuiz::CanvasAPI::Client.new(api_key: ENV['CANVAS_API_KEY'], host: ENV['CANVAS_API_PATH'])

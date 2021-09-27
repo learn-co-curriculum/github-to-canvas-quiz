@@ -3,7 +3,6 @@
 module GithubToCanvasQuiz
   # Custom DSL for building a Markdown string
   class MarkdownBuilder
-
     # Provides a custom DSL for building a Markdown string
     # Usage:
     #
