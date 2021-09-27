@@ -76,7 +76,6 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Quiz do
     end
   end
 
-
   before do
     reset_mock_db!
   end

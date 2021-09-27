@@ -198,15 +198,13 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
       end
     end
 
+    # testing side effects of commit!
     it 'commits the README and question files' do
       in_temp_dir do |path|
         builder = described_class.new(client, 4091, 21982, path)
         builder.build
 
         git = Git.open(path)
-
-        # git.status will raise if no commits have been made yet
-        expect { git.status }.not_to raise_error
 
         tracked_files = git.status.reject(&:untracked)
 

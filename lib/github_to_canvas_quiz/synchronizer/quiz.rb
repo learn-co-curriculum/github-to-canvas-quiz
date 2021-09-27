@@ -17,7 +17,7 @@ module GithubToCanvasQuiz
     #   client = CanvasAPI::Client.new(host: host, api_key: api_key)
     #   Synchronizer::Quiz.new(client, 'phase-1-quiz-arrays')
     class Quiz
-      attr_reader :client, :path, :git
+      attr_reader :client, :path, :repo
 
       def initialize(client, path)
         path = File.expand_path(path)
@@ -25,9 +25,7 @@ module GithubToCanvasQuiz
 
         @client = client
         @path = path
-
-        # TODO: this assumes the given path is a git repo; raise error if not?
-        @git = Git.open(path)
+        @repo = RepositoryInterface.new(path)
       end
 
       def sync
@@ -67,7 +65,7 @@ module GithubToCanvasQuiz
 
         json_data = JSON.pretty_generate({ quiz: quiz_data, questions: questions_data })
         File.write(json_path, json_data)
-        commit_file(json_path, 'Created Canvas snapshot')
+        repo.commit_files(json_path, 'Created Canvas snapshot')
       end
 
       def json_path
@@ -126,15 +124,7 @@ module GithubToCanvasQuiz
           md.md(parsed.content)
         end
         File.write(filepath, new_markdown)
-        commit_file(filepath, 'Updated frontmatter')
-      end
-
-      def commit_file(filepath, message)
-        relative_path = Pathname(filepath).relative_path_from(path).to_s
-        return unless git.status.untracked?(relative_path) || git.status.changed?(relative_path)
-
-        git.add(relative_path)
-        git.commit("AUTO: #{message}")
+        repo.commit_files(filepath, 'Updated frontmatter')
       end
     end
   end

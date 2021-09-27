@@ -24,6 +24,10 @@ module GithubToCanvasQuiz
 
       private
 
+      def repo
+        @repo ||= RepositoryInterface.new(path)
+      end
+
       def prepare_directory!
         Dir.mkdir(path) unless Pathname(path).directory?
       end
@@ -48,9 +52,8 @@ module GithubToCanvasQuiz
       end
 
       def commit!
-        git = Git.init(path) # inits a new repo, or loads the current one
-        git.add(['README.md', 'questions', '.canvas-snapshot.json'])
-        git.commit('Created Canvas backup')
+        repo = RepositoryInterface.new(path)
+        repo.commit_files('README.md', 'questions', '.canvas-snapshot.json', 'Created Canvas backup')
       end
 
       def json_path

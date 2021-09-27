@@ -48,6 +48,7 @@ require 'github_to_canvas_quiz/synchronizer/quiz'
 require 'github_to_canvas_quiz/cli'
 require 'github_to_canvas_quiz/markdown_builder'
 require 'github_to_canvas_quiz/markdown_converter'
+require 'github_to_canvas_quiz/repository_interface'
 require 'github_to_canvas_quiz/version'
 
 module GithubToCanvasQuiz
