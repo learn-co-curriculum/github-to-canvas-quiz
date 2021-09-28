@@ -6,8 +6,8 @@ module GithubToCanvasQuiz
     option :quiz, type: :numeric, required: true, desc: 'Canvas Quiz ID'
     option :directory, default: '.',
                        desc: '(optional) Directory to output markdown files. Defaults to current directory'
-    desc 'build', 'Creates Markdown files for a Canvas quiz and its questions'
-    def build
+    desc 'backup', 'Backup a Canvas quiz and its questions as markdown'
+    def backup
       puts '⬇️ Converting quiz...'
       Builder::Quiz.new(client, options[:course], options[:quiz], options[:directory]).build
       puts '✅ Done'
