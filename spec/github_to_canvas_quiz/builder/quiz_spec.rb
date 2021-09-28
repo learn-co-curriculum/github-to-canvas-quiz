@@ -17,6 +17,14 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
       }
     end
 
+    let(:quiz_data_no_repo) do
+      {
+        'id' => 21983,
+        'title' => 'Quiz',
+        'description' => '<p>Description</p>'
+      }
+    end
+
     let(:questions_data) do
       [
         {
@@ -61,11 +69,18 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
     end
 
     let(:client) do
-      instance_double(
+      client = instance_double(
         GithubToCanvasQuiz::CanvasAPI::Client,
-        get_single_quiz: quiz_data,
         list_questions: questions_data
       )
+      allow(client).to receive(:get_single_quiz) do |_course_id, quiz_id|
+        if quiz_id == 21983
+          quiz_data_no_repo
+        else
+          quiz_data
+        end
+      end
+      client
     end
 
     # testing side effects of prepare_directory!
@@ -100,6 +115,29 @@ RSpec.describe GithubToCanvasQuiz::Builder::Quiz do
         builder = described_class.new(client, 4091, 21982, path)
         builder.build
         readme_file = File.join(path, 'README.md')
+        expect(File.read(readme_file)).to eq(md)
+      end
+    end
+
+    # testing side effects of sync_quiz!
+    it 'uses the current directory as the repo name' do
+      in_temp_dir do
+        path = '.'
+        builder = described_class.new(client, 4091, 21983, path)
+        builder.build
+        readme_file = File.join(path, 'README.md')
+        dir = File.basename(File.expand_path(path))
+        md = <<~MARKDOWN
+          ---
+          id: 21983
+          course_id: 4091
+          repo: #{dir}
+          ---
+
+          # Quiz
+
+          Description
+        MARKDOWN
         expect(File.read(readme_file)).to eq(md)
       end
     end

@@ -7,7 +7,7 @@ module GithubToCanvasQuiz
     class Quiz
       attr_reader :client, :course_id, :quiz_id, :path
 
-      def initialize(client, course_id, quiz_id, path = '.')
+      def initialize(client, course_id, quiz_id, path)
         @path = path
         @client = client
         @course_id = course_id
@@ -30,6 +30,7 @@ module GithubToCanvasQuiz
 
       def prepare_directory!
         Dir.mkdir(path) unless Pathname(path).directory?
+        @path = File.expand_path(path)
       end
 
       def save_quiz!
@@ -81,7 +82,7 @@ module GithubToCanvasQuiz
         @quiz = begin
           quiz = Parser::Canvas::Quiz.new(canvas_quiz_data).parse
           # use file path as repo if not present
-          quiz.repo = path.split('/').last unless quiz.repo
+          quiz.repo = File.basename(path) unless quiz.repo
           quiz
         end
       end
