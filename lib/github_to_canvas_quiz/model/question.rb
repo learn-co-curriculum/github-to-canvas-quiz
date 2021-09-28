@@ -52,9 +52,9 @@ module GithubToCanvasQuiz
 
       def sources_to_html
         comments = sources.map do |source|
-          "<a href=\"#{source['url']}\">#{source['name']}</a>"
+          "<li><a href=\"#{source['url']}\">#{source['name']}</a></li>"
         end.join
-        "<p><strong>Source/s:</strong> #{comments}</p>"
+        "<p><strong>Source/s:</strong><ul>#{comments}</ul></p>"
       end
     end
   end
