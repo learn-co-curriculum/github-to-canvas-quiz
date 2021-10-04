@@ -25,7 +25,7 @@ module GithubToCanvasQuiz
           'description' => description_with_header,
           'quiz_type' => 'assignment',
           'shuffle_answers' => true,
-          'hide_results' => 'until_after_last_attempt',
+          'hide_results' => nil,
           'show_correct_answers_last_attempt' => true,
           'allowed_attempts' => 3,
           'scoring_policy' => 'keep_highest',

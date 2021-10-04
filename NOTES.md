@@ -5,11 +5,12 @@ Features:
 - Add a RepositoryInterface class to allow easier testing of repo commit etc
   functionality and slim down builder/synchronizer classes
 - can read the repo data from the directory (local) or url (GitHub API)
-- rename `build` to `backup` in CLI
 - move a bunch of methods from build/sync to models?? would make more testable.
   questionable if the models should be responsible for saving to file
   system/working with git/interacting with API...
 - issue when syncing: points not updated when questions added/removed?
+- create example templates for each question type and make them exportable via
+  the CLI
 
 Question:
 

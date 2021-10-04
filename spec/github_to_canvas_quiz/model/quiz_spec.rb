@@ -32,7 +32,7 @@ RSpec.describe GithubToCanvasQuiz::Model::Quiz do
         'description' => "#{header}\n<p><span>It's time to check your knowledge!</span></p>\n<p><span>If you don't know..</span></p>",
         'quiz_type' => 'assignment',
         'shuffle_answers' => true,
-        'hide_results' => 'until_after_last_attempt',
+        'hide_results' => nil,
         'show_correct_answers_last_attempt' => true,
         'allowed_attempts' => 3,
         'scoring_policy' => 'keep_highest',
