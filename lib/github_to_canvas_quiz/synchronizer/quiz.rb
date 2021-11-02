@@ -48,11 +48,34 @@ module GithubToCanvasQuiz
 
       # Get question data from Markdown files and return a Model::Question along with its path
       def parse_questions_with_path
+        # read Canvas question data
+        canvas_questions = client.list_questions(quiz.course_id, quiz.id)
+        
+        # read Markdown data
         Dir["#{path}/questions/*.md"].map do |question_path|
           question = Parser::Markdown::Question.new(File.read(question_path)).parse
           question.quiz_id = quiz.id
           question.course_id = quiz.course_id
+          
+          # find the matching Canvas answer
+          canvas_question = canvas_questions.find { |canvas_question| canvas_question['id'] == question.id }
+          get_answer_ids!(question, canvas_question) if canvas_question
+
           [question, question_path] # need that question path... gotta be a better way!
+        end
+      end
+
+      def get_answer_ids!(question, canvas_question)
+        question.answers.each do |answer|
+          # match the markdown answer to the Canvas answer based on the answer text
+          canvas_answer = canvas_question['answers'].find do |canvas_answer|
+            if canvas_answer['html'].nil? || canvas_answer['html'].empty?
+              canvas_answer['text'] == answer.text
+            else
+              canvas_answer['html'] == answer.text
+            end
+          end
+          answer.id = canvas_answer['id'].to_i if canvas_answer
         end
       end
 

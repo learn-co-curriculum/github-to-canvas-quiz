@@ -4,7 +4,7 @@ module GithubToCanvasQuiz
   module Model
     module Answer
       class Matching
-        attr_accessor :title, :text, :comments, :left, :right
+        attr_accessor :id, :title, :text, :comments, :left, :right
 
         def initialize(options)
           options.each do |key, value|
@@ -26,8 +26,9 @@ module GithubToCanvasQuiz
             'answer_weight' => 100,
             'answer_comment_html' => comments,
             'answer_match_left' => left,
-            'answer_match_right' => right
-          }
+            'answer_match_right' => right,
+            'id' => id
+          }.reject { |_,v| v.nil? }
         end
       end
     end
