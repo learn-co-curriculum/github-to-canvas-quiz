@@ -1,6 +1,5 @@
 # GithubToCanvasQuiz
 
-
 A tool for resizing and uploading images to AWS S3.
 
 ## Installation
@@ -29,14 +28,17 @@ Interacting with the Canvas API requires that you have the following environment
 variables set:
 
 - `ENV['CANVAS_API_PATH']`
-  - The base URL for your institution's Canvas API (`https://flatironlearn.beta.instructure.com/api/v1`)
+  - The base URL for your institution's Canvas API
+    (`https://flatironlearn.beta.instructure.com/api/v1`)
 - `ENV['CANVAS_API_KEY']`
-  - Your [Canvas Access Token](https://canvas.instructure.com/doc/api/file.oauth.html#manual-token-generation)
+  - Your
+    [Canvas Access Token](https://canvas.instructure.com/doc/api/file.oauth.html#manual-token-generation)
 
 ## Usage
 
 This gem provides two key features via the CLI: backing up Canvas quizzes to
-markdown, and updating a Canvas quiz from an existing directory of markdown files.
+markdown, and updating a Canvas quiz from an existing directory of markdown
+files.
 
 ### Backup
 
@@ -72,10 +74,10 @@ git commits and the created tag, and push the `.gem` file to
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at
-https://github.com/ihollander/flatiron-s3-uploader. This project is intended to
-be a safe, welcoming space for collaboration, and contributors are expected to
-adhere to the
-[code of conduct](https://github.com/ihollander/flatiron-s3-uploader/blob/main/CODE_OF_CONDUCT.md).
+https://github.com/learn-co-curriculum/github-to-canvas-quiz. This project is
+intended to be a safe, welcoming space for collaboration, and contributors are
+expected to adhere to the
+[code of conduct](https://github.com/learn-co-curriculum/github-to-canvas-quiz/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -86,4 +88,4 @@ The gem is available as open source under the terms of the
 
 Everyone interacting in the FlatironS3Uploader project's codebases, issue
 trackers, chat rooms and mailing lists is expected to follow the
-[code of conduct](https://github.com/ihollander/flatiron-s3-uploader/blob/main/CODE_OF_CONDUCT.md).
+[code of conduct](https://github.com/learn-co-curriculum/github-to-canvas-quiz/blob/main/CODE_OF_CONDUCT.md).
