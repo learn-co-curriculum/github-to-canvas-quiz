@@ -5,9 +5,9 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Quiz do
     {
       'quiz' => { 'id' => 123 },
       'questions' => [
-        { 'id' => 1 },
-        { 'id' => 2 },
-        { 'id' => 3 }
+        { 'id' => 1, 'answers' => [{ 'id' => 1, 'text' => 'Answer' }] },
+        { 'id' => 2, 'answers' => [{ 'id' => 2, 'text' => '', 'html' => '<p>Answer</p>' }] },
+        { 'id' => 3, 'answers' => [{ 'id' => 3, 'text' => 'Answer' }] }
       ]
     }
   end
@@ -95,7 +95,7 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Quiz do
       end
 
       let(:question2) do
-        GithubToCanvasQuiz::Model::Question.new(quiz_id: 123, course_id: 1234, id: 2, type: 'short_answer_question', name: 'Question 2', description: '<p>Description</p>', answers: [GithubToCanvasQuiz::Model::Answer::ShortAnswer.new(title: 'Correct', text: 'Answer', comments: '')], distractors: [])
+        GithubToCanvasQuiz::Model::Question.new(quiz_id: 123, course_id: 1234, id: 2, type: 'multiple_choice_question', name: 'Question 2', description: '<p>Description</p>', answers: [GithubToCanvasQuiz::Model::Answer::MultipleChoice.new(title: 'Correct', text: '<p>Answer</p>', comments: '')], distractors: [])
       end
 
       # testing side effects of backup_canvas_to_json!
@@ -128,8 +128,15 @@ RSpec.describe GithubToCanvasQuiz::Synchronizer::Quiz do
           create_quiz_repo!(path, quiz, question1, question2)
           synchronizer = described_class.new(client, path)
           synchronizer.sync
-          expect(client).to have_received(:update_question).with(1234, 123, 1, { 'question' => question1.to_h })
-          expect(client).to have_received(:update_question).with(1234, 123, 2, { 'question' => question2.to_h })
+          
+          # add answer data to question to test...
+          question_1_hash = question1.to_h
+          question_1_hash['answers'][0]['id'] = 1
+          question_2_hash = question2.to_h
+          question_2_hash['answers'][0]['id'] = 2
+
+          expect(client).to have_received(:update_question).with(1234, 123, 1, { 'question' => question_1_hash })
+          expect(client).to have_received(:update_question).with(1234, 123, 2, { 'question' => question_2_hash })
         end
       end
 

@@ -4,7 +4,7 @@ module GithubToCanvasQuiz
   module Model
     module Answer
       class MultipleDropdowns
-        attr_accessor :title, :text, :comments, :blank_id
+        attr_accessor :id, :title, :text, :comments, :blank_id
 
         def initialize(options)
           options.each do |key, value|
@@ -25,8 +25,9 @@ module GithubToCanvasQuiz
             'answer_text' => text,
             'answer_weight' => title == 'Correct' ? 100 : 0,
             'answer_comment_html' => comments,
-            'blank_id' => blank_id
-          }
+            'blank_id' => blank_id,
+            'id' => id
+          }.reject { |_,v| v.nil? }
         end
       end
     end

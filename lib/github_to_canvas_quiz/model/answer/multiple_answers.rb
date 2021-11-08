@@ -4,7 +4,7 @@ module GithubToCanvasQuiz
   module Model
     module Answer
       class MultipleAnswers
-        attr_accessor :title, :text, :comments
+        attr_accessor :id, :title, :text, :comments
 
         def initialize(options)
           options.each do |key, value|
@@ -24,8 +24,9 @@ module GithubToCanvasQuiz
           {
             'answer_html' => text,
             'answer_weight' => title == 'Correct' ? 100 : 0,
-            'answer_comment_html' => comments
-          }
+            'answer_comment_html' => comments,
+            'id' => id
+          }.reject { |_,v| v.nil? }
         end
       end
     end

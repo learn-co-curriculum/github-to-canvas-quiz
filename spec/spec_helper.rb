@@ -19,6 +19,9 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.max_formatted_output_length = 10
+  end
   # Helpers
   config.include FileHelpers
 
