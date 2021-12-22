@@ -1,22 +1,8 @@
 # GithubToCanvasQuiz
 
-A tool for resizing and uploading images to AWS S3.
+A tool maintaining Canvas quizzes as markdown files in GitHub.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'github-to-canvas-quiz'
-```
-
-And then execute:
-
-```console
-$ bundle install
-```
-
-Or install it yourself as:
 
 ```console
 $ gem install github-to-canvas-quiz
