@@ -22,16 +22,16 @@ module GithubToCanvasQuiz
       def initialize(client, path)
         path = File.expand_path(path)
         raise DirectoryNotFoundError unless Pathname(path).directory?
-
+        
         @client = client
         @path = path
         @repo = RepositoryInterface.new(path)
         @quiz = parse_quiz
-        @questions_with_path = parse_questions_with_path
+        @questions_with_path = parse_questions_with_path if @quiz.id
       end
 
       def sync
-        backup_canvas_to_json!
+        backup_canvas_to_json! if @quiz.id
         sync_quiz!
         sync_questions!
         backup_canvas_to_json!
@@ -104,6 +104,8 @@ module GithubToCanvasQuiz
 
       # Create or update questions on Canvas
       def sync_questions!
+        @questions_with_path ||= parse_questions_with_path
+
         questions_with_path.each do |question_with_path|
           question, path = question_with_path
           if question.id
